@@ -8,7 +8,7 @@
 /** 패키지 참조 */
 import { createGlobalStyle } from 'styled-components';
 
-export const GlobalStyles = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
   * {
     font-family: 'Roboto', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
   }
@@ -19,3 +19,5 @@ export const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
   }
 `;
+
+export default GlobalStyles;

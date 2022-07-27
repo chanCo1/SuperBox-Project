@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-export const Store = configureStore({
+const Store = configureStore({
   reducer: {
 
   },
@@ -8,3 +8,5 @@ export const Store = configureStore({
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}),
   devTools: true,
 });
+
+export default Store;

@@ -16,11 +16,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 // 전역 스타일 정의
-import { GlobalStyles } from './GlobalStyles';
+import GlobalStyles from './GlobalStyles';
 // 전역 SEO 구성
-import { Meta } from './Meta';
+import Meta from './Meta';
 //
-import { Store } from './Store';
+import Store from './Store';
 // 프로그램 시작
 import App from './App';
 

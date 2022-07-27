@@ -10,7 +10,7 @@ import React, { memo } from 'react';
 // SEO 처리 가능 패키지
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-export const Meta = memo((props) => {
+const Meta = memo((props) => {
   return (
     <HelmetProvider>
       <Helmet>
@@ -53,3 +53,5 @@ Meta.defaultProps = {
   // image: '기본이미지변수적용',
   url: window.location.href,
 };
+
+export default Meta;

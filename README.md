@@ -5,3 +5,5 @@
   * commit: mkdir client
 * 프로젝트 진행을 위한 기본값 설정(GlobalStyles, Meta 등)
   * commit: Default setting
+* 인트로 페이지 구현
+  * commit: intro page complete

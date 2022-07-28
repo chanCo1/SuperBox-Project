@@ -1,23 +1,27 @@
 /** 패키지 참조 */
-import React, { memo, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink, Link } from 'react-router-dom';
 
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
 
-// 1회용 -> 나중에 수정
-import { BiUserCircle } from 'react-icons/bi';
+// 마이페이지 1회용 아이콘 -> 나중에 수정
+import { FaUserCircle } from 'react-icons/fa';
 
-/** Header 부분 스타일 정의 */
+/** 
+ * Header 부분 스타일 정의 
+ */
 const HeaderContainer = styled.div`
   position: fixed;
   width: 100%;
   border-bottom: 4px solid #f3b017;
+  background-color: #fff;
+  z-index: 1;
 
   .header-wrap {
     position: relative;
-    width: 1080px;
+    width: 1200px;
     margin: auto;
     padding: 20px 10px;
     display: flex;
@@ -41,22 +45,23 @@ const HeaderContainer = styled.div`
       }
     }
 
-    .page-nav {
+    .nav-wrap {
       display: flex;
-      width: 50%;
+      width: 60%;
       padding: 0;
+
+      .nav {
+        color: #404040;
+        font-size: 20px;
+        margin-right: 30px;
+        cursor: pointer;
+      }
 
       .NavLink {
         &:hover {
           text-decoration: underline #f3b017;
           text-underline-position: under;
           text-decoration-thickness: 5px;
-        }
-
-        li {
-          color: #404040;
-          font-size: 20px;
-          margin-right: 30px;
         }
       }
 
@@ -70,6 +75,7 @@ const HeaderContainer = styled.div`
     .login-button {
       background-color: #fff;
       border: 1px solid #f3b017;
+      color: #f3b017;
       padding: 5px 20px;
       cursor: pointer;
       transition: ease .3s;
@@ -87,17 +93,41 @@ const HeaderContainer = styled.div`
   }
 `;
 
-// 로그인 값이 true가 되면 css값 적용
+// 고객센터 서브메뉴 css 처리
+const CustomerSubnav = styled.ul`
+  position: absolute;
+  background-color: #fff;
+  padding: 0 20px;
+  margin-top: 10px;
+  border: 1px solid #f3b017;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: .3s ease-in;
+
+  li {
+    margin: 0;
+    padding: 10px 0;
+    font-size: 17px;
+    color: #404040;
+
+    &:hover {
+      text-decoration: underline #f3b017;
+      text-underline-position: under;
+    }
+  }
+`;
+
+// 로그인 상태값에 따른 css 처리
 const MyPage = styled.div`
   display: flex;
-  justify-content: end;
-  width: 10%;
   font-size: 2.5rem;
   cursor: pointer;
-  opacity: 0;
+  overflow: hidden;
+  max-height: 0;
   
   a {
     display: flex;
+    justify-content: end;
 
     .user-circle {
       color: #999;
@@ -105,7 +135,7 @@ const MyPage = styled.div`
       transition: ease .3s;
   
       &:hover {
-        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
       }
       &:active {
         transform: scale(0.9, 0.9);
@@ -113,42 +143,77 @@ const MyPage = styled.div`
     }
   }
 
+  // props로 css 상태값 변경
   ${(props) => props.state && css`
-    opacity: 1;
+    max-height: 100vh;
   `}
 `;
 
+/** 
+ * 나타낼 값 시작
+ */
 const Header = memo(() => {
-  const [login, setLogin] = useState(true);
+  // 로그인 상태값 -> 로그인 구현하면 활용할 예정
+  const [login, setLogin] = useState(false);
+  // 고객센터 서브메뉴 on/off -> 최대높이값을 주는걸로 해결
+  const [customerStyle, setCustomerStyle] = useState({ maxHeight: 0, opacity: 0 });
+
+  // // active 상태값
+  // const [isActive, setActive] = useState(false);
+
+  // // 패스파라미터 값 가져오기
+  // const params = useParams();
+
+  // 고객센터 서브메뉴를 마우스 상태에 따라 
+  const onMouseOver = useCallback(() => {
+    setCustomerStyle({ maxHeight: '100vh', opacity: 1 });
+  }, []);
+  const onMouseOut = useCallback(() => {
+    setCustomerStyle({ maxHeight: 0, opacity: 0 });
+  }, []);
+
+  // // active 클래스 추가를 위한 boolean 값 도출
+  // const onClickActive = useCallback(() => {
+  //   setActive(params.path ? true : false);
+  // }, [params]);
 
   return (
-    <HeaderContainer>
-      <div className="header-wrap">
+    <>
+      <HeaderContainer>
+        <div className="header-wrap">
 
-        <Link to={'/main'}>
-          <div className="logo">
-            <img src={logo} alt="superbox-logo" />
-            <h1>SuperBox</h1>
-          </div>
-        </Link>
-
-        <ul className="page-nav">
-          <NavLink className="NavLink" to={'/receive'}><li>배송접수</li></NavLink>
-          <NavLink className="NavLink" to={'/review'}><li>고객후기</li></NavLink>
-          <NavLink className="NavLink" to={'/customer'}><li>고객센터</li></NavLink>
-        </ul>
-
-        <MyPage className="mypage" state={login}>
-          <Link to={'/mypage'}>
-            <BiUserCircle className='user-circle'/>
+          <Link to={'/main'}>
+            <div className="logo">
+              <img src={logo} alt="superbox-logo" />
+              <h1>SuperBox</h1>
+            </div>
           </Link>
-        </MyPage>
 
-        <Link to={'/login'}>
-          <button className='login-button'>로그인</button>
-        </Link>
-      </div>
-    </HeaderContainer>
+          <ul className="nav-wrap">
+            <NavLink className="NavLink nav" to={'/receive'}><li>배송접수</li></NavLink>
+            <NavLink className="NavLink nav" to={'/review'}><li>고객후기</li></NavLink>
+            <li className="NavLink nav" onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+              고객센터
+              <CustomerSubnav style={customerStyle}>
+                <Link to={'/customer/notice'}><li>공지사항</li></Link>
+                <Link to={'/customer/faq'}><li>자주찾는 질문</li></Link>
+                <Link to={'/customer/inqury'}><li>1:1 문의</li></Link>
+              </CustomerSubnav>
+            </li>
+          </ul>
+
+          <MyPage state={login}>
+            <Link to={'/mypage'}>
+              <FaUserCircle className='user-circle'/>
+            </Link>
+          </MyPage>
+
+          <Link to={'/login'}>
+            <button className='login-button'>로그인</button>
+          </Link>
+        </div>
+      </HeaderContainer>
+    </>
   );
 });
 

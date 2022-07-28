@@ -9,7 +9,9 @@ import IntroPage from './pages/IntroPage';
 import MainPage from './pages/MainPage';
 import ReceivePage from './pages/ReceivePage';
 import ReviewPage from './pages/ReviewPage';
-import CostomerPage from './pages/CostomerPage';
+import NoticePage from './pages/NoticePage';
+import FaqPage from './pages/FaqPage';
+import InqueryPage from './pages/InqueryPage';
 import MyPage from './pages/MyPage';
 import LoginPage from './pages/LoginPage';
 
@@ -23,10 +25,11 @@ const App = memo(() => {
         <Route path='/main' element={<MainPage />} />
         <Route path='/receive' element={<ReceivePage />} />
         <Route path='/review' element={<ReviewPage />} />
-        <Route path='/customer' element={<CostomerPage />} />
-        <Route path='/mypage' element={<MyPage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/login' element={<LoginPage />} />
+        <Route path='/customer/notice' element={<NoticePage />} />
+        <Route path='/customer/faq' element={<FaqPage />} />
+        <Route path='/customer/inqury' element={<InqueryPage />} />
       </Routes>
     </>
   );

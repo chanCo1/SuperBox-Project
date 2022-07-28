@@ -22,6 +22,10 @@ const IntroPageContainer = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
 
+    img {
+      width: 35em;
+    }
+
     .title {
       color: #f3b017;
       font-size: 5em;
@@ -52,7 +56,7 @@ const IntroPageContainer = styled.div`
         cursor: pointer;
         display: flex;
         justify-content: center;
-        transition: ease 0.3s;
+        transition: 0.3s ease-in;
 
         &:hover {
           background-color: #f3b017;

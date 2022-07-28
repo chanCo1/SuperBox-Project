@@ -2,8 +2,9 @@
 
 7/27(수)
 * 프로젝트 생성
-  * commit: mkdir client
 * 프로젝트 진행을 위한 기본값 설정(GlobalStyles, Meta 등)
-  * commit: Default setting
 * 인트로 페이지 구현
-  * commit: intro page complete
+
+7/28(목)
+* header component 구현 (UI 및 Link 연결)
+* footer component 구현

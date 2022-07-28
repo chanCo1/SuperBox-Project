@@ -11,12 +11,14 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyles = createGlobalStyle`
   * {
     font-family: 'Roboto', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
   }
 
   body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
   }
 `;
 

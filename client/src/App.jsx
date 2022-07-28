@@ -15,6 +15,8 @@ import InqueryPage from './pages/InqueryPage';
 import MyPage from './pages/MyPage';
 import LoginPage from './pages/LoginPage';
 
+import Footer from './components/Footer';
+
 const App = memo(() => {
   return (
     <>
@@ -31,6 +33,8 @@ const App = memo(() => {
         <Route path='/customer/faq' element={<FaqPage />} />
         <Route path='/customer/inqury' element={<InqueryPage />} />
       </Routes>
+
+      <Footer />
     </>
   );
 });

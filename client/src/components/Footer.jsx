@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import { BsGithub } from 'react-icons/bs';
 import { MdTitle, MdEmail, MdPhoneIphone } from 'react-icons/md';
 
+/**
+ * Footer 스타일 정의
+ */
 const FooterContainer = styled.div`
   width: 100%;
   height: 450px;
@@ -19,7 +22,7 @@ const FooterContainer = styled.div`
       margin: 0;
       padding: 70px 0;
       color: #f3b017;
-      font-size: 45px;
+      font-size: 50px;
     }
 
     .footer-link {
@@ -45,7 +48,8 @@ const FooterContainer = styled.div`
 
           h4 {
             margin: 0;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 500;
           }
         }
 

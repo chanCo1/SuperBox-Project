@@ -10,7 +10,7 @@ import logo from '../assets/image/superbox-logo.png';
 
 /** 인트로 페이지 전체 스타일 */
 const IntroPageContainer = styled.div`
-  position: relative;
+  position: fixed;
   width: 100%;
   height: 100vh;
   background-color: #fff;

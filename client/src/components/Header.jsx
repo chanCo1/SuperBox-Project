@@ -10,7 +10,7 @@ import logo from '../assets/image/superbox-logo.png';
 import { FaUserCircle } from 'react-icons/fa';
 
 /** 
- * Header 부분 스타일 정의 
+ * Header 스타일 정의 
  */
 const HeaderContainer = styled.div`
   position: fixed;
@@ -50,13 +50,6 @@ const HeaderContainer = styled.div`
       width: 60%;
       padding: 0;
 
-      .nav {
-        color: #404040;
-        font-size: 20px;
-        margin-right: 30px;
-        cursor: pointer;
-      }
-
       .NavLink {
         &:hover {
           text-decoration: underline #f3b017;
@@ -65,10 +58,41 @@ const HeaderContainer = styled.div`
         }
       }
 
+      .nav {
+        color: #404040;
+        font-size: 20px;
+        margin-right: 30px;
+        cursor: pointer;
+      }
+
       .active {
         text-decoration: underline #f3b017;
         text-underline-position: under;
         text-decoration-thickness: 5px;
+      }
+
+      .customer-Subnav {
+        position: absolute;
+        background-color: #fff;
+        padding: 0 20px;
+        margin-top: 10px;
+        border: 1px solid #f3b017;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: .3s ease-in;
+
+        li {
+          margin: 0;
+          padding: 10px 0;
+          font-size: 17px;
+          color: #404040;
+
+          &:hover {
+            text-decoration: underline #f3b017;
+            text-underline-position: under;
+            text-decoration-thickness: 3px;
+          }
+        }
       }
     }
 
@@ -89,30 +113,6 @@ const HeaderContainer = styled.div`
       &:active {
         transform: scale(0.9, 0.9);
       }
-    }
-  }
-`;
-
-// 고객센터 서브메뉴 css 처리
-const CustomerSubnav = styled.ul`
-  position: absolute;
-  background-color: #fff;
-  padding: 0 20px;
-  margin-top: 10px;
-  border: 1px solid #f3b017;
-  border-radius: 15px;
-  overflow: hidden;
-  transition: .3s ease-in;
-
-  li {
-    margin: 0;
-    padding: 10px 0;
-    font-size: 17px;
-    color: #404040;
-
-    &:hover {
-      text-decoration: underline #f3b017;
-      text-underline-position: under;
     }
   }
 `;
@@ -158,12 +158,6 @@ const Header = memo(() => {
   // 고객센터 서브메뉴 on/off -> 최대높이값을 주는걸로 해결
   const [customerStyle, setCustomerStyle] = useState({ maxHeight: 0, opacity: 0 });
 
-  // // active 상태값
-  // const [isActive, setActive] = useState(false);
-
-  // // 패스파라미터 값 가져오기
-  // const params = useParams();
-
   // 고객센터 서브메뉴를 마우스 상태에 따라 
   const onMouseOver = useCallback(() => {
     setCustomerStyle({ maxHeight: '100vh', opacity: 1 });
@@ -171,6 +165,12 @@ const Header = memo(() => {
   const onMouseOut = useCallback(() => {
     setCustomerStyle({ maxHeight: 0, opacity: 0 });
   }, []);
+
+  // // active 상태값
+  // const [isActive, setActive] = useState(false);
+
+  // // 패스파라미터 값 가져오기
+  // const params = useParams();
 
   // // active 클래스 추가를 위한 boolean 값 도출
   // const onClickActive = useCallback(() => {
@@ -194,11 +194,11 @@ const Header = memo(() => {
             <NavLink className="NavLink nav" to={'/review'}><li>고객후기</li></NavLink>
             <li className="NavLink nav" onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
               고객센터
-              <CustomerSubnav style={customerStyle}>
+              <ul className='customer-Subnav' style={customerStyle}>
                 <Link to={'/customer/notice'}><li>공지사항</li></Link>
                 <Link to={'/customer/faq'}><li>자주찾는 질문</li></Link>
                 <Link to={'/customer/inqury'}><li>1:1 문의</li></Link>
-              </CustomerSubnav>
+              </ul>
             </li>
           </ul>
 

@@ -2,6 +2,7 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 import { FaRegComment, FaUserFriends } from 'react-icons/fa';
+import { AiOutlineFileSearch } from 'react-icons/ai';
 
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
@@ -96,15 +97,16 @@ const MainReviewContainer = styled.div`
     width: 1200px;
     margin: auto;
 
-    .review-icon {
+    .review-icon-wrap {
       width: 50%;
       color:#2a3768;
+      padding: 50px 0;
       
-      .icon1 {
+      .review-icon1 {
         font-size: 18rem;
         margin: 10% 0 0 10%;
       }
-      .icon2 {
+      .review-icon2 {
         position: absolute;
         font-size: 10rem;
       }
@@ -112,7 +114,7 @@ const MainReviewContainer = styled.div`
       img {
         position: absolute;
         width: 8%;
-        top: 13%;
+        top: 20%;
         left: 31%;
       }
     }
@@ -124,7 +126,7 @@ const MainReviewContainer = styled.div`
       margin: auto 0;
 
       h3 {
-        font-size: 4rem;
+        font-size: 3rem;
         color: #f3b017;
         margin: 0 0 40px;
       }
@@ -137,6 +139,46 @@ const MainReviewContainer = styled.div`
         font-size: 1.3rem;
         margin: 0;
       }
+    }
+  }
+`;
+
+const MainCustomerContainer = styled.div`
+  width: 100%;
+  background-color: #f7f8fb;
+  padding: 60px 0;
+  
+  .main-customer-wrap {
+    display: flex;
+    width: 1200px;
+    margin: auto;
+
+    .customer-text {
+      width: 60%;
+      color: #404040;
+      font-weight: 500;
+      margin: auto 0;
+
+      h3 {
+        color: #f3b017;
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      p:nth-child(2) {
+        font-size: 2.5rem;
+        margin: 0;
+      }
+      p:nth-child(3) {
+        font-size: 1.2rem;
+      }
+    }
+
+    .customer-icon {
+      position: relative;
+      width: 40%;
+      font-size: 20rem;
+      color: #2a3768;
     }
   }
 `;
@@ -170,9 +212,9 @@ const MainPage = memo(() => {
 
       <MainReviewContainer>
         <div className='main-review-wrap'>
-          <div className='review-icon'>
-            <FaUserFriends className='icon1' />
-            <FaRegComment className='icon2' />
+          <div className='review-icon-wrap'>
+            <FaUserFriends className='review-icon1' />
+            <FaRegComment className='review-icon2' />
             <img src={logo} alt="superbox-lgo" />
           </div>
           <div className='review-text'>
@@ -182,6 +224,17 @@ const MainPage = memo(() => {
           </div>
         </div>
       </MainReviewContainer>
+
+      <MainCustomerContainer>
+        <div className='main-customer-wrap'>
+          <div className='customer-text'>
+            <h3>고객센터</h3>
+            <p>궁금한게 있으면 언제든지 물어보세요.</p>
+            <p>공지사항과 자주찾는 질문,<br />1:1 문의는 여러분들을 위해 항상 열려있습니다.</p>
+          </div>
+          <AiOutlineFileSearch className='customer-icon' />
+        </div>
+      </MainCustomerContainer>
     </>
   );
 });

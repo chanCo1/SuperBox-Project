@@ -1,5 +1,7 @@
+/** 패키지 참조 */
 import React, { memo } from 'react';
 import styled from 'styled-components';
+import { FaRegComment, FaUserFriends } from 'react-icons/fa';
 
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
@@ -10,12 +12,14 @@ import Meta from '../Meta';
 
 // 메인페이지 로고 섹션 스타일
 const MainLogoContainer = styled.div`
+  width: 100%;
   text-align: center;
   
   .main-logo-wrap {
     width: 1200px;
     margin: auto;
     padding: 225px 0 120px; 
+    font-weight: 500;
     
     .logo {
       position: relative;
@@ -31,6 +35,7 @@ const MainLogoContainer = styled.div`
     p {
       font-size: 1.5rem;
       margin: 10px 0;
+      color: #404040;
   
       span {
         color: #f3b017;
@@ -52,7 +57,10 @@ const MainReceiveContainer = styled.div`
     justify-content: space-between;
 
     .receive-text {
+      width: 50%;
       padding: 40px 0;
+      color: #404040;
+      font-weight: 500;
 
       p:nth-child(1) {
         font-size: 1.5rem;
@@ -69,10 +77,65 @@ const MainReceiveContainer = styled.div`
 
     .receive-img {
       padding: 40px 0 0;
-      width: 600px;
+      width: 50%;
 
       img {
         width: 100%;
+      }
+    }
+  }
+`;
+
+const MainReviewContainer = styled.div`
+  width: 100%;
+  padding: 40px 0;
+
+  .main-review-wrap {
+    position: relative;
+    display: flex;
+    width: 1200px;
+    margin: auto;
+
+    .review-icon {
+      width: 50%;
+      color:#2a3768;
+      
+      .icon1 {
+        font-size: 18rem;
+        margin: 10% 0 0 10%;
+      }
+      .icon2 {
+        position: absolute;
+        font-size: 10rem;
+      }
+
+      img {
+        position: absolute;
+        width: 8%;
+        top: 13%;
+        left: 31%;
+      }
+    }
+
+    .review-text {
+      width: 50%;
+      color: #404040;
+      font-weight: 500;
+      margin: auto 0;
+
+      h3 {
+        font-size: 4rem;
+        color: #f3b017;
+        margin: 0 0 40px;
+      }
+
+      p:nth-child(2) {
+        font-size: 1.6rem;
+        margin: 0 0 10px;
+      }
+      p:nth-child(3) {
+        font-size: 1.3rem;
+        margin: 0;
       }
     }
   }
@@ -104,6 +167,21 @@ const MainPage = memo(() => {
           </div>
         </div>
       </MainReceiveContainer>
+
+      <MainReviewContainer>
+        <div className='main-review-wrap'>
+          <div className='review-icon'>
+            <FaUserFriends className='icon1' />
+            <FaRegComment className='icon2' />
+            <img src={logo} alt="superbox-lgo" />
+          </div>
+          <div className='review-text'>
+            <h3>고객후기</h3>
+            <p>저희 서비스를 이용하시고 생생한 후기를 공유 해주세요!</p>
+            <p>후기를 통해 여러분들에게 한 발자국 더 다가서겠습니다.</p>
+          </div>
+        </div>
+      </MainReviewContainer>
     </>
   );
 });

@@ -124,21 +124,23 @@ const MyPage = styled.div`
   cursor: pointer;
   overflow: hidden;
   max-height: 0;
+  border-radius: 50%;
+  transition: ease .3s;
+
+  &:hover {  
+    transform: scale(1.2, 1.2);
+  }
   
   a {
     display: flex;
     justify-content: end;
-
+    
     .user-circle {
       color: #999;
-      border-radius: 50%;
       transition: ease .3s;
-  
-      &:hover {
-        box-shadow: 0 0 10px rgba(0,0,0,0.5);
-      }
+      
       &:active {
-        transform: scale(0.9, 0.9);
+        transform: scale(0.8, 0.8);
       }
     }
   }
@@ -154,7 +156,7 @@ const MyPage = styled.div`
  */
 const Header = memo(() => {
   // 로그인 상태값 -> 로그인 구현하면 활용할 예정
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   // 고객센터 서브메뉴 on/off -> 최대높이값을 주는걸로 해결
   const [customerStyle, setCustomerStyle] = useState({ maxHeight: 0, opacity: 0 });
 

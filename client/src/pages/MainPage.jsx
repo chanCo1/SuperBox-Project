@@ -1,8 +1,14 @@
 /** 패키지 참조 */
 import React, { memo } from 'react';
 import styled from 'styled-components';
+
+// 아이콘 참조
 import { FaRegComment, FaUserFriends } from 'react-icons/fa';
 import { AiOutlineFileSearch } from 'react-icons/ai';
+// import { MdArrowForwardIos } from 'react-icons/md';
+import { RiUserReceivedFill, RiCustomerServiceLine } from 'react-icons/ri';
+import { BsPencilSquare } from 'react-icons/bs';
+import { MdDoubleArrow } from 'react-icons/md';
 
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
@@ -10,6 +16,7 @@ import receive from '../assets/image/receive-screenshot.png';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
+import { Link } from 'react-router-dom';
 
 // 메인페이지 로고 섹션 스타일
 const MainLogoContainer = styled.div`
@@ -146,7 +153,7 @@ const MainReviewContainer = styled.div`
 const MainCustomerContainer = styled.div`
   width: 100%;
   background-color: #f7f8fb;
-  padding: 60px 0;
+  padding: 90px 0;
   
   .main-customer-wrap {
     display: flex;
@@ -161,13 +168,12 @@ const MainCustomerContainer = styled.div`
 
       h3 {
         color: #f3b017;
-        margin: 0;
         font-size: 1.5rem;
       }
 
       p:nth-child(2) {
         font-size: 2.5rem;
-        margin: 0;
+        margin-bottom: 30px;
       }
       p:nth-child(3) {
         font-size: 1.2rem;
@@ -179,6 +185,71 @@ const MainCustomerContainer = styled.div`
       width: 40%;
       font-size: 20rem;
       color: #2a3768;
+    }
+  }
+`;
+
+const MainUseStartContainer = styled.div`
+  width: 100%;
+  padding: 90px 0;
+  text-align: center;
+
+  .main-useStart-wrap {
+    width: 1200px;
+    margin: auto;
+
+    P {
+      font-size: 2rem;
+      font-weight: 500;
+      margin-bottom: 50px;
+
+      span {
+        color: #f3b017;
+      }
+    }
+
+    .useStart-btn-wrap {
+      display: flex;
+      justify-content: space-around;
+
+      .useStart-btn {
+        display: flex;
+        flex-direction: column;
+        transition: .3s ease;
+
+        .start-btn {
+          font-size: 1.5rem;
+          border: 3px solid #f3b017;
+          border-radius: 20%;
+          background-color: #fff;
+          padding: 30px;
+          margin-bottom: 20px;
+          cursor: pointer;
+          transition: .3s ease-out;
+
+          &:hover {
+            transform: scale(1.1, 1.1);
+          }
+          &:active {
+            transform: scale(.9, .9);
+          }
+
+          .btn-icon {
+            color: #2a3768;
+            font-size: 10rem;
+          }
+        }
+
+        span {
+          display: flex;
+          align-items: center;
+          font-size: 1.5rem;
+          font-weight: 500;
+          padding: 0 20%;
+          color: #404040;
+          justify-content: space-around;
+        }
+      }
     }
   }
 `;
@@ -202,7 +273,7 @@ const MainPage = memo(() => {
           <div className='receive-text'>
             <p>언제 어디서든<br />쉽고, 간편하게</p>
             <p>저희에게 설렘을 접수하세요.</p>
-            <p>전국 어디든 원하시는 분에게 전달 해드립니다.</p>
+            <p>전국 어디든 원하시는 분에게 전달해 드립니다.</p>
           </div>
           <div className='receive-img'>
             <img src={receive} alt="receive-img" />
@@ -235,6 +306,32 @@ const MainPage = memo(() => {
           <AiOutlineFileSearch className='customer-icon' />
         </div>
       </MainCustomerContainer>
+
+      <MainUseStartContainer>
+        <div className='main-useStart-wrap'>
+          <p>그럼 <span>Superbox</span> 한 번 사용해 볼까요?</p>
+          <div className='useStart-btn-wrap'>
+            <Link to={'/receive'} className='useStart-btn'>
+              <button className='start-btn'>
+                <RiUserReceivedFill className='btn-icon' />
+              </button>
+              <span>배송접수<MdDoubleArrow /></span>
+            </Link>
+            <Link to={'/review'} className='useStart-btn'>
+              <button className='start-btn'>
+                <BsPencilSquare className='btn-icon'/>
+              </button>
+              <span>고객후기<MdDoubleArrow /></span>
+            </Link>
+            <Link to={'/customer/notice'} className='useStart-btn'>
+              <button className='start-btn'>
+                <RiCustomerServiceLine className='btn-icon' />
+              </button>
+              <span>고객센터<MdDoubleArrow /></span>
+            </Link>
+          </div>
+        </div>
+      </MainUseStartContainer>
     </>
   );
 });

@@ -1,5 +1,5 @@
 /** 패키지 참조 */
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 
 // 아이콘 참조
@@ -32,6 +32,22 @@ const MainLogoContainer = styled.div`
     .logo {
       position: relative;
       width: 30rem;
+      animation: fly-logo 10s ease infinite;
+
+      @keyframes fly-logo {
+        0% {
+          transform: translate(-1500px, -200px);
+        }
+        40% {
+          transform: translate(0, 0);
+        }
+        60% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(1500px, -300px);
+        }
+      }
     }
   
     h2 {
@@ -255,6 +271,20 @@ const MainUseStartContainer = styled.div`
 `;
 
 const MainPage = memo(() => {
+
+  const testRef = useRef();
+  const [scrollY, setScrollY] = useState(0);
+  console.log(scrollY);
+
+  const testScroll = () => {
+    const position = window.pageYOffset;
+    setScrollY(position);
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', testScroll);
+  }, []);
+
   return (
     <>
       <Meta title={'SuperBox :: 메인페이지'} />

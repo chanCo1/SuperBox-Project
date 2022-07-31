@@ -24,6 +24,16 @@ const IntroPageContainer = styled.div`
 
     img {
       width: 35em;
+      animation: up-down 1.5s ease-in-out infinite alternate;
+
+      @keyframes up-down {
+        0% {
+          transform: translateY(0px);
+        }
+        100% {
+          transform: translateY(-30px);
+        }
+      }
     }
 
     .title {

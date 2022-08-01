@@ -19,7 +19,7 @@ import { Provider } from 'react-redux';
 import GlobalStyles from './GlobalStyles';
 // 전역 SEO 구성
 import Meta from './Meta';
-//
+// store 구독
 import Store from './Store';
 // 프로그램 시작
 import App from './App';

@@ -1,6 +1,8 @@
 /** 패키지 참조 */
 import React, { memo, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
+import { Link, useParams } from 'react-router-dom';
+import ScrollEvent from '../events/ScrollEvent';
 
 // 아이콘 참조
 import { FaRegComment, FaUserFriends } from 'react-icons/fa';
@@ -15,7 +17,6 @@ import receive from '../assets/image/receive-screenshot.png';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
-import { Link } from 'react-router-dom';
 
 /** 메인페이지 로고 섹션 스타일 */
 const MainLogoContainer = styled.div`
@@ -36,7 +37,7 @@ const MainLogoContainer = styled.div`
 
       @keyframes fly-logo {
         0% {
-          transform: translate(-1500px, -200px);
+          transform: translate(-1500px, 0);
         }
         40% {
           transform: translate(0, 0);
@@ -45,7 +46,7 @@ const MainLogoContainer = styled.div`
           transform: translate(0, 0);
         }
         100% {
-          transform: translate(1500px, -300px);
+          transform: translate(1500px, -400px);
         }
       }
     }
@@ -219,7 +220,7 @@ const MainCustomerContainer = styled.div`
 /** 메인페이지 사용해볼까요 섹션 스타일 */
 const MainUseStartContainer = styled.div`
   width: 100%;
-  padding: 90px 0;
+  padding: 130px 0;
   text-align: center;
 
   .main-useStart-wrap {
@@ -285,71 +286,20 @@ const MainUseStartContainer = styled.div`
 
 const MainPage = memo(() => {
 
-  // const [scrollY, setScrollY] = useState(0);
-  // console.log(scrollY);
-  
-  // const testScroll = () => {
-  //   const position = window.pageYOffset;
-  //   setScrollY(position);
-  // };
+  /** 사용할 useRef 호출 */
   const logoRef = useRef();
-  const receiveTextRef = useRef();
-  const receiveImgRef = useRef();
-  const reviewImgRef = useRef();
-  const reviewTextRef = useRef();
-  const customerTextRef = useRef();
-  const customerImgRef = useRef();
-  const useStartTextRef = useRef();
-  const useStartBtnRef = useRef();
+  const receiveTextRef = useRef(null);
+  const receiveImgRef = useRef(null);
+  const reviewImgRef = useRef(null);
+  const reviewTextRef = useRef(null);
+  const customerTextRef = useRef(null);
+  const customerImgRef = useRef(null);
+  const useStartTextRef = useRef(null);
+  const useStartBtnRef = useRef(null);
 
+  /** 스크롤 이벤트 함수 호출 */
   useEffect(() => {
-    window.addEventListener('scroll', e => {
-      if(window.scrollY > 250) {
-        receiveTextRef.current.style.opacity = 1;
-        receiveTextRef.current.style.transform = 'translateY(0)';
-        receiveImgRef.current.style.opacity = 1;
-      } else {
-        receiveTextRef.current.style.opacity = 0;
-        receiveTextRef.current.style.transform = 'translateY(60px)';
-        receiveImgRef.current.style.opacity = 0;
-      }
-
-      if(window.scrollY > 350) {
-        logoRef.current.style.opacity = 0;
-      } else {
-        logoRef.current.style.opacity = 1;
-      }
-
-      if(window.scrollY > 1000) {
-        reviewImgRef.current.style.opacity = 1;
-        reviewTextRef.current.style.transform = 'translateY(0)';
-        reviewTextRef.current.style.opacity = 1;
-      } else {
-        reviewImgRef.current.style.opacity = 0;
-        reviewTextRef.current.style.transform = 'translateY(60px)';
-        reviewTextRef.current.style.opacity = 0;
-      }
-
-      if(window.scrollY > 1500) {
-        customerImgRef.current.style.opacity = 1;
-        customerTextRef.current.style.transform = 'translateY(0)';
-        customerTextRef.current.style.opacity = 1;
-      } else {
-        customerImgRef.current.style.opacity = 0;
-        customerTextRef.current.style.transform = 'translateY(60px)';
-        customerTextRef.current.style.opacity = 0;
-      }
-
-      if(window.scrollY > 1900) {
-        useStartBtnRef.current.style.opacity = 1;
-        useStartTextRef.current.style.transform = 'translateY(0)';
-        useStartTextRef.current.style.opacity = 1;
-      } else {
-        useStartBtnRef.current.style.opacity = 0;
-        useStartTextRef.current.style.transform = 'translateY(60px)';
-        useStartTextRef.current.style.opacity = 0;
-      }
-    });
+    ScrollEvent(logoRef, receiveTextRef, receiveImgRef, reviewImgRef, reviewTextRef, customerTextRef, customerImgRef, useStartTextRef, useStartBtnRef);
   }, []);
 
   return (
@@ -422,11 +372,11 @@ const MainPage = memo(() => {
               </button>
               <span>고객후기<MdDoubleArrow /></span>
             </Link>
-            <Link to={'/customer/notice'} className='useStart-btn'>
+            <Link to={'/customer/inquiry'} className='useStart-btn'>
               <button className='start-btn'>
                 <RiCustomerServiceLine className='btn-icon' />
               </button>
-              <span>고객센터<MdDoubleArrow /></span>
+              <span>1:1 문의<MdDoubleArrow /></span>
             </Link>
           </div>
         </div>

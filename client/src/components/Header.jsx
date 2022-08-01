@@ -199,7 +199,7 @@ const Header = memo(() => {
               <ul className='customer-Subnav' style={customerStyle}>
                 <Link to={'/customer/notice'}><li>공지사항</li></Link>
                 <Link to={'/customer/faq'}><li>자주찾는 질문</li></Link>
-                <Link to={'/customer/inqury'}><li>1:1 문의</li></Link>
+                <Link to={'/customer/inquiry'}><li>1:1 문의</li></Link>
               </ul>
             </li>
           </ul>

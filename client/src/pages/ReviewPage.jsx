@@ -5,7 +5,6 @@ const ReviewPage = memo(() => {
   return (
     <div>
       <Meta title={'SuperBox :: 고객후기'} />
-      후기게시판
     </div>
   );
 });

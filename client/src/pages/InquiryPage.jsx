@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import Meta from '../Meta';
 
-const InqueryPage = memo(() => {
+const InquiryPage = memo(() => {
   return (
     <div>
       <Meta title={'SuperBox :: 1:1 문의'} />
@@ -10,4 +10,4 @@ const InqueryPage = memo(() => {
   );
 });
 
-export default InqueryPage;
+export default InquiryPage;

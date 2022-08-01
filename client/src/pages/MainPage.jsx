@@ -5,7 +5,6 @@ import styled from 'styled-components';
 // 아이콘 참조
 import { FaRegComment, FaUserFriends } from 'react-icons/fa';
 import { AiOutlineFileSearch } from 'react-icons/ai';
-// import { MdArrowForwardIos } from 'react-icons/md';
 import { RiUserReceivedFill, RiCustomerServiceLine } from 'react-icons/ri';
 import { BsPencilSquare } from 'react-icons/bs';
 import { MdDoubleArrow } from 'react-icons/md';
@@ -18,7 +17,7 @@ import receive from '../assets/image/receive-screenshot.png';
 import Meta from '../Meta';
 import { Link } from 'react-router-dom';
 
-// 메인페이지 로고 섹션 스타일
+/** 메인페이지 로고 섹션 스타일 */
 const MainLogoContainer = styled.div`
   width: 100%;
   text-align: center;
@@ -28,6 +27,7 @@ const MainLogoContainer = styled.div`
     margin: auto;
     padding: 225px 0 120px; 
     font-weight: 500;
+    transition: 1s ease;
     
     .logo {
       position: relative;
@@ -68,6 +68,7 @@ const MainLogoContainer = styled.div`
   }
 `;
 
+/** 메인페이지 접수 섹션 스타일 */
 const MainReceiveContainer = styled.div`
   width: 100%;
   padding: 40px 0 0;
@@ -85,6 +86,7 @@ const MainReceiveContainer = styled.div`
       padding: 40px 0;
       color: #404040;
       font-weight: 500;
+      transition: 1s ease;
 
       p:nth-child(1) {
         font-size: 1.5rem;
@@ -102,6 +104,7 @@ const MainReceiveContainer = styled.div`
     .receive-img {
       padding: 40px 0 0;
       width: 50%;
+      transition: 2s ease;
 
       img {
         width: 100%;
@@ -110,6 +113,7 @@ const MainReceiveContainer = styled.div`
   }
 `;
 
+/** 메인페이지 고객후기 섹션 스타일 */
 const MainReviewContainer = styled.div`
   width: 100%;
   padding: 40px 0;
@@ -124,6 +128,7 @@ const MainReviewContainer = styled.div`
       width: 50%;
       color:#2a3768;
       padding: 50px 0;
+      transition: 2s ease;
       
       .review-icon1 {
         font-size: 18rem;
@@ -147,6 +152,7 @@ const MainReviewContainer = styled.div`
       color: #404040;
       font-weight: 500;
       margin: auto 0;
+      transition: 1s ease;
 
       h3 {
         font-size: 3rem;
@@ -166,6 +172,7 @@ const MainReviewContainer = styled.div`
   }
 `;
 
+/** 메인페이지 고객센터 섹션 스타일 */
 const MainCustomerContainer = styled.div`
   width: 100%;
   background-color: #f7f8fb;
@@ -181,6 +188,7 @@ const MainCustomerContainer = styled.div`
       color: #404040;
       font-weight: 500;
       margin: auto 0;
+      transition: 1s ease;
 
       h3 {
         color: #f3b017;
@@ -198,13 +206,17 @@ const MainCustomerContainer = styled.div`
 
     .customer-icon {
       position: relative;
+      display: flex;
+      justify-content: center;
       width: 40%;
       font-size: 20rem;
       color: #2a3768;
+      transition: 2s ease;
     }
   }
 `;
 
+/** 메인페이지 사용해볼까요 섹션 스타일 */
 const MainUseStartContainer = styled.div`
   width: 100%;
   padding: 90px 0;
@@ -218,6 +230,7 @@ const MainUseStartContainer = styled.div`
       font-size: 2rem;
       font-weight: 500;
       margin-bottom: 50px;
+      transition: 1s ease;
 
       span {
         color: #f3b017;
@@ -227,11 +240,11 @@ const MainUseStartContainer = styled.div`
     .useStart-btn-wrap {
       display: flex;
       justify-content: space-around;
+      transition: 2s ease;
 
       .useStart-btn {
         display: flex;
         flex-direction: column;
-        transition: .3s ease;
 
         .start-btn {
           font-size: 1.5rem;
@@ -272,17 +285,71 @@ const MainUseStartContainer = styled.div`
 
 const MainPage = memo(() => {
 
-  const testRef = useRef();
-  const [scrollY, setScrollY] = useState(0);
-  console.log(scrollY);
-
-  const testScroll = () => {
-    const position = window.pageYOffset;
-    setScrollY(position);
-  }
+  // const [scrollY, setScrollY] = useState(0);
+  // console.log(scrollY);
+  
+  // const testScroll = () => {
+  //   const position = window.pageYOffset;
+  //   setScrollY(position);
+  // };
+  const logoRef = useRef();
+  const receiveTextRef = useRef();
+  const receiveImgRef = useRef();
+  const reviewImgRef = useRef();
+  const reviewTextRef = useRef();
+  const customerTextRef = useRef();
+  const customerImgRef = useRef();
+  const useStartTextRef = useRef();
+  const useStartBtnRef = useRef();
 
   useEffect(() => {
-    window.addEventListener('scroll', testScroll);
+    window.addEventListener('scroll', e => {
+      if(window.scrollY > 250) {
+        receiveTextRef.current.style.opacity = 1;
+        receiveTextRef.current.style.transform = 'translateY(0)';
+        receiveImgRef.current.style.opacity = 1;
+      } else {
+        receiveTextRef.current.style.opacity = 0;
+        receiveTextRef.current.style.transform = 'translateY(60px)';
+        receiveImgRef.current.style.opacity = 0;
+      }
+
+      if(window.scrollY > 350) {
+        logoRef.current.style.opacity = 0;
+      } else {
+        logoRef.current.style.opacity = 1;
+      }
+
+      if(window.scrollY > 1000) {
+        reviewImgRef.current.style.opacity = 1;
+        reviewTextRef.current.style.transform = 'translateY(0)';
+        reviewTextRef.current.style.opacity = 1;
+      } else {
+        reviewImgRef.current.style.opacity = 0;
+        reviewTextRef.current.style.transform = 'translateY(60px)';
+        reviewTextRef.current.style.opacity = 0;
+      }
+
+      if(window.scrollY > 1500) {
+        customerImgRef.current.style.opacity = 1;
+        customerTextRef.current.style.transform = 'translateY(0)';
+        customerTextRef.current.style.opacity = 1;
+      } else {
+        customerImgRef.current.style.opacity = 0;
+        customerTextRef.current.style.transform = 'translateY(60px)';
+        customerTextRef.current.style.opacity = 0;
+      }
+
+      if(window.scrollY > 1900) {
+        useStartBtnRef.current.style.opacity = 1;
+        useStartTextRef.current.style.transform = 'translateY(0)';
+        useStartTextRef.current.style.opacity = 1;
+      } else {
+        useStartBtnRef.current.style.opacity = 0;
+        useStartTextRef.current.style.transform = 'translateY(60px)';
+        useStartTextRef.current.style.opacity = 0;
+      }
+    });
   }, []);
 
   return (
@@ -290,7 +357,7 @@ const MainPage = memo(() => {
       <Meta title={'SuperBox :: 메인페이지'} />
 
       <MainLogoContainer>
-        <div className='main-logo-wrap'>
+        <div className='main-logo-wrap' ref={logoRef}>
           <img className='logo' src={logo} alt="superbox-logo" />
           <h2>SuperBox</h2>
           <p>누구나 한번 쯤은 택배 상자를 받고 설레는 기분을 느꼈을거예요.</p>
@@ -300,12 +367,12 @@ const MainPage = memo(() => {
 
       <MainReceiveContainer>
         <div className='main-receive-wrap'>
-          <div className='receive-text'>
+          <div className='receive-text' ref={receiveTextRef}>
             <p>언제 어디서든<br />쉽고, 간편하게</p>
             <p>저희에게 설렘을 접수하세요.</p>
             <p>전국 어디든 원하시는 분에게 전달해 드립니다.</p>
           </div>
-          <div className='receive-img'>
+          <div className='receive-img' ref={receiveImgRef}>
             <img src={receive} alt="receive-img" />
           </div>
         </div>
@@ -313,12 +380,12 @@ const MainPage = memo(() => {
 
       <MainReviewContainer>
         <div className='main-review-wrap'>
-          <div className='review-icon-wrap'>
+          <div className='review-icon-wrap' ref={reviewImgRef}>
             <FaUserFriends className='review-icon1' />
             <FaRegComment className='review-icon2' />
             <img src={logo} alt="superbox-lgo" />
           </div>
-          <div className='review-text'>
+          <div className='review-text' ref={reviewTextRef}>
             <h3>고객후기</h3>
             <p>저희 서비스를 이용하시고 생생한 후기를 공유 해주세요!</p>
             <p>후기를 통해 여러분들에게 한 발자국 더 다가서겠습니다.</p>
@@ -328,19 +395,21 @@ const MainPage = memo(() => {
 
       <MainCustomerContainer>
         <div className='main-customer-wrap'>
-          <div className='customer-text'>
+          <div className='customer-text' ref={customerTextRef}>
             <h3>고객센터</h3>
             <p>궁금한게 있으면 언제든지 물어보세요.</p>
             <p>공지사항과 자주찾는 질문,<br />1:1 문의는 여러분들을 위해 항상 열려있습니다.</p>
           </div>
-          <AiOutlineFileSearch className='customer-icon' />
+          <div className='customer-icon' ref={customerImgRef}>
+            <AiOutlineFileSearch />
+          </div>
         </div>
       </MainCustomerContainer>
 
       <MainUseStartContainer>
         <div className='main-useStart-wrap'>
-          <p>그럼 <span>Superbox</span> 한 번 사용해 볼까요?</p>
-          <div className='useStart-btn-wrap'>
+          <p ref={useStartTextRef}>그럼 <span>Superbox</span> 한 번 사용해 볼까요?</p>
+          <div className='useStart-btn-wrap' ref={useStartBtnRef}>
             <Link to={'/receive'} className='useStart-btn'>
               <button className='start-btn'>
                 <RiUserReceivedFill className='btn-icon' />

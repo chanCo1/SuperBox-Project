@@ -16,13 +16,17 @@ const IntroPageContainer = styled.div`
   background-color: #fff;
   z-index: 99;
 
-  .logo-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .logo-wrap {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     img {
+      display: flex;
+      justify-content: center;
       width: 35em;
       animation: up-down 1.5s ease-in-out infinite alternate;
 
@@ -40,32 +44,24 @@ const IntroPageContainer = styled.div`
       color: #f3b017;
       font-size: 5em;
       margin: 10px 0;
-      text-align: center;
     }
 
     p {
       margin: 0 0 20px 0;
-      text-align: center;
       color: #5e5e5e;
       font-size: 1.1em;
       font-weight: 500;
     }
 
     .button {
-      display: flex;
-      justify-content: center;
-
       button {
         background-color: #fff;
         border: 1px solid #f3b017;
         border-radius: 20px;
         color: #f3b017;
-        text-align: center;
         padding: 5px 30px;
         font-size: 1.3em;
         cursor: pointer;
-        display: flex;
-        justify-content: center;
         transition: 0.3s ease-in;
 
         &:hover {
@@ -92,7 +88,7 @@ const IntroPage = memo(() => {
       <Meta title={'SuperBox :: 반가워요!'} />
 
       <IntroPageContainer>
-        <div className="logo-box">
+        <div className="logo-wrap">
           <img src={logo} alt="superbox-logo" />
           <h1 className="title">SuperBox</h1>
           <p>택배 접수 대행 서비스</p>

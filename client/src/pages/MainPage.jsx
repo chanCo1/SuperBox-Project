@@ -25,6 +25,7 @@ const MainLogoContainer = styled.div`
   
   .main-logo-wrap {
     width: 1200px;
+    height: 100vh;
     margin: auto;
     padding: 225px 0 120px; 
     font-weight: 500;
@@ -37,7 +38,7 @@ const MainLogoContainer = styled.div`
 
       @keyframes fly-logo {
         0% {
-          transform: translate(-1500px, 0);
+          transform: translate(-1500px, -300px);
         }
         40% {
           transform: translate(0, 0);
@@ -105,7 +106,7 @@ const MainReceiveContainer = styled.div`
     .receive-img {
       padding: 40px 0 0;
       width: 50%;
-      transition: 2s ease;
+      transition: 1s ease;
 
       img {
         width: 100%;
@@ -129,7 +130,7 @@ const MainReviewContainer = styled.div`
       width: 50%;
       color:#2a3768;
       padding: 50px 0;
-      transition: 2s ease;
+      transition: 1s ease;
       
       .review-icon1 {
         font-size: 18rem;
@@ -158,7 +159,7 @@ const MainReviewContainer = styled.div`
       h3 {
         font-size: 3rem;
         color: #f3b017;
-        margin: 0 0 40px;
+        margin: 0 0 20px;
       }
 
       p:nth-child(2) {
@@ -212,7 +213,7 @@ const MainCustomerContainer = styled.div`
       width: 40%;
       font-size: 20rem;
       color: #2a3768;
-      transition: 2s ease;
+      transition: 1s ease;
     }
   }
 `;
@@ -241,7 +242,7 @@ const MainUseStartContainer = styled.div`
     .useStart-btn-wrap {
       display: flex;
       justify-content: space-around;
-      transition: 2s ease;
+      transition: 1s ease;
 
       .useStart-btn {
         display: flex;

@@ -14,6 +14,7 @@ import FaqPage from './pages/FaqPage';
 import InquiryPage from './pages/InquiryPage';
 import MyPage from './pages/MyPage';
 import LoginPage from './pages/LoginPage';
+import JoinPage from './pages/JoinPage';
 
 import Footer from './components/Footer';
 
@@ -29,6 +30,7 @@ const App = memo(() => {
         <Route path='/review' element={<ReviewPage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/login' element={<LoginPage />} />
+        <Route path='/join' element={<JoinPage />} />
         <Route path='/customer/notice' element={<NoticePage />} />
         <Route path='/customer/faq' element={<FaqPage />} />
         <Route path='/customer/inquiry' element={<InquiryPage />} />

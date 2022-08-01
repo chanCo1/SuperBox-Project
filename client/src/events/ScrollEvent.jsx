@@ -12,21 +12,23 @@ const ScrollEvent = (logoRef, receiveTextRef, receiveImgRef, reviewImgRef, revie
   const useStartBtn = useStartBtnRef.current.style;
 
   const scrollEvent = window.addEventListener('scroll', e => {
-    if(window.scrollY > 250) {
+    if(window.scrollY > 350) {
       receiveText.opacity = 1;
       receiveText.transform = 'translateY(0)';
       receiveImg.opacity = 1;
+      logo.opacity = 0;
     } else {
       receiveText.opacity = 0;
       receiveText.transform = 'translateY(60px)';
       receiveImg.opacity = 0;
-    }
-
-    if(window.scrollY > 350) {
-      logo.opacity = 0;
-    } else {
       logo.opacity = 1;
     }
+
+    // if(window.scrollY > 350) {
+    //   logo.opacity = 0;
+    // } else {
+    //   logo.opacity = 1;
+    // }
 
     if(window.scrollY > 1000) {
       reviewImg.opacity = 1;

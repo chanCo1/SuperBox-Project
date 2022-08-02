@@ -304,7 +304,7 @@ const MainPage = memo(() => {
   }, []);
 
   return (
-    <>
+    <div>
       <Meta title={'SuperBox :: 메인페이지'} />
 
       <MainLogoContainer>
@@ -382,7 +382,7 @@ const MainPage = memo(() => {
           </div>
         </div>
       </MainUseStartContainer>
-    </>
+    </div>
   );
 });
 

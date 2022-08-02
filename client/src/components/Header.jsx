@@ -9,6 +9,9 @@ import logo from '../assets/image/superbox-logo.png';
 // 마이페이지 1회용 아이콘 -> 나중에 수정
 import { FaUserCircle } from 'react-icons/fa';
 
+// 컴포넌트 참조
+import MainPage from '../pages/MainPage';
+
 /** 
  * Header 스타일 정의 
  */
@@ -154,13 +157,16 @@ const MyPage = styled.div`
 /** 
  * 나타낼 값 시작
  */
-const Header = memo(() => {
+const Header = memo(({ loginPageState }) => {
   // 로그인 상태값 -> 로그인 구현하면 활용할 예정
   const [login, setLogin] = useState(true);
+  // // 로그인 버튼 클릭시 사용할 boolean 값
+  // const [loginPage, setLoginPage] = useState(false);
+
   // 고객센터 서브메뉴 on/off -> 최대높이값을 주는걸로 해결
   const [customerStyle, setCustomerStyle] = useState({ maxHeight: 0, opacity: 0 });
 
-  // 고객센터 서브메뉴를 마우스 상태에 따라 
+  // 고객센터 서브메뉴를 마우스 상태에 따라 변환
   const onMouseOver = useCallback(() => {
     setCustomerStyle({ maxHeight: '100vh', opacity: 1 });
   }, []);
@@ -168,16 +174,10 @@ const Header = memo(() => {
     setCustomerStyle({ maxHeight: 0, opacity: 0 });
   }, []);
 
-  // // active 상태값
-  // const [isActive, setActive] = useState(false);
-
-  // // 패스파라미터 값 가져오기
-  // const params = useParams();
-
-  // // active 클래스 추가를 위한 boolean 값 도출
-  // const onClickActive = useCallback(() => {
-  //   setActive(params.path ? true : false);
-  // }, [params]);
+  // 로그인 버튼 클릭시 app.jsx에서 받은 상태값을 true 바꾼다.
+  const loginBtnClick = useCallback(() => {
+    loginPageState(true);
+  }, [loginPageState]);
 
   return (
     <>
@@ -210,9 +210,9 @@ const Header = memo(() => {
             </Link>
           </MyPage>
 
-          <Link to={'/login'}>
-            <button className='login-button'>로그인</button>
-          </Link>
+          <button className='login-button' onClick={loginBtnClick}>로그인</button>
+          {/* <Link to={'/login'}>
+          </Link> */}
         </div>
       </HeaderContainer>
     </>

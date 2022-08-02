@@ -1,7 +1,8 @@
 /** 패키지 참조 */
-import React, { memo } from 'react';
+import React, { memo, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { MdOutlineMail } from 'react-icons/md';
+import { CgCloseR } from 'react-icons/cg';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
@@ -13,7 +14,7 @@ const LoginPageContainer = styled.div`
   position: fixed;
   width: 100%;
   height: 100vh;
-  background-color: #f7f8fb;
+  background-color: rgba(0,0,0,.5);
   z-index: 9;
 
   .login-wrap {
@@ -27,6 +28,18 @@ const LoginPageContainer = styled.div`
     border-radius: 20px;
     border: 1px solid #f3b017;
     color: #404040;
+
+    .close-btn {
+      position: absolute;
+      right: 10%;
+      font-size: 1.5rem;
+      color: #999;
+      cursor: pointer;
+
+      &:hover {
+        color: #404040;
+      }
+    }
 
     .login-text {
       margin-bottom: 30px;
@@ -64,13 +77,18 @@ const LoginPageContainer = styled.div`
         margin: 30px 0;
         padding: 10px;
         border: none;
-        background-color: #f3b017;
+        border: 1px solid #f3b017;
         border-radius: 10px;
-        color: #fff;
+        color: #f3b017;
+        background-color: #fff;
         font-size: 1.1rem;
         cursor: pointer;
         transition: .3s ease;
 
+        &:hover {
+          background-color: #f3b017;
+          color: #fff;
+        }
         &:active {
           transform: scale(.9, .9);
         }
@@ -90,7 +108,17 @@ const LoginPageContainer = styled.div`
   }
 `;
 
-const LoginPage = memo(() => {
+const CloseButton = styled.div`
+  position: absolute;
+`;
+
+const LoginPage = memo(({loginPageState}) => {
+  
+  // 로그인 버튼 클릭시 app.jsx에서 받은 상태값을 false 바꾼다.
+  const loginCloseBtnClick = useCallback(() => {
+    loginPageState(false);
+  }, [loginPageState]);
+
   return (
     <div>
       <>
@@ -99,6 +127,9 @@ const LoginPage = memo(() => {
         <LoginPageContainer>
           <Logo />
           <div className='login-wrap'>
+            <div className='close-btn' onClick={loginCloseBtnClick}>
+              <CgCloseR />
+            </div>
             <div className='login-text'>
               <h3>SuperBox</h3>
               <p>만나서 반가워요!</p>

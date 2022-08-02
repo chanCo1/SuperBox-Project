@@ -1,5 +1,5 @@
 /** 패키지 참조 */
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 /** 컴포넌트 참조 */
@@ -19,9 +19,16 @@ import JoinPage from './pages/JoinPage';
 import Footer from './components/Footer';
 
 const App = memo(() => {
+
+  // 로그인 버튼 클릭시 사용할 boolean 값
+  const [loginPageState, setLoginPageState] = useState(false);
+  console.log(loginPageState);
+
   return (
     <>
-      <Header />
+      <Header loginPageState={setLoginPageState} />
+
+      {loginPageState && <LoginPage loginPageState={setLoginPageState} />}
 
       <Routes>
         <Route path='/' exact={true} element={<IntroPage />} />
@@ -29,7 +36,7 @@ const App = memo(() => {
         <Route path='/receive' element={<ReceivePage />} />
         <Route path='/review' element={<ReviewPage />} />
         <Route path='/mypage' element={<MyPage />} />
-        <Route path='/login' element={<LoginPage />} />
+        {/* <Route path='/login' element={<LoginPage />} /> */}
         <Route path='/join' element={<JoinPage />} />
         <Route path='/customer/notice' element={<NoticePage />} />
         <Route path='/customer/faq' element={<FaqPage />} />

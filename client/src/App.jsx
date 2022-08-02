@@ -13,8 +13,8 @@ import NoticePage from './pages/NoticePage';
 import FaqPage from './pages/FaqPage';
 import InquiryPage from './pages/InquiryPage';
 import MyPage from './pages/MyPage';
-import LoginPage from './pages/LoginPage';
-import JoinPage from './pages/JoinPage';
+import LoginPage from './components/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 import Footer from './components/Footer';
 
@@ -22,7 +22,6 @@ const App = memo(() => {
 
   // 로그인 버튼 클릭시 사용할 boolean 값
   const [loginPageState, setLoginPageState] = useState(false);
-  console.log(loginPageState);
 
   return (
     <>
@@ -37,7 +36,7 @@ const App = memo(() => {
         <Route path='/review' element={<ReviewPage />} />
         <Route path='/mypage' element={<MyPage />} />
         {/* <Route path='/login' element={<LoginPage />} /> */}
-        <Route path='/join' element={<JoinPage />} />
+        <Route path='/register' element={<RegisterPage />} />
         <Route path='/customer/notice' element={<NoticePage />} />
         <Route path='/customer/faq' element={<FaqPage />} />
         <Route path='/customer/inquiry' element={<InquiryPage />} />

@@ -4,14 +4,14 @@ import styled from 'styled-components';
 
 import Meta from '../Meta';
 
-const LoginPage = memo(() => {
+const RegisterPage = memo(() => {
   return (
     <div>
       <>
-        <Meta title={'SuperBox :: 로그인'} />
+        <Meta title={'SuperBox :: 회원가입'} />
       </>
     </div>
   );
 });
 
-export default LoginPage;
+export default RegisterPage;

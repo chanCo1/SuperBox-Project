@@ -1,12 +1,15 @@
 /** 패키지 참조 */
 import React, { memo, useState, useCallback } from 'react';
 import styled from 'styled-components';
-import { MdOutlineMail } from 'react-icons/md';
+
+// 아이콘 참조
+import { AiOutlineMail } from 'react-icons/ai';
 import { CgCloseR } from 'react-icons/cg';
+import { BsKey } from 'react-icons/bs';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
-import Logo from '../components/Logo';
+import Logo from './Logo';
 import { Link } from 'react-router-dom';
 
 /** 로그인 페이지 스타일 정의 */
@@ -59,17 +62,34 @@ const LoginPageContainer = styled.div`
       display: flex;
       flex-direction: column;
 
-      input {
-        padding: 10px 20px;
-        margin-bottom: 30px;
-        border: none;
-        border-bottom: 1px solid #999;
-        outline: none;
-        color: #404040;
-        font-size: 1.2rem;
+      .input-with-icon {
+        position: relative;
+        margin: 10px 0;
 
-        &::-webkit-input-placeholder {
-          color: #999;
+        .input-icon {
+          position: absolute;
+          display: flex;
+          top: 15%;
+          font-size: 1.7rem;
+          color: #bcbcbc;
+        }
+
+        input {
+          width: 100%;
+          border: none;
+          border-bottom: 2px solid #bcbcbc;
+          outline: none;
+          padding: 10px 40px;
+          font-size: 1.1rem;
+
+          &::-webkit-input-placeholder {
+            color: #bcbcbc;
+          }
+          
+          &:focus {
+            border-color: #404040;
+            color: #404040;
+          }
         }
       }
 
@@ -108,11 +128,7 @@ const LoginPageContainer = styled.div`
   }
 `;
 
-const CloseButton = styled.div`
-  position: absolute;
-`;
-
-const LoginPage = memo(({loginPageState}) => {
+const LoginPage = memo(({ loginPageState }) => {
   
   // 로그인 버튼 클릭시 app.jsx에서 받은 상태값을 false 바꾼다.
   const loginCloseBtnClick = useCallback(() => {
@@ -136,13 +152,19 @@ const LoginPage = memo(({loginPageState}) => {
               <p>더 멋진 서비스 제공을 위해 로그인 해주세요.</p>
             </div>
             <form className='login-input'>
-              <input type="email" id='email' placeholder='Email' />
-              <input type="password" id='password' placeholder='Password' />
+              <div className='input-with-icon'>
+                <AiOutlineMail className='input-icon' />
+                <input type="email" id='email' placeholder={'이메일'} />
+              </div>
+              <div className='input-with-icon'>
+                <BsKey className='input-icon' />
+                <input type="password" id='password' placeholder='비밀번호' />
+              </div>
               <button>로그인</button>
             </form>
             <div className='login-sign-up'>
               <p>아직 계정이 없으신가요?</p>
-              <Link to={'/join'}>가입하기</Link>
+              <Link to={'/register'}>회원가입</Link>
             </div>
           </div>
         </LoginPageContainer>

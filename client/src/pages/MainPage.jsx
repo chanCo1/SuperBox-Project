@@ -29,7 +29,7 @@ const MainLogoContainer = styled.div`
     margin: auto;
     padding: 225px 0 120px; 
     font-weight: 500;
-    transition: 1s ease;
+    transition: 1s ease-in-out;
     
     .logo {
       position: relative;
@@ -88,7 +88,7 @@ const MainReceiveContainer = styled.div`
       padding: 40px 0;
       color: #404040;
       font-weight: 500;
-      transition: 1s ease;
+      transition: 1s ease-in-out;
 
       p:nth-child(1) {
         font-size: 1.5rem;
@@ -106,7 +106,7 @@ const MainReceiveContainer = styled.div`
     .receive-img {
       padding: 40px 0 0;
       width: 50%;
-      transition: 1s ease;
+      transition: 1s ease-in-out;
 
       img {
         width: 100%;
@@ -130,7 +130,7 @@ const MainReviewContainer = styled.div`
       width: 50%;
       color:#2a3768;
       padding: 50px 0;
-      transition: 1s ease;
+      transition: 1s ease-in-out;
       
       .review-icon1 {
         font-size: 18rem;
@@ -154,7 +154,7 @@ const MainReviewContainer = styled.div`
       color: #404040;
       font-weight: 500;
       margin: auto 0;
-      transition: 1s ease;
+      transition: 1s ease-in-out;
 
       h3 {
         font-size: 3rem;
@@ -190,7 +190,7 @@ const MainCustomerContainer = styled.div`
       color: #404040;
       font-weight: 500;
       margin: auto 0;
-      transition: 1s ease;
+      transition: 1s ease-in-out;
 
       h3 {
         color: #f3b017;
@@ -213,7 +213,7 @@ const MainCustomerContainer = styled.div`
       width: 40%;
       font-size: 20rem;
       color: #2a3768;
-      transition: 1s ease;
+      transition: 1s ease-in-out;
     }
   }
 `;
@@ -227,12 +227,13 @@ const MainUseStartContainer = styled.div`
   .main-useStart-wrap {
     width: 1200px;
     margin: auto;
-
+    
     P {
       font-size: 2rem;
       font-weight: 500;
+      color: #404040;
       margin-bottom: 50px;
-      transition: 1s ease;
+      transition: 1s ease-in-out;
 
       span {
         color: #f3b017;
@@ -242,7 +243,7 @@ const MainUseStartContainer = styled.div`
     .useStart-btn-wrap {
       display: flex;
       justify-content: space-around;
-      transition: 1s ease;
+      transition: 1s ease-in-out;
 
       .useStart-btn {
         display: flex;

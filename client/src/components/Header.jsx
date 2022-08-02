@@ -9,9 +9,6 @@ import logo from '../assets/image/superbox-logo.png';
 // 마이페이지 1회용 아이콘 -> 나중에 수정
 import { FaUserCircle } from 'react-icons/fa';
 
-// 컴포넌트 참조
-import MainPage from '../pages/MainPage';
-
 /** 
  * Header 스타일 정의 
  */
@@ -160,8 +157,6 @@ const MyPage = styled.div`
 const Header = memo(({ loginPageState }) => {
   // 로그인 상태값 -> 로그인 구현하면 활용할 예정
   const [login, setLogin] = useState(true);
-  // // 로그인 버튼 클릭시 사용할 boolean 값
-  // const [loginPage, setLoginPage] = useState(false);
 
   // 고객센터 서브메뉴 on/off -> 최대높이값을 주는걸로 해결
   const [customerStyle, setCustomerStyle] = useState({ maxHeight: 0, opacity: 0 });

@@ -23,7 +23,6 @@ const App = memo(() => {
 
   // 로그인 버튼 클릭시 사용할 boolean 값
   const [loginPageState, setLoginPageState] = useState(false);
-  console.log(loginPageState)
 
   return (
     <>

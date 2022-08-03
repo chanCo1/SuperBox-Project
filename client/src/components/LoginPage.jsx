@@ -1,14 +1,13 @@
 /** 패키지 참조 */
 import React, { memo, useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
 import Logo from './Logo';
-import { Link } from 'react-router-dom';
+import RegexHelper from '../libs/RegexHelper';
 
 // slice 참조
 import { login } from '../slices/LoginSlice';
@@ -52,7 +51,7 @@ const LoginPageContainer = styled.div`
     }
 
     .login-text {
-      margin-bottom: 50px;
+      margin-bottom: 30px;
 
       h3 {
         color: #f3b017;
@@ -139,7 +138,6 @@ const LoginPageContainer = styled.div`
 
 const LoginPage = memo(({ loginPageState }) => {
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   /** Store를 통해 상태값 호출 */
@@ -180,27 +178,44 @@ const LoginPage = memo(({ loginPageState }) => {
   const onSubmit = useCallback((e) => {
     e.preventDefault();
 
-    if(email === '') {
-      setEmailErrorMsg('이메일을 입력해주세요.');
-      setEmailErrorStyle({color: 'red'});
-    } else if(password === '') {
-      setPassErrorMsg('비밀번호를 입력해주세요.');
-      setPassErrorStyle({color: 'red'});
-    } else {
-      dispatch(login({
-        email: email,
-        password: password,
-      })).then(() => {
-        loginPageState(false);
-      });
-    };
+    // 이벤트가 발생한 폼 객체
+    const current = e.target;
     
-    // // 로그인 성공시 로그인창 닫기
-    // if(email && password) {
-    //   // window.location.reload();
-    //   loginPageState(false);
+    // 입력값에 대한 유효성 검사
+    try {
+      RegexHelper.value(current.email, '이메일을 입력해주세요.');
+      RegexHelper.value(current.password, '비밀번호를 입력해주세요.');
+
+    } catch(err) {
+      
+      if(err.message === '이메일을 입력해주세요.') {
+        setEmailErrorMsg(err.message);
+        setEmailErrorStyle({color: 'red'});
+      }
+
+      if(err.message === '비밀번호를 입력해주세요.') {
+        setPassErrorMsg(err.message);
+        setPassErrorStyle({color: 'red'});
+      }
+
+      err.field.focus();
+      return;
+    }
+
+    // if(email === '') {
+    //   setEmailErrorMsg('이메일을 입력해주세요.');
+    //   setEmailErrorStyle({color: 'red'});
+    // } else if(password === '') {
+    //   setPassErrorMsg('비밀번호를 입력해주세요.');
+    //   setPassErrorStyle({color: 'red'});
     // }
-    // loginPageState
+    
+    dispatch(login({
+      email: email,
+      password: password,
+    })).then(() => {
+      loginPageState(false);
+    });
     
   }, [email, password, dispatch, loginPageState]);
 

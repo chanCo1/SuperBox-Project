@@ -1,8 +1,15 @@
 /** 패키지 참조 */
 import React, { memo, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ScrollEvent from '../events/ScrollEvent';
+
+// 컴포넌트 참조
+import Meta from '../Meta';
+
+// 이미지 참조
+import logo from '../assets/image/superbox-logo.png';
+import receive from '../assets/image/receive-screenshot.png';
 
 // 아이콘 참조
 import { FaRegComment, FaUserFriends } from 'react-icons/fa';
@@ -10,13 +17,6 @@ import { AiOutlineFileSearch } from 'react-icons/ai';
 import { RiUserReceivedFill, RiCustomerServiceLine } from 'react-icons/ri';
 import { BsPencilSquare } from 'react-icons/bs';
 import { MdDoubleArrow } from 'react-icons/md';
-
-// 이미지 참조
-import logo from '../assets/image/superbox-logo.png';
-import receive from '../assets/image/receive-screenshot.png';
-
-// 컴포넌트 참조
-import Meta from '../Meta';
 
 /** 메인페이지 로고 섹션 스타일 */
 const MainLogoContainer = styled.div`
@@ -34,7 +34,7 @@ const MainLogoContainer = styled.div`
     .logo {
       position: relative;
       width: 30rem;
-      animation: fly-logo 15s ease infinite;
+      animation: fly-logo 13s ease infinite;
 
       @keyframes fly-logo {
         0% {

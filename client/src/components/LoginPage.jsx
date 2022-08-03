@@ -1,16 +1,22 @@
 /** 패키지 참조 */
 import React, { memo, useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-// 아이콘 참조
-import { AiOutlineMail } from 'react-icons/ai';
-import { CgCloseR } from 'react-icons/cg';
-import { BsKey } from 'react-icons/bs';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
 import Logo from './Logo';
 import { Link } from 'react-router-dom';
+
+// slice 참조
+import { login } from '../slices/LoginSlice';
+
+// 아이콘 참조
+import { AiOutlineMail } from 'react-icons/ai';
+import { CgCloseR } from 'react-icons/cg';
+import { BsKey } from 'react-icons/bs';
 
 /** 로그인 페이지 스타일 정의 */
 const LoginPageContainer = styled.div`
@@ -46,7 +52,7 @@ const LoginPageContainer = styled.div`
     }
 
     .login-text {
-      margin-bottom: 30px;
+      margin-bottom: 50px;
 
       h3 {
         color: #f3b017;
@@ -98,7 +104,7 @@ const LoginPageContainer = styled.div`
         position: relative;
         font-size: 12px;
         color: red;
-        height: 20px;
+        height: 10px;
       }
 
       button {
@@ -132,6 +138,12 @@ const LoginPageContainer = styled.div`
 `;
 
 const LoginPage = memo(({ loginPageState }) => {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  /** Store를 통해 상태값 호출 */
+  const { data, loading, error } = useSelector(state => state.login);
 
   /** 로그인 입력 상태값 관리 */
   const [email, setEmail] = useState('');
@@ -174,8 +186,23 @@ const LoginPage = memo(({ loginPageState }) => {
     } else if(password === '') {
       setPassErrorMsg('비밀번호를 입력해주세요.');
       setPassErrorStyle({color: 'red'});
-    } 
-  }, [email, password]);
+    } else {
+      dispatch(login({
+        email: email,
+        password: password,
+      })).then(() => {
+        loginPageState(false);
+      });
+    };
+    
+    // // 로그인 성공시 로그인창 닫기
+    // if(email && password) {
+    //   // window.location.reload();
+    //   loginPageState(false);
+    // }
+    // loginPageState
+    
+  }, [email, password, dispatch, loginPageState]);
 
   // input에 아무 입력이 없을시 초기상태로 변환
   useEffect(() => {

@@ -1,5 +1,5 @@
 /** 패키지 참조 */
-import React, { memo, useState, useCallback } from 'react';
+import React, { memo, useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 
 // 아이콘 참조
@@ -34,7 +34,8 @@ const LoginPageContainer = styled.div`
 
     .close-btn {
       position: absolute;
-      right: 10%;
+      top: 7%;
+      right: 8%;
       font-size: 1.5rem;
       color: #999;
       cursor: pointer;
@@ -69,12 +70,12 @@ const LoginPageContainer = styled.div`
         .input-icon {
           position: absolute;
           display: flex;
-          top: 15%;
+          top: 20%;
+          left: 2%;
           font-size: 1.7rem;
-          color: #bcbcbc;
         }
 
-        input {
+        .input-area {
           width: 100%;
           border: none;
           border-bottom: 2px solid #bcbcbc;
@@ -93,22 +94,24 @@ const LoginPageContainer = styled.div`
         }
       }
 
+      .error-msg {
+        position: relative;
+        font-size: 12px;
+        color: red;
+        height: 20px;
+      }
+
       button {
         margin: 30px 0;
         padding: 10px;
         border: none;
-        border: 1px solid #f3b017;
         border-radius: 10px;
-        color: #f3b017;
-        background-color: #fff;
+        color: #fff;
+        background-color: #f3b017;
         font-size: 1.1rem;
         cursor: pointer;
         transition: .3s ease;
 
-        &:hover {
-          background-color: #f3b017;
-          color: #fff;
-        }
         &:active {
           transform: scale(.9, .9);
         }
@@ -129,8 +132,65 @@ const LoginPageContainer = styled.div`
 `;
 
 const LoginPage = memo(({ loginPageState }) => {
+
+  /** 로그인 입력 상태값 관리 */
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailErrorMsg, setEmailErrorMsg] = useState('');
+  const [emailErrorStyle, setEmailErrorStyle] = useState({color: '#bcbcbc'})
+  const [passErrorMsg, setPassErrorMsg] = useState('');
+  const [passErrorStyle, setPassErrorStyle] = useState({color: '#bcbcbc'})
+
+  // input 입력값을 state에 저장
+  const onEmailChange = useCallback((e) => {
+    e.preventDefault();
+
+    setEmail(e.currentTarget.value);
+
+    if(email) {
+      setEmailErrorMsg('');
+      setEmailErrorStyle({color: '#404040'});
+    }
+  }, [email]);
+
+  const onPassChange = useCallback((e) => {
+    e.preventDefault();
+
+    setPassword(e.currentTarget.value);
+
+    if(password) {
+      setPassErrorMsg('');
+      setPassErrorStyle({color: '#404040'});
+    }
+  }, [password]);
+
+  // 로그인 버튼의 submit 이벤트 발생시
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
+
+    if(email === '') {
+      setEmailErrorMsg('이메일을 입력해주세요.');
+      setEmailErrorStyle({color: 'red'});
+    } else if(password === '') {
+      setPassErrorMsg('비밀번호를 입력해주세요.');
+      setPassErrorStyle({color: 'red'});
+    } 
+  }, [email, password]);
+
+  // input에 아무 입력이 없을시 초기상태로 변환
+  useEffect(() => {
+    if(!email) {
+      setEmailErrorMsg('');
+      setEmailErrorStyle({color: '#bcbcbc'})
+    } 
+    
+    if(!password) {
+      setPassErrorMsg('');
+      setPassErrorStyle({color: '#bcbcbc'});
+    }
+  }, [email, password]);
   
-  // 로그인 버튼 클릭시 app.jsx에서 받은 상태값을 false 바꾼다.
+  // 헤더의 로그인 버튼 클릭시 app.jsx에서 받은 상태값을 false 바꾼다.
   const loginCloseBtnClick = useCallback(() => {
     loginPageState(false);
   }, [loginPageState]);
@@ -151,16 +211,42 @@ const LoginPage = memo(({ loginPageState }) => {
               <p>만나서 반가워요!</p>
               <p>더 멋진 서비스 제공을 위해 로그인 해주세요.</p>
             </div>
-            <form className='login-input'>
+            <form className='login-input' onSubmit={onSubmit}>
               <div className='input-with-icon'>
-                <AiOutlineMail className='input-icon' />
-                <input type="email" id='email' placeholder={'이메일'} />
+                <AiOutlineMail className='input-icon' style={emailErrorStyle} />
+                <input 
+                  className='input-area' 
+                  type="email" 
+                  name='email' 
+                  value={email} 
+                  placeholder={'이메일'} 
+                  onChange={onEmailChange} 
+                />
               </div>
+              
+              {/* 에러메세지 */}
+              <div className='error-msg'>
+                {emailErrorMsg}
+              </div>
+
               <div className='input-with-icon'>
-                <BsKey className='input-icon' />
-                <input type="password" id='password' placeholder='비밀번호' />
+                <BsKey className='input-icon' style={passErrorStyle} />
+                <input 
+                  className='input-area' 
+                  type="password" 
+                  name='password' 
+                  value={password} 
+                  placeholder='비밀번호' 
+                  onChange={onPassChange} 
+                />
               </div>
-              <button>로그인</button>
+
+              {/* 에러메세지 */}
+              <div className='error-msg'>
+                {passErrorMsg}
+              </div>
+
+              <button type='submit'>로그인</button>
             </form>
             <div className='login-sign-up'>
               <p>아직 계정이 없으신가요?</p>

@@ -34,16 +34,16 @@ const MainLogoContainer = styled.div`
     .logo {
       position: relative;
       width: 30rem;
-      animation: fly-logo 10s ease infinite;
+      animation: fly-logo 15s ease infinite;
 
       @keyframes fly-logo {
         0% {
           transform: translate(-1500px, -300px);
         }
-        40% {
+        20% {
           transform: translate(0, 0);
         }
-        60% {
+        80% {
           transform: translate(0, 0);
         }
         100% {

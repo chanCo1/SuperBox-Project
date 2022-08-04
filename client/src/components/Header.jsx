@@ -1,7 +1,10 @@
 /** 패키지 참조 */
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import Spinner from './Spinner';
 
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
@@ -155,8 +158,19 @@ const MyPage = styled.div`
  * 나타낼 값 시작
  */
 const Header = memo(({ loginPageState }) => {
+
+  /** Store를 통해 상태값 호출 */
+  const { data, loading } = useSelector(state => state.login);
+
   // 로그인 상태값 -> 로그인 구현하면 활용할 예정
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
+
+  // 로그인 성공 시 마이페이지 아이콘 표시
+  useEffect(() => {
+    if(data?.success) {
+      setLogin(true);
+    }
+  }, [data]);
 
   // 고객센터 서브메뉴 on/off -> 최대높이값을 주는걸로 해결
   const [customerStyle, setCustomerStyle] = useState({ maxHeight: 0, opacity: 0 });
@@ -176,6 +190,8 @@ const Header = memo(({ loginPageState }) => {
 
   return (
     <>
+      <Spinner visible={loading} />
+
       <HeaderContainer>
         <div className="header-wrap">
 
@@ -205,7 +221,11 @@ const Header = memo(({ loginPageState }) => {
             </Link>
           </MyPage>
 
-          <button className='login-button' onClick={loginBtnClick}>로그인</button>
+          {data?.success ? (
+            <button className='login-button' onClick={loginBtnClick}>로그아웃</button>
+          ) : (
+            <button className='login-button' onClick={loginBtnClick}>로그인</button>
+          )}
           {/* <Link to={'/login'}>
           </Link> */}
         </div>

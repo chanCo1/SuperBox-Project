@@ -9,8 +9,7 @@ export const login = createAsyncThunk('loginSlice/login', async (payload, { reje
   let result = null;
 
   try {
-    // result = await axios.post(`${API_URL}login`);
-    result = await axios.post('http://localhost:3001/api/users/login', payload);
+    result = await axios.post(`${API_URL}login`, payload);
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {
@@ -20,7 +19,7 @@ export const login = createAsyncThunk('loginSlice/login', async (payload, { reje
     }
 
   } catch(err) {
-    // console.error(err);
+    // console.error(err.response.data);
     result = rejectWithValue(err);
   }
 
@@ -51,12 +50,14 @@ const loginSlice = createSlice({
     },
     // 에러 발생시
     [login.rejected]: (state, { payload }) => {
+      const res = payload.response;
       return {
         data: payload?.data,
         loading: false,
         error: {
-          code: payload?.status ? payload.status : 500,
-          message: payload?.statusTxt ? payload.statusText : 'Server Error',
+          code: payload?.response?.status ? res.status : 500,
+          message: payload?.response?.data.message ? res.data.message : 'Server Error',
+          success: payload?.response?.data.success ? true : res.data.success,
         }
       };
     }

@@ -7,6 +7,17 @@
 /** 정규표현식에 대한 검사 실패시 에러 발생 참조 */
 import BadRequestException from './BadRequestException';
 
+
+import LoginSlice from '../slices/LoginSlice';
+import { useSelector, useDispatch } from 'react-redux';
+
+const Slice = () => {
+  const { error } = useSelector(state => state.login);
+  return error;
+}
+
+
+
 class RegexHelper {
   // 입력값의 존재 여부 검사
   value(field, msg) {

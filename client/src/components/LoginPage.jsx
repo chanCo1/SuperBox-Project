@@ -1,8 +1,9 @@
 /** 패키지 참조 */
 import React, { memo, useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
@@ -141,7 +142,7 @@ const LoginPage = memo(({ loginPageState }) => {
   const dispatch = useDispatch();
 
   /** Store를 통해 상태값 호출 */
-  const { data, loading, error } = useSelector(state => state.login);
+  // const { data, loading, error } = useSelector(state => state.login);
 
   /** 로그인 입력 상태값 관리 */
   const [email, setEmail] = useState('');
@@ -151,7 +152,7 @@ const LoginPage = memo(({ loginPageState }) => {
   const [passErrorMsg, setPassErrorMsg] = useState('');
   const [passErrorStyle, setPassErrorStyle] = useState({color: '#bcbcbc'})
 
-  // input 입력값을 state에 저장
+  /** input 입력값을 state에 저장 */
   const onEmailChange = useCallback((e) => {
     e.preventDefault();
 
@@ -174,8 +175,8 @@ const LoginPage = memo(({ loginPageState }) => {
     }
   }, [password]);
 
-  // 로그인 버튼의 submit 이벤트 발생시
-  const onSubmit = useCallback((e) => {
+  /** 로그인 버튼의 submit 이벤트 발생시 */
+  const onSubmit = useCallback( async (e) => {
     e.preventDefault();
 
     // 이벤트가 발생한 폼 객체
@@ -186,36 +187,45 @@ const LoginPage = memo(({ loginPageState }) => {
       RegexHelper.value(current.email, '이메일을 입력해주세요.');
       RegexHelper.value(current.password, '비밀번호를 입력해주세요.');
 
-    } catch(err) {
-      
+    } catch(err) {  
       if(err.message === '이메일을 입력해주세요.') {
         setEmailErrorMsg(err.message);
         setEmailErrorStyle({color: 'red'});
+        return;
       }
-
       if(err.message === '비밀번호를 입력해주세요.') {
         setPassErrorMsg(err.message);
         setPassErrorStyle({color: 'red'});
+        return;
       }
-
       err.field.focus();
       return;
     }
 
-    // if(email === '') {
-    //   setEmailErrorMsg('이메일을 입력해주세요.');
-    //   setEmailErrorStyle({color: 'red'});
-    // } else if(password === '') {
-    //   setPassErrorMsg('비밀번호를 입력해주세요.');
-    //   setPassErrorStyle({color: 'red'});
-    // }
-    
+    // Redux 값 갱신
     dispatch(login({
       email: email,
       password: password,
-    })).then(() => {
+    }));
+
+    // 값의 존재 여부 확인을 위한 추가 ajax 통신
+    try {
+      const result = await axios.post('http://localhost:3001/api/users/login',{
+        email: email,
+        password: password,
+      });
       loginPageState(false);
-    });
+    } catch(e) {
+      console.error(e);
+      
+      if(e.response.data.message === '이메일이 존재하지 않습니다.') {
+        setEmailErrorMsg(e.response.data.message);
+        setEmailErrorStyle({color: 'red'});
+      } else if(e.response.data.message === '비밀번호가 틀렸습니다.') {
+        setPassErrorMsg(e.response.data.message);
+        setPassErrorStyle({color: 'red'});
+      }
+    }
     
   }, [email, password, dispatch, loginPageState]);
 

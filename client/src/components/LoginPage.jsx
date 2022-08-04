@@ -1,6 +1,5 @@
 /** 패키지 참조 */
 import React, { memo, useState, useCallback, useEffect } from 'react';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
@@ -8,6 +7,8 @@ import axios from 'axios';
 // 컴포넌트 참조
 import Meta from '../Meta';
 import Logo from './Logo';
+import InputBox from './InputBox';
+import LoginPageContainer from '../styles/LoginStyle';
 import RegexHelper from '../libs/RegexHelper';
 
 // slice 참조
@@ -17,125 +18,6 @@ import { login } from '../slices/LoginSlice';
 import { AiOutlineMail } from 'react-icons/ai';
 import { CgCloseR } from 'react-icons/cg';
 import { BsKey } from 'react-icons/bs';
-
-/** 로그인 페이지 스타일 정의 */
-const LoginPageContainer = styled.div`
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0,0,0,.5);
-  z-index: 9;
-
-  .login-wrap {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 500px;
-    padding: 50px 80px;
-    background-color: #fff;
-    border-radius: 20px;
-    border: 1px solid #f3b017;
-    color: #404040;
-
-    .close-btn {
-      position: absolute;
-      top: 7%;
-      right: 8%;
-      font-size: 1.5rem;
-      color: #999;
-      cursor: pointer;
-
-      &:hover {
-        color: #404040;
-      }
-    }
-
-    .login-text {
-      margin-bottom: 30px;
-
-      h3 {
-        color: #f3b017;
-        font-size: 2em;
-        font-weight: 500;
-      }
-      p:nth-child(2) {
-        font-size: 2.5rem;
-        font-weight: 500;
-      }
-    }
-
-    .login-input {
-      display: flex;
-      flex-direction: column;
-
-      .input-with-icon {
-        position: relative;
-        margin: 10px 0;
-
-        .input-icon {
-          position: absolute;
-          display: flex;
-          top: 20%;
-          left: 2%;
-          font-size: 1.7rem;
-        }
-
-        .input-area {
-          width: 100%;
-          border: none;
-          border-bottom: 2px solid #bcbcbc;
-          outline: none;
-          padding: 10px 40px;
-          font-size: 1.1rem;
-
-          &::-webkit-input-placeholder {
-            color: #bcbcbc;
-          }
-          
-          &:focus {
-            border-color: #404040;
-            color: #404040;
-          }
-        }
-      }
-
-      .error-msg {
-        position: relative;
-        font-size: 12px;
-        color: red;
-        height: 10px;
-      }
-
-      button {
-        margin: 30px 0;
-        padding: 10px;
-        border: none;
-        border-radius: 10px;
-        color: #fff;
-        background-color: #f3b017;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: .3s ease;
-
-        &:active {
-          transform: scale(.9, .9);
-        }
-      }
-    }
-
-    .login-sign-up {
-      text-align: center;
-      & > p {
-        margin: 10px 0;
-      }
-      & > a {
-        color: #999;
-        text-decoration: underline;
-      }
-    }
-  }
-`;
 
 const LoginPage = memo(({ loginPageState }) => {
 
@@ -147,6 +29,8 @@ const LoginPage = memo(({ loginPageState }) => {
   /** 로그인 입력 상태값 관리 */
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  // 에러 메세지 및 스타일 정의
   const [emailErrorMsg, setEmailErrorMsg] = useState('');
   const [emailErrorStyle, setEmailErrorStyle] = useState({color: '#bcbcbc'})
   const [passErrorMsg, setPassErrorMsg] = useState('');
@@ -202,18 +86,15 @@ const LoginPage = memo(({ loginPageState }) => {
       return;
     }
 
-    // Redux 값 갱신
-    dispatch(login({
-      email: email,
-      password: password,
-    }));
-
     // 값의 존재 여부 확인을 위한 추가 ajax 통신
     try {
       const result = await axios.post('http://localhost:3001/api/users/login',{
         email: email,
         password: password,
       });
+      console.log(result)
+
+      // window.sessionStorage.setItem("accessToken", "test");
       loginPageState(false);
     } catch(e) {
       console.error(e);
@@ -224,12 +105,20 @@ const LoginPage = memo(({ loginPageState }) => {
       } else if(e.response.data.message === '비밀번호가 틀렸습니다.') {
         setPassErrorMsg(e.response.data.message);
         setPassErrorStyle({color: 'red'});
+      } else {
+        alert('로그인에 실패하였습니다.');
       }
     }
+
+    // Redux 값 갱신 요청
+    dispatch(login({
+      email: email,
+      password: password,
+    }));
     
   }, [email, password, dispatch, loginPageState]);
 
-  // input에 아무 입력이 없을시 초기상태로 변환
+  /** input에 입력이 없을시 초기상태로 변환 */
   useEffect(() => {
     if(!email) {
       setEmailErrorMsg('');
@@ -252,7 +141,6 @@ const LoginPage = memo(({ loginPageState }) => {
     <div>
       <>
         <Meta title={'SuperBox :: 로그인'} />
-
         <LoginPageContainer>
           <Logo />
           <div className='login-wrap'>
@@ -265,45 +153,33 @@ const LoginPage = memo(({ loginPageState }) => {
               <p>더 멋진 서비스 제공을 위해 로그인 해주세요.</p>
             </div>
             <form className='login-input' onSubmit={onSubmit}>
-              <div className='input-with-icon'>
-                <AiOutlineMail className='input-icon' style={emailErrorStyle} />
-                <input 
-                  className='input-area' 
-                  type="email" 
-                  name='email' 
-                  value={email} 
-                  placeholder={'이메일'} 
-                  onChange={onEmailChange} 
-                />
-              </div>
-              
-              {/* 에러메세지 */}
-              <div className='error-msg'>
-                {emailErrorMsg}
-              </div>
+              <InputBox 
+                icon={<AiOutlineMail />} 
+                errStyle={emailErrorStyle} 
+                type={'email'} 
+                name={'email'}
+                value={email}
+                placeholder={'이메일을 입력하세요.'}
+                onChange={onEmailChange}
+                errMsg={emailErrorMsg}
+              />
 
-              <div className='input-with-icon'>
-                <BsKey className='input-icon' style={passErrorStyle} />
-                <input 
-                  className='input-area' 
-                  type="password" 
-                  name='password' 
-                  value={password} 
-                  placeholder='비밀번호' 
-                  onChange={onPassChange} 
-                />
-              </div>
-
-              {/* 에러메세지 */}
-              <div className='error-msg'>
-                {passErrorMsg}
-              </div>
+              <InputBox 
+                icon={<BsKey />} 
+                errStyle={passErrorStyle} 
+                type={'password'} 
+                name={'password'}
+                value={password}
+                placeholder={'비밀번호를 입력하세요.'}
+                onChange={onPassChange}
+                errMsg={passErrorMsg}
+              />
 
               <button type='submit'>로그인</button>
             </form>
             <div className='login-sign-up'>
               <p>아직 계정이 없으신가요?</p>
-              <Link to={'/register'}>회원가입</Link>
+              <Link to={'/register'} onClick={loginCloseBtnClick}>회원가입</Link>
             </div>
           </div>
         </LoginPageContainer>
@@ -313,3 +189,55 @@ const LoginPage = memo(({ loginPageState }) => {
 });
 
 export default LoginPage;
+
+
+
+
+
+
+{/* 
+<div className='input-with-icon'>
+  <span className='input-icon'>
+  <BsKey style={passErrorStyle} />
+  </span>
+  <input 
+    className='input-area' 
+    type="password" 
+    name='password' 
+    value={password} 
+    placeholder='비밀번호' 
+    onChange={onPassChange} 
+  />
+  </div> 
+*/}
+
+{/* 에러메세지 */}
+{/* 
+<div className='error-msg'>
+  {passErrorMsg}
+</div> 
+*/}
+
+
+{/* 
+              <div className='input-with-icon'>
+                <span className='input-icon'>
+                <BsKey style={passErrorStyle} />
+                </span>
+                <input 
+                  className='input-area' 
+                  type="password" 
+                  name='password' 
+                  value={password} 
+                  placeholder='비밀번호' 
+                  onChange={onPassChange} 
+                />
+              </div> 
+              */}
+
+              {/* 에러메세지 */}
+              {/* 
+              <div className='error-msg'>
+                {passErrorMsg}
+              </div> 
+              */}

@@ -7,15 +7,15 @@
  */
 
 /** 패키지 참조 */
-import path from 'path';                        // 내장 모듈 참조
-import express from 'express';                  // express 참조
-import dotenv from 'dotenv';                    // env 파일 사용
-import userAgent from 'express-useragent';      // 클라이언트의 정보를 조회할 수 있는 패키지
-import bodyParser from 'body-parser';           // POST 파라미터 처리
-import methodOverride from 'method-override';   // PUT 파라미터 처리
-import cookieParser from 'cookie-parser';       // Cookie 처리
-import expressSession from 'express-session';   // Session 처리
-import cors from 'cors';                        // cors 처리
+import path from 'path';                      // 내장 모듈 참조
+import express from 'express';                // express 참조
+import dotenv from 'dotenv';                  // env 파일 사용
+import userAgent from 'express-useragent';    // 클라이언트의 정보를 조회할 수 있는 패키지
+import bodyParser from 'body-parser';         // POST 파라미터 처리
+import methodOverride from 'method-override'; // PUT 파라미터 처리
+import cookieParser from 'cookie-parser';     // Cookie 처리
+import expressSession from 'express-session'; // Session 처리
+import cors from 'cors';                      // cors 처리
 
 import users from './router/users.js';
 
@@ -25,7 +25,6 @@ const app = express();
 
 // 프로젝트 폴더 위치
 const __dirname = path.resolve();
-console.log(__dirname);
 
 // 보안성을 높이기 위한 config.env 파일 참조
 dotenv.config({ path: path.join(__dirname, '../env/config.env') });
@@ -63,14 +62,18 @@ app.use(cookieParser(process.env.COOKIE_ENCRYPT_KEY));
 
 // 세션 설정
 app.use(expressSession({
+  // key: 'loginData',
   secret: process.env.SESSION_ENCRYPT_KEY,  // 암호화 키
   resave: false,  // 세션이 초기화 되지 않더라도 새로 저장할지 여부 (일반적으로 false)
   saveUninitialized: false,  // 세션이 저장되기 전에 기존의 세션을 초기화 상태로 만들지 여부
+  // cookie: {
+  //   expires: 60 * 60 * 24,
+  // }
 }));
 
 
 /** router 가져오기 */
-app.use('/api/users', users());
+app.use('/api/users', users);
 
 
 /** 서버 구동 */

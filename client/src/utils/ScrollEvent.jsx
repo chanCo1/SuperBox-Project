@@ -1,6 +1,14 @@
-// 원본
-const ScrollEvent = (logoRef, receiveTextRef, receiveImgRef, reviewImgRef, reviewTextRef, customerTextRef, customerImgRef, useStartTextRef, useStartBtnRef) => {
-
+export const ScrollEvent = (
+  logoRef,
+  receiveTextRef,
+  receiveImgRef,
+  reviewImgRef,
+  reviewTextRef,
+  customerTextRef,
+  customerImgRef,
+  useStartTextRef,
+  useStartBtnRef
+) => {
   const logo = logoRef.current.style;
   const receiveText = receiveTextRef.current.style;
   const receiveImg = receiveImgRef.current.style;
@@ -11,8 +19,8 @@ const ScrollEvent = (logoRef, receiveTextRef, receiveImgRef, reviewImgRef, revie
   const useStartText = useStartTextRef.current.style;
   const useStartBtn = useStartBtnRef.current.style;
 
-  const scrollEvent = window.addEventListener('scroll', e => {
-    if(window.scrollY > 350) {
+  const scrollEvent = window.addEventListener('scroll', (e) => {
+    if (window.scrollY > 350) {
       receiveText.opacity = 1;
       receiveText.transform = 'translateY(0)';
       receiveImg.opacity = 1;
@@ -30,7 +38,7 @@ const ScrollEvent = (logoRef, receiveTextRef, receiveImgRef, reviewImgRef, revie
     //   logo.opacity = 1;
     // }
 
-    if(window.scrollY > 1000) {
+    if (window.scrollY > 1000) {
       reviewImg.opacity = 1;
       reviewText.transform = 'translateY(0)';
       reviewText.opacity = 1;
@@ -40,7 +48,7 @@ const ScrollEvent = (logoRef, receiveTextRef, receiveImgRef, reviewImgRef, revie
       reviewText.opacity = 0;
     }
 
-    if(window.scrollY > 1500) {
+    if (window.scrollY > 1500) {
       customerImg.opacity = 1;
       customerText.transform = 'translateY(0)';
       customerText.opacity = 1;
@@ -50,7 +58,7 @@ const ScrollEvent = (logoRef, receiveTextRef, receiveImgRef, reviewImgRef, revie
       customerText.opacity = 0;
     }
 
-    if(window.scrollY > 2000) {
+    if (window.scrollY > 2000) {
       useStartBtn.opacity = 1;
       useStartText.transform = 'translateY(0)';
       useStartText.opacity = 1;
@@ -58,10 +66,10 @@ const ScrollEvent = (logoRef, receiveTextRef, receiveImgRef, reviewImgRef, revie
       useStartBtn.opacity = 0;
       useStartText.transform = 'translateY(60px)';
       useStartText.opacity = 0;
-    }      
-  }); 
+    }
+  });
 
   return scrollEvent;
 };
 
-export default ScrollEvent;
+// export default ScrollEvent;

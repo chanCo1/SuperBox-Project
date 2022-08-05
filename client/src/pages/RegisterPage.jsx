@@ -13,7 +13,7 @@ import LoginPageContainer from '../styles/LoginStyle';
 import RegexHelper from '../libs/RegexHelper';
 
 // 아이콘 참조
-import { FiUser } from 'react-icons/fi';
+import { FiUser, FiSmile } from 'react-icons/fi';
 import { BsKey } from 'react-icons/bs';
 import { AiOutlineMail, AiOutlinePhone, AiOutlineCheckCircle } from 'react-icons/ai';
 
@@ -26,10 +26,10 @@ const RegisterPage = memo(() => {
     userId: '',
     password: '',
     passwordCheck: '',
+    userName: '',
     email: '',
     phoneNumber: '',
   });
-  console.log(register);
 
   /** 에러 메세지 및 스타일 정의 */
   const [idErrorMsg, setIdErrorMsg] = useState('');
@@ -41,6 +41,9 @@ const RegisterPage = memo(() => {
   const [pwCheckErrorMsg, setPwCheckErrorMsg] = useState('');
   const [pwCheckErrorStyle, setPwCheckErrorStyle] = useState({color: '#bcbcbc'});
 
+  const [nameErrorMsg, setNameErrorMsg] = useState('');
+  const [nameErrorStyle, setNameErrorStyle] = useState({color: '#bcbcbc'});
+
   const [emailErrorMsg, setEmailErrorMsg] = useState('');
   const [emailErrorStyle, setEmailErrorStyle] = useState({color: '#bcbcbc'});
 
@@ -48,11 +51,12 @@ const RegisterPage = memo(() => {
   const [phoneErrorStyle, setPhoneErrorStyle] = useState({color: '#bcbcbc'});
 
   /** input 입력값을 state에 저장 */
-  const { userId, password, passwordCheck, email, phoneNumber } = register;
+  const { userId, password, passwordCheck, userName, email, phoneNumber } = register;
   const onChange = useCallback((e) => {
     e.preventDefault();
 
     const { name, value } = e.target;
+    // 입력값
     setRegister({ ...register, [name]: value });
 
     if(userId) {
@@ -67,6 +71,10 @@ const RegisterPage = memo(() => {
       setPwCheckErrorMsg('');
       setPwCheckErrorStyle({color: '#404040'});
     }
+    if(userName) {
+      setNameErrorMsg('');
+      setNameErrorStyle({color: '#404040'});
+    }
     if(email) {
       setEmailErrorMsg('');
       setEmailErrorStyle({color: '#404040'});
@@ -75,31 +83,94 @@ const RegisterPage = memo(() => {
       setPhoneErrorMsg('');
       setPhoneErrorStyle({color: '#404040'});
     }
-  }, [register, userId, password, passwordCheck, email, phoneNumber]);
+  }, [register, userId, password, passwordCheck, userName, email, phoneNumber]);
 
-  /** input에 입력이 없을시 초기상태로 변환 */
+  const onSubmit = useCallback( async (e) => {
+    e.preventDefault();
+
+    const current = e.target;
+
+    try {
+      // 아이디 유효성 검사
+      RegexHelper.value(current.userId, '아이디를 입력해주세요.');
+      RegexHelper.idCheck(current.userId, '영문(소문자), 숫자, 4~10자리만 가능합니다.');
+
+      // 비밀번호 유효성 검사
+      RegexHelper.value(current.password,  '비밀번호를 입력해주세요.');
+      RegexHelper.pwCheck(current.password,  '영문(대/소문자)+숫자+특수문자, 8~20자리만 가능합니다.');
+
+      RegexHelper.value(current.passwordCheck, '비밀번호를 확인해주세요.');
+      RegexHelper.compare(current.password, current.passwordCheck, '비밀번호가 일치하지 않습니다.');
+
+      // 이름 유효성 검사
+      RegexHelper.value(current.userName, '이름을 입력해주세요.');
+      RegexHelper.nameCheck(current.userName, '영문(소문자), 한글, 2~10자리만 가능합니다.');
+
+      // 이메일 유효성 검사
+      RegexHelper.value(current.email, '이메일을 입력해주세요.');
+      RegexHelper.emailCheck(current.email, '이메일 형식에 맞지 않습니다.');
+
+      // 전화번호 유효성 검사
+      RegexHelper.value(current.phoneNumber, '전화번호를 입력해주세요.');
+      RegexHelper.cellphone(current.phoneNumber, '전화번호 형식에 맞지 않습니다. "-"이 있다면 빼고 입력해주세요.');
+
+    } catch(err) {
+      if(
+        err.message === '아이디를 입력해주세요.' ||
+        err.message === '영문(소문자), 숫자, 4~10자리만 가능합니다.'
+      ) {
+        setIdErrorMsg(err.message);
+        setIdErrorStyle({color: 'red'});
+      }
+      if(
+        err.message === '비밀번호를 입력해주세요.' ||
+        err.message === '영문(대/소문자)+숫자+특수문자, 8~20자리만 가능합니다.'
+      ) {
+        setPassErrorMsg(err.message);
+        setPassErrorStyle({color: 'red'});
+      }
+      if(
+        err.message === '비밀번호를 확인해주세요.' ||
+        err.message === '비밀번호가 일치하지 않습니다.'
+      ) {
+        setPwCheckErrorMsg(err.message);
+        setPwCheckErrorStyle({color: 'red'});
+      }
+      if(
+        err.message === '이름을 입력해주세요.' ||
+        err.message === '영문(소문자), 한글, 2~10자리만 가능합니다.'
+      ) {
+        setNameErrorMsg(err.message);
+        setNameErrorStyle({color: 'red'});
+      }
+      if(
+        err.message === '이메일을 입력해주세요.' ||
+        err.message === '이메일 형식에 맞지 않습니다.'
+      ) {
+        setEmailErrorMsg(err.message);
+        setEmailErrorStyle({color: 'red'});
+      }
+      if(
+        err.message === '전화번호를 입력해주세요.' ||
+        err.message === '전화번호 형식에 맞지 않습니다. "-"이 있다면 빼고 입력해주세요.'
+      ) {
+        setPhoneErrorMsg(err.message);
+        setPhoneErrorStyle({color: 'red'});
+      }
+
+      err.field.focus();
+    }
+  }, []);
+
+  /** input에 입력이 없을 시 초기상태로 변환 */
   useEffect(() => {
-    if(!userId) {
-      setIdErrorMsg('');
-      setIdErrorStyle({color: '#bcbcbc'})
-    } 
-    if(!password) {
-      setPassErrorMsg('');
-      setPassErrorStyle({color: '#bcbcbc'});
-    }
-    if(!passwordCheck) {
-      setPwCheckErrorMsg('');
-      setPwCheckErrorStyle({color: '#bcbcbc'});
-    }
-    if(!email) {
-      setEmailErrorMsg('');
-      setEmailErrorStyle({color: '#bcbcbc'});
-    }
-    if(!phoneNumber) {
-      setPhoneErrorMsg('');
-      setPhoneErrorStyle({color: '#bcbcbc'});
-    }
-  }, [register, userId, password, passwordCheck, email, phoneNumber]);
+    if(!userId) setIdErrorStyle({color: '#bcbcbc'})
+    if(!password) setPassErrorStyle({color: '#bcbcbc'});
+    if(!passwordCheck) setPwCheckErrorStyle({color: '#bcbcbc'});
+    if(!userName) setNameErrorStyle({color: '#bcbcbc'});
+    if(!email) setEmailErrorStyle({color: '#bcbcbc'});
+    if(!phoneNumber) setPhoneErrorStyle({color: '#bcbcbc'});
+  }, [register, userId, password, passwordCheck, userName, email, phoneNumber]);
 
   return (
     <div>
@@ -114,14 +185,14 @@ const RegisterPage = memo(() => {
               <p>회원가입</p>
               <p>지금 가입하고 다양한 서비스를 누리세요!</p>
             </div>
-            <form className='login-input'>
+            <form className='login-input' onSubmit={onSubmit}>
               <InputBox
                 icon={<FiUser />}
                 errStyle={idErrorStyle}
                 type={'text'}
                 name={'userId'}
                 value={userId || ''}
-                placeholder={'아이디를 입력하세요.'}
+                placeholder={'아이디를 입력하세요. (필수)'}
                 onChange={onChange}
                 errMsg={idErrorMsg}
               />
@@ -132,7 +203,7 @@ const RegisterPage = memo(() => {
                 type={'password'}
                 name={'password'}
                 value={password || ''}
-                placeholder={'비밀번호를 입력하세요.'}
+                placeholder={'비밀번호를 입력하세요. (필수)'}
                 onChange={onChange}
                 errMsg={passErrorMsg}
               />
@@ -143,9 +214,20 @@ const RegisterPage = memo(() => {
                 type={'password'}
                 name={'passwordCheck'}
                 value={passwordCheck || ''}
-                placeholder={'비밀번호를 확인해주세요.'}
+                placeholder={'비밀번호를 확인해주세요. (필수)'}
                 onChange={onChange}
                 errMsg={pwCheckErrorMsg}
+              />
+
+              <InputBox
+                icon={<FiSmile />}
+                errStyle={nameErrorStyle}
+                type={'text'}
+                name={'userName'}
+                value={userName || ''}
+                placeholder={'이름을 입력하세요. (필수)'}
+                onChange={onChange}
+                errMsg={nameErrorMsg}
               />
 
               <InputBox
@@ -154,7 +236,7 @@ const RegisterPage = memo(() => {
                 type={'email'}
                 name={'email'}
                 value={email || ''}
-                placeholder={'이메일을 입력하세요.'}
+                placeholder={'이메일을 입력하세요. (필수)'}
                 onChange={onChange}
                 errMsg={emailErrorMsg}
               />
@@ -165,7 +247,7 @@ const RegisterPage = memo(() => {
                 type={'text'}
                 name={'phoneNumber'}
                 value={phoneNumber || ''}
-                placeholder={"전화번호를 입력하세요.(' - ' 제외)"}
+                placeholder={"' - ' 제외, 전화번호를 입력하세요.(필수)"}
                 onChange={onChange}
                 errMsg={phoneErrorMsg}
               />
@@ -176,7 +258,6 @@ const RegisterPage = memo(() => {
               <Link to={'/main'}>메인화면으로</Link>
             </div>
           </div>
-
         </LoginPageContainer>
       </>
     </div>

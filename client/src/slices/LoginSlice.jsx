@@ -5,7 +5,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:3001/api/users/';
 
 /** 비동기 처리 함수 구현 */
-export const login = createAsyncThunk('loginSlice/login', async (payload, { rejectWithValue }) => {
+export const Login = createAsyncThunk('loginSlice/login', async (payload, { rejectWithValue }) => {
   let result = null;
 
   try {
@@ -37,11 +37,11 @@ const loginSlice = createSlice({
 
   extraReducers: {
     // 로딩 상태
-    [login.pending]: (state, { payload }) => {
+    [Login.pending]: (state, { payload }) => {
       return { ...state, loading: true };
     },
     // ajax 처리 완료시
-    [login.fulfilled]: (state, { payload }) => {
+    [Login.fulfilled]: (state, { payload }) => {
       return {
         data: payload?.data,
         loading: false,
@@ -49,7 +49,7 @@ const loginSlice = createSlice({
       };
     },
     // 에러 발생시
-    [login.rejected]: (state, { payload }) => {
+    [Login.rejected]: (state, { payload }) => {
       const res = payload.response;
       return {
         data: payload?.data,

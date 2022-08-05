@@ -57,7 +57,7 @@ const LoginPageContainer = styled.div`
         .input-icon {
           position: absolute;
           display: flex;
-          top: 20%;
+          top: 15%;
           left: 2%;
           font-size: 1.7rem;
         }
@@ -68,7 +68,7 @@ const LoginPageContainer = styled.div`
           border-bottom: 2px solid #bcbcbc;
           outline: none;
           padding: 10px 20px 10px 40px;
-          font-size: 1.1rem;
+          font-size: 1rem;
 
           &::-webkit-input-placeholder {
             color: #bcbcbc;

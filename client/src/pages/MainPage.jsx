@@ -2,7 +2,7 @@
 import React, { memo, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import ScrollEvent from '../events/ScrollEvent';
+import { ScrollEvent } from '../utils/ScrollEvent';
 
 // 컴포넌트 참조
 import Meta from '../Meta';

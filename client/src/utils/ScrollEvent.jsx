@@ -1,4 +1,4 @@
-export const ScrollEvent = (
+const ScrollEvent = (
   logoRef,
   receiveTextRef,
   receiveImgRef,
@@ -72,4 +72,4 @@ export const ScrollEvent = (
   return scrollEvent;
 };
 
-// export default ScrollEvent;
+export { ScrollEvent };

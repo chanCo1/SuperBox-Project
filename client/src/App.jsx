@@ -1,6 +1,9 @@
 /** 패키지 참조 */
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { tokenVerify, setIsLogin } from './slices/UserSlice';
+
 
 /** 컴포넌트 참조 */
 import Header from './components/Header';
@@ -21,8 +24,22 @@ import Footer from './components/Footer';
 
 const App = memo(() => {
 
+  const dispatch = useDispatch();
+
   // 로그인 버튼 클릭시 사용할 boolean 값
   const [loginPageState, setLoginPageState] = useState(false);
+
+  useEffect(() => {
+    if(window.localStorage.getItem('accessToken')) {
+      try {
+        dispatch(tokenVerify());
+      } catch(err) {
+        console.log(err);
+      }
+    } else {
+      dispatch(setIsLogin(false));
+    }
+  }, [dispatch]);
 
   return (
     <>

@@ -1,7 +1,7 @@
 /** 패키지 참조 */
 import React, { memo, useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 // 컴포넌트 참조
@@ -12,14 +12,19 @@ import LoginPageContainer from '../styles/LoginStyle';
 
 import RegexHelper from '../libs/RegexHelper';
 
+// slice 참조
+import { Register } from '../slices/UserSlice';
+
 // 아이콘 참조
 import { FiUser, FiSmile } from 'react-icons/fi';
 import { BsKey } from 'react-icons/bs';
-import { AiOutlineMail, AiOutlinePhone, AiOutlineCheckCircle } from 'react-icons/ai';
+import { AiOutlineMail, AiOutlineCheckCircle } from 'react-icons/ai';
+import { MdPhoneIphone } from 'react-icons/md';
 
 const RegisterPage = memo(() => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   /** 회원가입 입력 상태값 관리 */
   const [register, setRegister] = useState({
@@ -52,6 +57,7 @@ const RegisterPage = memo(() => {
 
   /** input 입력값을 state에 저장 */
   const { userId, password, passwordCheck, userName, email, phoneNumber } = register;
+
   const onChange = useCallback((e) => {
     e.preventDefault();
 
@@ -85,6 +91,7 @@ const RegisterPage = memo(() => {
     }
   }, [register, userId, password, passwordCheck, userName, email, phoneNumber]);
 
+  /** 회원가입 버튼의 submit 이벤트 발생시 */
   const onSubmit = useCallback( async (e) => {
     e.preventDefault();
 
@@ -159,8 +166,34 @@ const RegisterPage = memo(() => {
       }
 
       err.field.focus();
+      return;
     }
-  }, []);
+
+    // 아이디, 이메일, 전화번호 값 존재 여부 확인
+    try {
+      await axios.post('http://localhost:3001/api/users/check', register);
+      alert('회원가입이 완료되었습니다. 로그인 해주세요!');
+      navigate('/main');
+    } catch(e) {
+      const errMsg = e.response.data.message;
+      console.log(e);
+
+      if(errMsg === '같은 아이디가 존재합니다.') {
+        setIdErrorMsg(errMsg);
+        setIdErrorStyle({color: 'red'});
+      } 
+      if(errMsg === '같은 이메일이 존재합니다.') {
+        setEmailErrorMsg(errMsg);
+        setEmailErrorStyle({color: 'red'});
+      }
+      return;
+    }
+
+    // Redux 값 갱신 요청
+    dispatch(Register(register));
+    // navigate('/main');
+
+  }, [dispatch, register, navigate]);
 
   /** input에 입력이 없을 시 초기상태로 변환 */
   useEffect(() => {
@@ -196,6 +229,15 @@ const RegisterPage = memo(() => {
                 onChange={onChange}
                 errMsg={idErrorMsg}
               />
+              {/* <button style={
+                {
+                  position: 'absolute',
+                  width: '15%',
+                  top: '22%',
+                  right: '16%',
+                  fontSize: '13px',
+                }
+              }>중복확인</button> */}
 
               <InputBox
                 icon={<BsKey />}
@@ -242,17 +284,17 @@ const RegisterPage = memo(() => {
               />
 
               <InputBox
-                icon={<AiOutlinePhone />}
+                icon={<MdPhoneIphone />}
                 errStyle={phoneErrorStyle}
                 type={'text'}
                 name={'phoneNumber'}
                 value={phoneNumber || ''}
-                placeholder={"' - ' 제외, 전화번호를 입력하세요.(필수)"}
+                placeholder={'" - " 제외, 전화번호를 입력하세요.(필수)'}
                 onChange={onChange}
                 errMsg={phoneErrorMsg}
               />
 
-              <button type='submit'>함께하기</button>
+              <button type='submit'>회원가입</button>
             </form>
             <div className='login-sign-up'>
               <Link to={'/main'}>메인화면으로</Link>

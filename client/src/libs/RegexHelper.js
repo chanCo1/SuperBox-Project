@@ -40,7 +40,6 @@ class RegexHelper {
     return true;
   };
 
-
   /** - - - - - - - - - - - - - - - - - - 입력값에 대한 정규표현식 검사 */
   field(field, msg, regex) {
     this.value(field, msg);
@@ -76,9 +75,6 @@ class RegexHelper {
   /** TODO: 핸드폰 입력값에 대한 정규표현식 */
   cellphone(field, msg) {
     return this.field(field, msg, /^01([0|1|6|7|8|9])([0-9]{4})([0-9]{4})$/);
-  }
-  cellphone_hyphen(field, msg) {
-    return this.field(field, msg, /^01([0|1|6|7|8|9])/-/([0-9]{4})/-/([0-9]{4})$/);
   }
 };
 

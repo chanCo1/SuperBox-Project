@@ -12,7 +12,7 @@ import LoginPageContainer from '../styles/LoginStyle';
 import RegexHelper from '../libs/RegexHelper';
 
 // slice 참조
-import { Login } from '../slices/LoginSlice';
+import { tokenVerify } from '../slices/UserSlice';
 
 // 아이콘 참조
 import { FiUser } from 'react-icons/fi';
@@ -22,9 +22,6 @@ import { BsKey } from 'react-icons/bs';
 const LoginPage = memo(({ loginPageState }) => {
 
   const dispatch = useDispatch();
-
-  /** Store를 통해 상태값 호출 */
-  // const { data, loading, error } = useSelector(state => state.login);
 
   /** 로그인 입력 상태값 관리 */
   const [login, setLogin] = useState({
@@ -49,7 +46,7 @@ const LoginPage = memo(({ loginPageState }) => {
     if(userId) {
       setIdErrorMsg('');
       setIdErrorStyle({color: '#404040'});
-    }
+    } 
     if(password) {
       setPassErrorMsg('');
       setPassErrorStyle({color: '#404040'});
@@ -72,8 +69,7 @@ const LoginPage = memo(({ loginPageState }) => {
       if(err.message === '아이디를 입력해주세요.') {
         setIdErrorMsg(err.message);
         setIdErrorStyle({color: 'red'});
-      }
-      if(err.message === '비밀번호를 입력해주세요.') {
+      } else if(err.message === '비밀번호를 입력해주세요.') {
         setPassErrorMsg(err.message);
         setPassErrorStyle({color: 'red'});
       }
@@ -81,36 +77,40 @@ const LoginPage = memo(({ loginPageState }) => {
       return;
     }
 
-    // 값의 존재 여부 확인을 위한 추가 ajax 통신
     try {
-      await axios.post('http://localhost:3001/api/users/login',{
-        userId: userId,
-        password: password,
-      });
+      const response = await axios.post('http://localhost:3001/api/users/login', login);
 
-      // window.sessionStorage.setItem("accessToken", "test");
+      const accessToken = response.data.accessToken;
+      const refreshToken = response.data.refreshToken;
+
+      window.localStorage.setItem("accessToken", accessToken);
+      window.localStorage.setItem("refreshToken", refreshToken);
+
+      // Redux 값 갱신 요청
+      dispatch(tokenVerify(login));
+
+      alert('로그인 되었습니다.');
       loginPageState(false);
+
     } catch(e) {
-      console.error(e);
+      const errMsg = e.response.data.message;
+      console.log(e);
       
-      if(e.response.data.message === '아이디가 존재하지 않습니다.') {
-        setIdErrorMsg(e.response.data.message);
+      if(errMsg === '아이디가 존재하지 않습니다.') {
+        setIdErrorMsg(errMsg);
         setIdErrorStyle({color: 'red'});
-      } else if(e.response.data.message === '비밀번호가 틀렸습니다.') {
-        setPassErrorMsg(e.response.data.message);
+      } else if(errMsg === '비밀번호가 틀렸습니다.') {
+        setPassErrorMsg(errMsg);
         setPassErrorStyle({color: 'red'});
       } else {
         alert('로그인에 실패하였습니다.');
       }
+      return;
     }
 
-    // Redux 값 갱신 요청
-    dispatch(Login({
-      userId: userId,
-      password: password,
-    }));
     
-  }, [userId, password, dispatch, loginPageState]);
+    
+  }, [login, dispatch, loginPageState]);
 
   /** input에 입력이 없을시 초기상태로 변환 */
   useEffect(() => {

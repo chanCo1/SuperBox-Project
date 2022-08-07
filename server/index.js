@@ -45,6 +45,11 @@ app.use((req, res, next) => {
 
 /** Express 객체 추가 설정 */
 // cors 해결
+// app.use(cors({
+//   origin: 'http://localhost:3000',
+//   credentals: true,
+//   exposedHeaders: ['total-count'],
+// }));
 app.use(cors());
 
 // POST 파라미터 수신 모듈 설정
@@ -58,18 +63,19 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(methodOverride('X-Method-Override'));
 
 // 쿠키를 처리할 수 있는 객체 연결
-app.use(cookieParser(process.env.COOKIE_ENCRYPT_KEY));
+app.use(cookieParser());
 
-// 세션 설정
-app.use(expressSession({
-  // key: 'loginData',
-  secret: process.env.SESSION_ENCRYPT_KEY,  // 암호화 키
-  resave: false,  // 세션이 초기화 되지 않더라도 새로 저장할지 여부 (일반적으로 false)
-  saveUninitialized: false,  // 세션이 저장되기 전에 기존의 세션을 초기화 상태로 만들지 여부
-  // cookie: {
-  //   expires: 60 * 60 * 24,
-  // }
-}));
+// // 세션 설정
+// app.use(expressSession({
+//   // key: 'loginData',
+//   secret: process.env.SESSION_ENCRYPT_KEY,  // 암호화 키
+//   resave: false,  // 세션이 초기화 되지 않더라도 새로 저장할지 여부 (일반적으로 false)
+//   saveUninitialized: false,  // 세션이 저장되기 전에 기존의 세션을 초기화 상태로 만들지 여부
+//   cookie: {
+//     expires: 60 * 60 * 24,
+//     httpOnly: true
+//   }
+// }));
 
 
 /** router 가져오기 */

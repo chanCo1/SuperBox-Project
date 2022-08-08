@@ -11,19 +11,21 @@ dotenv.config({ path: join(resolve(), '../../env/config.env') });
 
 const createToken = (memberData) => {
 
-  const { user_no, user_id, profile_img } = memberData;
+  const { user_no, user_id } = memberData;
 
   return jwt.sign(
-    { user_no, user_id, profile_img }, 
+    { user_no, user_id }, 
     process.env.SECRET_KEY,
-    { expiresIn: '10s' }
+    { expiresIn: '1d' }
   );
 }
 
 const createRefreshToken = (memberData) => {
 
+  const { user_no, user_id } = memberData;
+
   return jwt.sign(
-    { id: memberData.user_id }, 
+    { user_no, user_id }, 
     process.env.SECRET_KEY,
     { expiresIn: '7d' }
   );

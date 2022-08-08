@@ -155,13 +155,13 @@ router.get('/token', async (req, res) => {
  */
 router.use('/refresh', auth);
 router.get('/refresh', async (req, res) => {
-  const { id } = req.decoded;
-  const sql = 'SELECT * FROM member WHERE user_id = ?';
+  const { user_no } = req.decoded;
+  const sql = 'SELECT * FROM member WHERE user_no = ?';
 
   let memberData = null;
 
   try {
-    const result = await mysqlPool(sql, id);
+    const result = await mysqlPool(sql, user_no);
     
     for (const data of result) {
       memberData = data;

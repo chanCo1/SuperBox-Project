@@ -11,7 +11,6 @@ const secret = process.env.SECRET_KEY;
 
 const auth = (req, res, next) => {
   console.log(req.headers);
-  // console.log(req.headers);
   const token = req.query.token || req.headers['access-token'];
 
   if (!token) {
@@ -21,9 +20,12 @@ const auth = (req, res, next) => {
 
   // 토큰 확인
   try {
-    jwt.verify(token, secret, (err, decode) => {
-      if (err) console.log('유효하지 않은 토큰입니다.');
-      req.decoded = decode;
+    jwt.verify(token, secret, (err, decoded) => {
+      if (err) {
+        // res.status(401).json({ success: false, message: err.message });
+        throw new Error('유효하지 않은 토큰입니다.(verify)');
+      }
+      req.decoded = decoded;
       req.token = token;
       next();
     });

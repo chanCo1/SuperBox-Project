@@ -45,11 +45,6 @@ app.use((req, res, next) => {
 
 /** Express 객체 추가 설정 */
 // cors 해결
-// app.use(cors({
-//   origin: 'http://localhost:3000',
-//   credentals: true,
-//   exposedHeaders: ['total-count'],
-// }));
 app.use(cors());
 
 // POST 파라미터 수신 모듈 설정
@@ -78,7 +73,7 @@ app.use(cookieParser());
 // }));
 
 
-/** router 가져오기 */
+/** router 사용 */
 app.use('/api/users', users);
 
 

@@ -67,6 +67,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
+
 /** 
  * 회원가입 
  */
@@ -140,7 +141,7 @@ router.get('/token', async (req, res) => {
     }
 
   } catch(err) {
-    console.log(err);
+    res.status(401).json({ success: false, message: err });
   }
   res.status(200).json({ 
     success: true,
@@ -153,24 +154,25 @@ router.get('/token', async (req, res) => {
  * refresh 토큰
  */
 router.use('/refresh', auth);
-router.get('/refresh', async (res, req) => {
-  const { user_no } = req.decoded;
-  const sql = 'SELECT * FROM member WHERE user_no = ?';
+router.get('/refresh', async (req, res) => {
+  const { id } = req.decoded;
+  const sql = 'SELECT * FROM member WHERE user_id = ?';
 
   let memberData = null;
 
   try {
-    const result = await mysqlPool(sql, user_no);
+    const result = await mysqlPool(sql, id);
     
     for (const data of result) {
       memberData = data;
     }
     
-    if(memberData !== null && memberData.token) {
+    if(memberData !== null && memberData.token === req.token) {
       const accessToken = await createToken(memberData);
       res.send({ success: true, accessToken });
+
     } else {
-      console.log('유효하지 않은 토큰입니다.');
+      throw new Error('유효하지 않은 토큰입니다.');
     }
   } catch(err) {
     res.status(401).json({ success: false, message: err.message });

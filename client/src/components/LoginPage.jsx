@@ -2,7 +2,8 @@
 import React, { memo, useState, useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../config/axios';
+// import axios from 'axios';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
@@ -86,8 +87,10 @@ const LoginPage = memo(({ loginPageState }) => {
       window.localStorage.setItem("accessToken", accessToken);
       window.localStorage.setItem("refreshToken", refreshToken);
 
+      // axios.defaults.headers.common['Authorization'] = `Basic ${window.localStorage.getItem("accessToken")}`
+
       // Redux 값 갱신 요청
-      dispatch(tokenVerify(login));
+      dispatch(tokenVerify(accessToken));
 
       alert('로그인 되었습니다.');
       loginPageState(false);
@@ -107,8 +110,6 @@ const LoginPage = memo(({ loginPageState }) => {
       }
       return;
     }
-
-    
     
   }, [login, dispatch, loginPageState]);
 

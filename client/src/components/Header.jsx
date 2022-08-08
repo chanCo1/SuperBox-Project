@@ -2,7 +2,8 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setIsLogin } from '../slices/UserSlice';
 
 import Spinner from './Spinner';
 
@@ -160,10 +161,12 @@ const MyPage = styled.div`
  */
 const Header = memo(({ loginPageState }) => {
 
+  const dispatch = useDispatch();
+
   /** Store를 통해 상태값 호출 */
-  const { data, loading, isLogin } = useSelector(state => state.user);
-  console.log('isLogin >>> ', isLogin)
-  console.log('data >>> ', data)
+  const { loading, isLogin } = useSelector(state => state.user);
+  console.log('isLogin>>>>>',isLogin);
+
 
   // // 로그인 상태값 -> 로그인 구현하면 활용할 예정
   // const [login, setLogin] = useState(false);
@@ -190,6 +193,13 @@ const Header = memo(({ loginPageState }) => {
   const loginBtnClick = useCallback(() => {
     loginPageState(true);
   }, [loginPageState]);
+
+  // 로그아웃 버튼
+  const logoutBtn = useCallback((e) => {
+    window.localStorage.clear();
+    dispatch(setIsLogin(false));
+    alert('로그아웃 되었습니다.');
+  }, [dispatch]);
 
   return (
     <>
@@ -225,7 +235,7 @@ const Header = memo(({ loginPageState }) => {
           </MyPage>
 
           {isLogin ? (
-            <button className='login-button' onClick={loginBtnClick}>로그아웃</button>
+            <button className='login-button' onClick={logoutBtn}>로그아웃</button>
           ) : (
             <button className='login-button' onClick={loginBtnClick}>로그인</button>
           )}

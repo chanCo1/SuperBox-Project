@@ -1,7 +1,7 @@
 /** 패키지 참조 */
 import React, { memo, useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { tokenVerify, setIsLogin } from './slices/UserSlice';
 
 
@@ -29,6 +29,11 @@ const App = memo(() => {
   // 로그인 버튼 클릭시 사용할 boolean 값
   const [loginPageState, setLoginPageState] = useState(false);
 
+  // // 리덕스를 통해 토큰값을 가져온다.
+  // const { accessToken } = useSelector(state => state.user);
+  // console.log(accessToken);
+  
+  // 앱이 실행될 때 마다 토큰 유효성 검사 실행
   useEffect(() => {
     if(window.localStorage.getItem('accessToken')) {
       try {

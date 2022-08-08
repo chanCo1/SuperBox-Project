@@ -1,6 +1,7 @@
 /** 패키치 참조 */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../config/axios';
 import { pending, fulfilled, rejected } from '../utils/ExtraReducers';
 
 const API_URL = 'http://localhost:3001/api/users/';
@@ -12,10 +13,10 @@ export const tokenVerify = createAsyncThunk('userSlice/tokenVerify', async (payl
   let result = null;
 
   try {
-    result = await axios.get(`${API_URL}check`, {
+    result = await axios.get(`${API_URL}token`, {
       params: {
         token: payload,
-      }
+      },
     });
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
@@ -29,7 +30,7 @@ export const tokenVerify = createAsyncThunk('userSlice/tokenVerify', async (payl
     // console.error(err.response.data);
     result = rejectWithValue(err);
   }
-
+  console.log(result);
   return result;
 });
 
@@ -66,8 +67,8 @@ const userSlice = createSlice({
     data: null,
     loading: false,
     error: null,
-    // id: null,
-    // accessToken: null,
+    id: null,
+    accessToken: null,
     isLogin: false,
   },
 
@@ -82,16 +83,16 @@ const userSlice = createSlice({
 
   extraReducers: {
     // 로그인 reducer
-    [tokenVerify.pending]: (state, { payload }) => {
+    [tokenVerify.pending]: (state,  { payload }) => {
       return { ...state, loading: true };
     },
     [tokenVerify.fulfilled]: (state, { payload }) => {
       return {
         ...state,
         data: payload?.data,
-        userData: payload?.data.userData,
-        // id: payload?.data.userData.user_id,
-        // accessToken: payload?.data.userData.accessToken,
+        memberData: payload?.data.memberData,
+        // id: payload?.data.memberData.user_id,
+        // accessToken: payload?.data.memberData.token,
         loading: false,
         error: null,
         isLogin: true,

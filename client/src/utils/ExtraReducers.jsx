@@ -12,7 +12,7 @@ const fulfilled = (state, { payload }) => {
     data: payload?.data,
     loading: false,
     error: null,
-    isLogin: true,
+    // isLogin: true,
   };
 };
 

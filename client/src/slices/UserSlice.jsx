@@ -1,13 +1,12 @@
 /** 패키치 참조 */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-// import axios from 'axios';
 import axios from '../config/axios';
 import { pending, fulfilled, rejected } from '../utils/ExtraReducers';
 
 const API_URL = 'http://localhost:3001/api/users/';
 
 /** 
- * 로그인 정보에 대한 비동기 처리 
+ * 토큰에 대한 유효성 확인 백엔드 통신
  */
 export const tokenVerify = createAsyncThunk('userSlice/tokenVerify', async (payload, { rejectWithValue }) => {
   let result = null;
@@ -30,12 +29,11 @@ export const tokenVerify = createAsyncThunk('userSlice/tokenVerify', async (payl
     // console.error(err.response.data);
     result = rejectWithValue(err);
   }
-  console.log(result);
   return result;
 });
 
 /** 
- * 회원가입에 대한 비동기 처리 
+ * 회원가입에 대한 백엔드 통신
  */
 export const Register = createAsyncThunk('userSlice/register', async (payload, {rejectWithValue }) => {
   let result = null;
@@ -72,7 +70,7 @@ const userSlice = createSlice({
     isLogin: false,
   },
 
-  // 내부적으로 사용
+  // 내부적으로 로그인 상태값 사용
   reducers: {
     setIsLogin: (state, { payload }) => {
       if(!payload) {

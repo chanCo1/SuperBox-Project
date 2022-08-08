@@ -1,10 +1,9 @@
+/**
+ * axios 통신 할 때 인터셉트하여 정보를 추가하여 보내거나 받는다.
+ */
 import axios from 'axios';
 
-// const axios = Axios.create({
-//   baseURL: 'http://localhost:3000/',
-// });
-
-axios.defaults.baseURL = 'http://localhost:3000/';
+axios.defaults.baseURL = 'http://localhost:3001';
 
 axios.interceptors.request.use(
   (request) => {
@@ -22,12 +21,11 @@ axios.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log(error);
     const { response, config } = error;
 
     if (response.status === 401) {
       const { data } = await axios.get('api/users/refresh', {
-        baseURL: 'http://localhost:3000/',
+        baseURL: 'http://localhost:3001',
         params: {
           token: window.localStorage.getItem('refreshToken'),
         },

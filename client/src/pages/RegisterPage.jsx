@@ -1,6 +1,6 @@
 /** 패키지 참조 */
 import React, { memo, useState, useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -9,6 +9,7 @@ import Meta from '../Meta';
 import Logo from '../components/Logo';
 import InputBox from '../components/InputBox';
 import LoginPageContainer from '../styles/LoginStyle';
+import Spinner from '../components/Spinner';
 
 import RegexHelper from '../libs/RegexHelper';
 
@@ -21,12 +22,16 @@ import { BsKey } from 'react-icons/bs';
 import { AiOutlineMail, AiOutlineCheckCircle } from 'react-icons/ai';
 import { MdPhoneIphone } from 'react-icons/md';
 
-const RegisterPage = memo(() => {
+const RegisterPage = memo(({ loginPageState }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  /** 회원가입 입력 상태값 관리 */
+  const { loading } = useSelector(state => state.user);
+
+  /** 
+   * 회원가입 입력 상태값 관리 
+   */
   const [register, setRegister] = useState({
     userId: '',
     password: '',
@@ -36,7 +41,9 @@ const RegisterPage = memo(() => {
     phoneNumber: '',
   });
 
-  /** 에러 메세지 및 스타일 정의 */
+  /** 
+   * 에러 메세지 및 스타일 정의 
+   */
   const [idErrorMsg, setIdErrorMsg] = useState('');
   const [idErrorStyle, setIdErrorStyle] = useState({color: '#bcbcbc'});
 
@@ -55,7 +62,9 @@ const RegisterPage = memo(() => {
   const [phoneErrorMsg, setPhoneErrorMsg] = useState('');
   const [phoneErrorStyle, setPhoneErrorStyle] = useState({color: '#bcbcbc'});
 
-  /** input 입력값을 state에 저장 */
+  /** 
+   * input 입력값을 state에 저장 
+   */
   const { userId, password, passwordCheck, userName, email, phoneNumber } = register;
 
   const onChange = useCallback((e) => {
@@ -91,7 +100,9 @@ const RegisterPage = memo(() => {
     }
   }, [register, userId, password, passwordCheck, userName, email, phoneNumber]);
 
-  /** 회원가입 버튼의 submit 이벤트 발생시 */
+  /** 
+   * 회원가입 버튼의 submit 이벤트 발생시 
+   */
   const onSubmit = useCallback( async (e) => {
     e.preventDefault();
 
@@ -100,18 +111,18 @@ const RegisterPage = memo(() => {
     try {
       // 아이디 유효성 검사
       RegexHelper.value(current.userId, '아이디를 입력해주세요.');
-      RegexHelper.idCheck(current.userId, '영문(소문자), 숫자, 4~10자리만 가능합니다.');
+      RegexHelper.idCheck(current.userId, '4~10자리의 영문(소문자)과 숫자만 가능합니다.');
 
       // 비밀번호 유효성 검사
       RegexHelper.value(current.password,  '비밀번호를 입력해주세요.');
-      RegexHelper.pwCheck(current.password,  '영문(대/소문자)+숫자+특수문자, 8~20자리만 가능합니다.');
+      RegexHelper.pwCheck(current.password,  '8~20자리의 영문(대/소문자)+숫자+특수문자만 가능합니다.');
 
       RegexHelper.value(current.passwordCheck, '비밀번호를 확인해주세요.');
       RegexHelper.compare(current.password, current.passwordCheck, '비밀번호가 일치하지 않습니다.');
 
       // 이름 유효성 검사
       RegexHelper.value(current.userName, '이름을 입력해주세요.');
-      RegexHelper.nameCheck(current.userName, '영문(소문자), 한글, 2~10자리만 가능합니다.');
+      RegexHelper.nameCheck(current.userName, '2~10자리의 영문(소문자), 한글만 가능합니다.');
 
       // 이메일 유효성 검사
       RegexHelper.value(current.email, '이메일을 입력해주세요.');
@@ -122,16 +133,17 @@ const RegisterPage = memo(() => {
       RegexHelper.cellphone(current.phoneNumber, '전화번호 형식에 맞지 않습니다. "-"이 있다면 빼고 입력해주세요.');
 
     } catch(err) {
+      // 에러 메세지와 이모티콘 색 지정
       if(
         err.message === '아이디를 입력해주세요.' ||
-        err.message === '영문(소문자), 숫자, 4~10자리만 가능합니다.'
+        err.message === '4~10자리의 영문(소문자)과 숫자만 가능합니다.'
       ) {
         setIdErrorMsg(err.message);
         setIdErrorStyle({color: 'red'});
       }
       if(
         err.message === '비밀번호를 입력해주세요.' ||
-        err.message === '영문(대/소문자)+숫자+특수문자, 8~20자리만 가능합니다.'
+        err.message === '8~20자리의 영문(대/소문자)+숫자+특수문자만 가능합니다.'
       ) {
         setPassErrorMsg(err.message);
         setPassErrorStyle({color: 'red'});
@@ -145,7 +157,7 @@ const RegisterPage = memo(() => {
       }
       if(
         err.message === '이름을 입력해주세요.' ||
-        err.message === '영문(소문자), 한글, 2~10자리만 가능합니다.'
+        err.message === '2~10자리의 영문(소문자), 한글만 가능합니다.'
       ) {
         setNameErrorMsg(err.message);
         setNameErrorStyle({color: 'red'});
@@ -174,10 +186,12 @@ const RegisterPage = memo(() => {
       await axios.post('http://localhost:3001/api/users/check', register);
       alert('회원가입이 완료되었습니다. 로그인 해주세요!');
       navigate('/main');
+      loginPageState(true);
+      
     } catch(e) {
       const errMsg = e.response.data.message;
       console.log(e);
-
+      
       if(errMsg === '같은 아이디가 존재합니다.') {
         setIdErrorMsg(errMsg);
         setIdErrorStyle({color: 'red'});
@@ -187,15 +201,16 @@ const RegisterPage = memo(() => {
         setEmailErrorStyle({color: 'red'});
       }
       return;
-    }
-
+    };
+    
     // Redux 값 갱신 요청
     dispatch(Register(register));
-    // navigate('/main');
 
-  }, [dispatch, register, navigate]);
+  }, [dispatch, register, navigate, loginPageState]);
 
-  /** input에 입력이 없을 시 초기상태로 변환 */
+  /** 
+   * input에 입력이 없을 시 초기상태로 변환 
+   */
   useEffect(() => {
     if(!userId) setIdErrorStyle({color: '#bcbcbc'})
     if(!password) setPassErrorStyle({color: '#bcbcbc'});
@@ -209,6 +224,7 @@ const RegisterPage = memo(() => {
     <div>
       <>
         <Meta title={'SuperBox :: 회원가입'} />
+        <Spinner visible={loading} />
 
         <LoginPageContainer style={{background: '#f7f8fb'}}>
           <Logo />

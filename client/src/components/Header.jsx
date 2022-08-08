@@ -1,7 +1,7 @@
 /** 패키지 참조 */
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setIsLogin } from '../slices/UserSlice';
 
@@ -162,21 +162,11 @@ const MyPage = styled.div`
 const Header = memo(({ loginPageState }) => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   /** Store를 통해 상태값 호출 */
   const { loading, isLogin } = useSelector(state => state.user);
-  console.log('isLogin>>>>>',isLogin);
-
-
-  // // 로그인 상태값 -> 로그인 구현하면 활용할 예정
-  // const [login, setLogin] = useState(false);
-
-  // // 로그인 성공 시 마이페이지 아이콘 표시
-  // useEffect(() => {
-  //   if(data?.message === '로그인 성공') {
-  //     setLogin(true);
-  //   }
-  // }, [data]);
+  console.log('isLogin 상태 >> ',isLogin);
 
   // 고객센터 서브메뉴 on/off -> 최대높이값을 주는걸로 해결
   const [customerStyle, setCustomerStyle] = useState({ maxHeight: 0, opacity: 0 });
@@ -195,11 +185,21 @@ const Header = memo(({ loginPageState }) => {
   }, [loginPageState]);
 
   // 로그아웃 버튼
-  const logoutBtn = useCallback((e) => {
+  const logoutBtnClick = useCallback((e) => {
     window.localStorage.clear();
     dispatch(setIsLogin(false));
     alert('로그아웃 되었습니다.');
-  }, [dispatch]);
+    navigate('/main');
+  }, [dispatch, navigate]);
+
+  // 로그인 상태가 false면 배송접수 버튼 차단
+  const connectReceivePage = useCallback(e => {
+    if(!isLogin) {
+      alert('로그인 먼저 해주세요~');
+      e.preventDefault();
+      loginPageState(true);
+    }
+  }, [isLogin, loginPageState])
 
   return (
     <>
@@ -216,7 +216,7 @@ const Header = memo(({ loginPageState }) => {
           </Link>
 
           <ul className="nav-wrap">
-            <NavLink className="NavLink nav" to={'/receive'}><li>배송접수</li></NavLink>
+            <NavLink className="NavLink nav" to={'/receive'} onClick={connectReceivePage}><li>배송접수</li></NavLink>
             <NavLink className="NavLink nav" to={'/review'}><li>고객후기</li></NavLink>
             <li className="NavLink nav" onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
               고객센터
@@ -235,12 +235,10 @@ const Header = memo(({ loginPageState }) => {
           </MyPage>
 
           {isLogin ? (
-            <button className='login-button' onClick={logoutBtn}>로그아웃</button>
+            <button className='login-button' onClick={logoutBtnClick}>로그아웃</button>
           ) : (
             <button className='login-button' onClick={loginBtnClick}>로그인</button>
           )}
-          {/* <Link to={'/login'}>
-          </Link> */}
         </div>
       </HeaderContainer>
     </>

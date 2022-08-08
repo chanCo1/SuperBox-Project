@@ -28,10 +28,6 @@ const App = memo(() => {
 
   // 로그인 버튼 클릭시 사용할 boolean 값
   const [loginPageState, setLoginPageState] = useState(false);
-
-  // // 리덕스를 통해 토큰값을 가져온다.
-  // const { accessToken } = useSelector(state => state.user);
-  // console.log(accessToken);
   
   // 앱이 실행될 때 마다 토큰 유효성 검사 실행
   useEffect(() => {
@@ -59,7 +55,7 @@ const App = memo(() => {
         <Route path='/review' element={<ReviewPage />} />
         <Route path='/mypage' element={<MyPage />} />
         {/* <Route path='/login' element={<LoginPage />} /> */}
-        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/register' element={<RegisterPage loginPageState={setLoginPageState} />} />
         <Route path='/customer/notice' element={<NoticePage />} />
         <Route path='/customer/faq' element={<FaqPage />} />
         <Route path='/customer/inquiry' element={<InquiryPage />} />

@@ -13,7 +13,6 @@ const SearchAddress = memo(({ setStartMyAddress, setArriveMyAddress }) => {
 
   /** 출발지 주소검색 */
   const startHandleComplete = (data) => {
-    console.log('주소검색 data!! >> ',data);
     let fullAddress = data.address;
     let extraAddress = '';
 
@@ -36,7 +35,6 @@ const SearchAddress = memo(({ setStartMyAddress, setArriveMyAddress }) => {
 
   /** 도착지 주소검색 */
   const arriveHandleComplete = (data) => {
-    console.log('주소검색 data!! >> ',data);
     let fullAddress = data.address;
     let extraAddress = '';
 

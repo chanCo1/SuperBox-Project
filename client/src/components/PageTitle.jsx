@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const PageTitleContainer = styled.div`
   position: relative;
   width: 1200px;
-  padding: 165px 0 95px;
+  padding: 135px 0 65px;
   margin: 0 auto;
   color: #404040;
 

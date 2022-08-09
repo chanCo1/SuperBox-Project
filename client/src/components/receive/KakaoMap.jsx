@@ -13,9 +13,8 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
   const mapRef = useRef();
 
   const [startPosition, setStartPosition] = useState('');
-  console.log("startPosition >>> ", startPosition);
   const [arrivePosition, setArrivePosition] = useState('');
-  console.log("arrivePosition >>> ",arrivePosition);
+  const [flag, setFlag] = useState(false);
 
   useEffect(() => {
     /**
@@ -25,7 +24,7 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
     // 지도 시작위치
     const mapOption = {
       center: new kakao.maps.LatLng(37.566535, 126.97796919),
-      level: 3,
+      level: 4,
     };
     // 지도 생성
     const map = new kakao.maps.Map(mapContainer, mapOption);
@@ -38,8 +37,7 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
       if(status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         setStartPosition(coords);
-
-        map.panTo(coords)
+        setFlag(true);
 
         /** 결과값으로 출발 마커 생성 */
         const startMarkerSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png';
@@ -57,8 +55,8 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
         });
     
         // 정보 표시
-        const startInfoContent = `<div style="padding: 30px">${startMyAddress}</div>`;
-        const startInfoPosition = new kakao.maps.LatLng(37.462882421, 127.139002132);
+        const startInfoContent = `<div style="padding: 30px">출발지:<br /> ${startMyAddress} </div>`;
+        const startInfoPosition = new kakao.maps.LatLng(startPosition.Ma, startPosition.La);
     
         const startInfoWindow = new kakao.maps.InfoWindow({
           content: startInfoContent,
@@ -72,16 +70,20 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
         kakao.maps.event.addListener(startMarker, 'mouseout', () => {
           startInfoWindow.close();
         });
+
+        if(flag) {
+          map.panTo(coords);
+          setFlag(false);
+        }
       }
-    })
-    // 경기 성남시 수정구 수정로 319 (산성역포레스티아아파트)
+    });
+
     /** 주소로 도착지 좌표를 검색한다. */
     arriveMyAddress && geocoder.addressSearch(arriveMyAddress, (result, status) => {
       if(status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         setArrivePosition(coords);
-
-        map.panTo(coords);
+        setFlag(false);
 
         /** 결과값으로 도착 마커 생성 */
         const arriveMarkerSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_drag.png';
@@ -99,8 +101,8 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
         });
     
         // 정보 표시
-        const arriveInfoContent = "<div style='padding: 30px'></div>";
-        const arriveInfoPosition = new kakao.maps.LatLng(37.462882421, 127.139002132);
+        const arriveInfoContent = `<div style="padding: 30px;">도착지: <br /> ${arriveMyAddress}</div>`;
+        const arriveInfoPosition = new kakao.maps.LatLng(arrivePosition.Ma, arrivePosition.La);
     
         const arriveInfoWindow = new kakao.maps.InfoWindow({
           content: arriveInfoContent,
@@ -114,21 +116,23 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
         kakao.maps.event.addListener(arriveMarker, 'mouseout', () => {
           arriveInfoWindow.close();
         });
+
+        // map.panTo(coords);
       }
-    })
+    });
 
     /**
      * 연결선 생성
      */
-    const firstPolyline = [
-      new kakao.maps.LatLng(startPosition.Ma, startPosition.La ),
+    const polyline = [
+      new kakao.maps.LatLng(startPosition.Ma, startPosition.La),
       new kakao.maps.LatLng(arrivePosition.Ma, arrivePosition.La),
     ];
 
-    startPosition && new kakao.maps.Polyline({
+    polyline && new kakao.maps.Polyline({
       map: map,
-      path: firstPolyline,
-      strokeWeight: 5,
+      path: polyline,
+      strokeWeight: 7,
       strokeColor: 'red',
       strokeStyle: 'dashed'
     });
@@ -137,7 +141,22 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
     const zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-  }, [startMyAddress, arriveMyAddress]);
+    // 지도 범위 재설정
+    if(startPosition.La && arrivePosition.La) {
+
+      let bounds = new kakao.maps.LatLngBounds();
+      for(let i = 0; i < polyline.length; i++) {
+        // LatLngBounds 객체에 좌표 추가
+        console.log(polyline[i]);
+        bounds.extend(polyline[i]);
+      }
+  
+      map.setBounds(bounds);
+    }
+
+    map.relayout();
+
+  }, [startMyAddress, arriveMyAddress, startPosition.La, startPosition.Ma, arrivePosition.La, arrivePosition.Ma]);
 
   return <div id="map" className="kakao-map" style={{ width: '100%', height: '600px' }} ref={mapRef} />;
 });

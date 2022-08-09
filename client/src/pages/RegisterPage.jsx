@@ -3,11 +3,12 @@ import React, { memo, useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
-import Logo from '../components/Logo';
-import InputBox from '../components/InputBox';
+import Logo from '../components/login/Logo';
+import InputBox from '../components/login/InputBox';
 import LoginPageContainer from '../styles/LoginStyle';
 import Spinner from '../components/Spinner';
 
@@ -184,10 +185,16 @@ const RegisterPage = memo(({ loginPageState }) => {
     // 아이디, 이메일, 전화번호 값 존재 여부 확인
     try {
       await axios.post('http://localhost:3001/api/users/check', register);
-      alert('회원가입이 완료되었습니다. 로그인 해주세요!');
-      navigate('/main');
-      loginPageState(true);
-      
+      Swal.fire({
+        icon: 'success',
+        iconColor: '#f3b017',
+        text:'회원가입이 완료되었습니다.',
+        confirmButtonColor: '#f3b017',
+      }).then(() => {
+        navigate('/main');
+        loginPageState(true);
+      });
+
     } catch(e) {
       const errMsg = e.response.data.message;
       console.log(e);

@@ -65,8 +65,6 @@ const userSlice = createSlice({
     data: null,
     loading: false,
     error: null,
-    id: null,
-    accessToken: null,
     isLogin: false,
   },
 
@@ -89,8 +87,6 @@ const userSlice = createSlice({
         ...state,
         data: payload?.data,
         memberData: payload?.data.memberData,
-        // id: payload?.data.memberData.user_id,
-        // accessToken: payload?.data.memberData.token,
         loading: false,
         error: null,
         isLogin: true,

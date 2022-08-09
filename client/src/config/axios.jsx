@@ -32,9 +32,12 @@ axios.interceptors.response.use(
       });
 
       const { accessToken } = data;
-      window.localStorage.setItem('accessToken', accessToken); //새 액세스 토큰을 로컬스토리지에 저장
-      config.headers['access-token'] = accessToken; //새 액세스 토큰을 헤더에 설정
-      return await axios(config); //재요청
+      //새 액세스 토큰을 로컬스토리지에 저장
+      window.localStorage.setItem('accessToken', accessToken);
+      //새 액세스 토큰을 헤더에 설정
+      config.headers['access-token'] = accessToken;
+      //재요청
+      return await axios(config);
     }
     return Promise.reject(error);
   }

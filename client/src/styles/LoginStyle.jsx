@@ -5,7 +5,7 @@ const LoginPageContainer = styled.div`
   width: 100%;
   height: 100vh;
   background-color: rgba(0,0,0,.5);
-  z-index: 9;
+  z-index: 99;
 
   .login-wrap {
     position: absolute;

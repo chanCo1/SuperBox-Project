@@ -3,9 +3,10 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsLogin } from '../slices/UserSlice';
+import Swal from 'sweetalert2';
 
 import Spinner from './Spinner';
+import { setIsLogin } from '../slices/UserSlice';
 
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
@@ -21,7 +22,7 @@ const HeaderContainer = styled.div`
   width: 100%;
   border-bottom: 4px solid #f3b017;
   background-color: #fff;
-  z-index: 1;
+  z-index: 9;
 
   .header-wrap {
     position: relative;
@@ -31,6 +32,11 @@ const HeaderContainer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: 1200px) {
+      width: 90%;
+      margin: 0 auto;
+    }
     
     .logo {
       display: flex;
@@ -166,7 +172,6 @@ const Header = memo(({ loginPageState }) => {
 
   /** Store를 통해 상태값 호출 */
   const { loading, isLogin } = useSelector(state => state.user);
-  console.log('isLogin 상태 >> ',isLogin);
 
   // 고객센터 서브메뉴 on/off -> 최대높이값을 주는걸로 해결
   const [customerStyle, setCustomerStyle] = useState({ maxHeight: 0, opacity: 0 });
@@ -188,16 +193,32 @@ const Header = memo(({ loginPageState }) => {
   const logoutBtnClick = useCallback((e) => {
     window.localStorage.clear();
     dispatch(setIsLogin(false));
-    alert('로그아웃 되었습니다.');
+
+    Swal.fire({
+      icon: 'info',
+      iconColor: '#f3b017',
+      text:'로그아웃 되었습니다.',
+      showConfirmButton: false,
+      timer: 1000,
+    });
+
     navigate('/main');
   }, [dispatch, navigate]);
 
   // 로그인 상태가 false면 배송접수 버튼 차단
   const connectReceivePage = useCallback(e => {
     if(!isLogin) {
-      alert('로그인 먼저 해주세요~');
+      Swal.fire({
+        icon: 'warning',
+        iconColor: '#f3b017',
+        text:'로그인 후 이용해주세요.',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#f3b017',
+      }).then(() => {
+        loginPageState(true);
+      });
+
       e.preventDefault();
-      loginPageState(true);
     }
   }, [isLogin, loginPageState])
 
@@ -222,7 +243,7 @@ const Header = memo(({ loginPageState }) => {
               고객센터
               <ul className='customer-Subnav' style={customerStyle}>
                 <Link to={'/customer/notice'}><li>공지사항</li></Link>
-                <Link to={'/customer/faq'}><li>자주찾는 질문</li></Link>
+                <Link to={'/customer/faq'}><li>자주 찾는 질문</li></Link>
                 <Link to={'/customer/inquiry'}><li>1:1 문의</li></Link>
               </ul>
             </li>

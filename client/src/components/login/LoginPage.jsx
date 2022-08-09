@@ -2,18 +2,19 @@
 import React, { memo, useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from '../config/axios';
+import axios from '../../config/axios';
+import swal from 'sweetalert2';
 
 // 컴포넌트 참조
-import Meta from '../Meta';
+import Meta from '../../Meta';
 import Logo from './Logo';
 import InputBox from './InputBox';
-import LoginPageContainer from '../styles/LoginStyle';
-import RegexHelper from '../libs/RegexHelper';
-import Spinner from './Spinner';
+import LoginPageContainer from '../../styles/LoginStyle';
+import RegexHelper from '../../libs/RegexHelper';
+import Spinner from '../Spinner';
 
 // slice 참조
-import { tokenVerify } from '../slices/UserSlice';
+import { tokenVerify } from '../../slices/UserSlice';
 
 // 아이콘 참조
 import { FiUser } from 'react-icons/fi';
@@ -95,7 +96,14 @@ const LoginPage = memo(({ loginPageState }) => {
         // Redux 값 갱신 요청
         dispatch(tokenVerify(accessToken));
 
-        alert('로그인 되었습니다.');
+        swal.fire({
+          icon: 'success',
+          iconColor: '#f3b017',
+          text:'로그인 되었습니다.',
+          showConfirmButton: false,
+          timer: 1000,
+        });
+
         loginPageState(false);
       } catch (e) {
         const errMsg = e.response.data.message;
@@ -108,7 +116,12 @@ const LoginPage = memo(({ loginPageState }) => {
           setPassErrorMsg(errMsg);
           setPassErrorStyle({ color: 'red' });
         } else {
-          alert('로그인에 실패하였습니다.');
+          swal.fire({
+            icon: 'success',
+            iconColor: '#f3b017',
+            text:'로그인에 실패하였습니다.',
+            confirmButtonColor: '#f3b017',
+          });
         }
         return;
       }

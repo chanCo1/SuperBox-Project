@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // 로딩바 컴포넌트
-import { RotatingSquare } from 'react-loader-spinner';
+// import { RotatingSquare } from 'react-loader-spinner';
+import { Watch } from 'react-loader-spinner';
 
 // 로딩바 뒤에 표시될 반투명
 const TransLayer = styled.div`
@@ -22,7 +23,7 @@ const Spinner = ({visible, color, width, height}) => {
     <>
       {visible && (
         <TransLayer>
-          <RotatingSquare color={color} height={height} width={width}
+          <Watch color={color} height={height} width={width}
           wrapperStyle={{
             position: 'absolute',
             zIndex: 100,

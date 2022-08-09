@@ -1,4 +1,4 @@
-const ScrollEvent = (
+export const ScrollEvent = (
   logoRef,
   receiveTextRef,
   receiveImgRef,
@@ -20,6 +20,14 @@ const ScrollEvent = (
   const useStartBtn = useStartBtnRef.current.style;
 
   const scrollEvent = window.addEventListener('scroll', (e) => {
+    if (window.scrollY < 100) {
+      receiveText.display = 'none';
+      receiveImg.display = 'none';
+    } else {
+      receiveText.display = 'block';
+      receiveImg.display = 'block';
+    }
+
     if (window.scrollY > 350) {
       receiveText.opacity = 1;
       receiveText.transform = 'translateY(0)';
@@ -72,4 +80,4 @@ const ScrollEvent = (
   return scrollEvent;
 };
 
-export { ScrollEvent };
+// export { ScrollEvent };

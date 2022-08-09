@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 // 이미지 참조
-import logo from '../assets/image/superbox-logo.png';
+import logo from '../../assets/image/superbox-logo.png';
 
 const LogoContainer = styled.div`
   position: relative;

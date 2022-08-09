@@ -1,11 +1,17 @@
+/**
+ * 메인 페이지
+ */
+
 /** 패키지 참조 */
-import React, { memo, useEffect, useState, useRef } from 'react';
+import React, { memo, useEffect, useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ScrollEvent } from '../utils/ScrollEvent';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
+import { ScrollEvent } from '../utils/ScrollEvent';
 
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
@@ -286,7 +292,10 @@ const MainUseStartContainer = styled.div`
   }
 `;
 
-const MainPage = memo(() => {
+const MainPage = memo(({ loginPageState }) => {
+
+  /** Store를 통해 상태값 호출 */
+  const { loading, isLogin } = useSelector(state => state.user);
 
   /** 사용할 useRef 호출 */
   const logoRef = useRef();
@@ -303,6 +312,23 @@ const MainPage = memo(() => {
   useEffect(() => {
     ScrollEvent(logoRef, receiveTextRef, receiveImgRef, reviewImgRef, reviewTextRef, customerTextRef, customerImgRef, useStartTextRef, useStartBtnRef);
   }, []);
+
+  // 로그인 상태가 false면 배송접수 버튼 차단
+  const connectReceivePage = useCallback(e => {
+    if(!isLogin) {
+      Swal.fire({
+        icon: 'warning',
+        // iconColor: '#f3b017',
+        text:'로그인 후 이용해주세요.',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#f3b017',
+      }).then(() => {
+        loginPageState(true);
+      });
+
+      e.preventDefault();
+    }
+  }, [isLogin, loginPageState])
 
   return (
     <div>
@@ -362,7 +388,7 @@ const MainPage = memo(() => {
         <div className='main-useStart-wrap'>
           <p ref={useStartTextRef}>그럼 <span>Superbox</span> 한 번 사용해 볼까요?</p>
           <div className='useStart-btn-wrap' ref={useStartBtnRef}>
-            <Link to={'/receive'} className='useStart-btn'>
+            <Link to={'/receive'} className='useStart-btn' onClick={connectReceivePage}>
               <button className='start-btn'>
                 <RiUserReceivedFill className='btn-icon' />
               </button>

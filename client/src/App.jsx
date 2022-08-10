@@ -57,7 +57,7 @@ const App = memo(() => {
           element={isLogin ? <ReceivePage /> : <ErrorPage error={error} />} 
         />
         <Route path="/review" element={<ReviewPage />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage/*" element={<MyPage />} />
         <Route
           path="/register"
           element={<RegisterPage loginPageState={setLoginPageState} />}

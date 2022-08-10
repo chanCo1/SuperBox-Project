@@ -24,6 +24,7 @@ const PageTitle = memo(({ title, subtitle }) => {
     <PageTitleContainer>
       <h1>{title}</h1>
       <p>{subtitle}</p>
+      <hr />
     </PageTitleContainer>
   );
 });

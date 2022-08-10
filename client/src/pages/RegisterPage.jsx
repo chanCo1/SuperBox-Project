@@ -185,6 +185,7 @@ const RegisterPage = memo(({ loginPageState }) => {
     // 아이디, 이메일, 전화번호 값 존재 여부 확인
     try {
       await axios.post('http://localhost:3001/api/users/check', register);
+      
       Swal.fire({
         icon: 'success',
         iconColor: '#f3b017',
@@ -312,7 +313,7 @@ const RegisterPage = memo(({ loginPageState }) => {
                 type={'text'}
                 name={'phoneNumber'}
                 value={phoneNumber || ''}
-                placeholder={'" - " 제외, 전화번호를 입력하세요.(필수)'}
+                placeholder={'" - " 제외, 연락처를 입력하세요.(필수)'}
                 onChange={onChange}
                 errMsg={phoneErrorMsg}
               />

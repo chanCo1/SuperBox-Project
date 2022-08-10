@@ -121,9 +121,7 @@ const HeaderContainer = styled.div`
         background-color: #f3b017;
         color: #fff;
       }
-      &:active {
-        transform: scale(0.9, 0.9);
-      }
+      &:active { transform: scale(0.9, 0.9); }
     }
   }
 `;

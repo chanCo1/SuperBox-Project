@@ -27,9 +27,7 @@ const LoginPageContainer = styled.div`
       color: #999;
       cursor: pointer;
 
-      &:hover {
-        color: #404040;
-      }
+      &:hover { color: #404040; }
     }
 
     .login-text {
@@ -66,13 +64,10 @@ const LoginPageContainer = styled.div`
           width: 100%;
           border: none;
           border-bottom: 2px solid #bcbcbc;
-          outline: none;
           padding: 10px 20px 10px 40px;
           font-size: 1rem;
 
-          &::-webkit-input-placeholder {
-            color: #bcbcbc;
-          }
+          &::-webkit-input-placeholder { color: #bcbcbc; }
           
           &:focus {
             border-color: #404040;
@@ -99,9 +94,7 @@ const LoginPageContainer = styled.div`
         cursor: pointer;
         transition: .3s ease;
 
-        &:active {
-          transform: scale(.9, .9);
-        }
+        &:active { transform: scale(.9, .9); }
       }
     }
 

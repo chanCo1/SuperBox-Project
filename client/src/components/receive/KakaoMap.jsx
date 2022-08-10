@@ -1,5 +1,5 @@
 /**
- * 카카오맵 컴포넌트 (보류)
+ * 카카오맵
  */
 
 /** 패키지 참조 */
@@ -8,7 +8,7 @@ import Map from 'react-kakao-maps-sdk';
 
 const { kakao } = window;
 
-const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
+const KakaoMap = memo(({ sendAddress, arriveAddress }) => {
 
   const mapRef = useRef();
 
@@ -23,8 +23,8 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
     const mapContainer = mapRef.current;
     // 지도 시작위치
     const mapOption = {
-      center: new kakao.maps.LatLng(37.566535, 126.97796919),
-      level: 4,
+      center: new kakao.maps.LatLng(37.4979931764546, 127.02760161038849),
+      level: 3,
     };
     // 지도 생성
     const map = new kakao.maps.Map(mapContainer, mapOption);
@@ -33,7 +33,7 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
     const geocoder = new kakao.maps.services.Geocoder();
 
     /** 주소로 출발지 좌표를 검색한다. */
-    startMyAddress && geocoder.addressSearch(startMyAddress, (result, status) => {
+    sendAddress && geocoder.addressSearch(sendAddress, (result, status) => {
       if(status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         setStartPosition(coords);
@@ -55,7 +55,7 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
         });
     
         // 정보 표시
-        const startInfoContent = `<div style="padding: 30px">출발지:<br /> ${startMyAddress} </div>`;
+        const startInfoContent = `<div style="padding: 20px">${sendAddress} &nbsp;</div>`;
         const startInfoPosition = new kakao.maps.LatLng(startPosition.Ma, startPosition.La);
     
         const startInfoWindow = new kakao.maps.InfoWindow({
@@ -71,6 +71,7 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
           startInfoWindow.close();
         });
 
+        // 주소 입력시에만 화면 이동
         if(flag) {
           map.panTo(coords);
           setFlag(false);
@@ -79,7 +80,7 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
     });
 
     /** 주소로 도착지 좌표를 검색한다. */
-    arriveMyAddress && geocoder.addressSearch(arriveMyAddress, (result, status) => {
+    arriveAddress && geocoder.addressSearch(arriveAddress, (result, status) => {
       if(status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
         setArrivePosition(coords);
@@ -101,7 +102,7 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
         });
     
         // 정보 표시
-        const arriveInfoContent = `<div style="padding: 30px;">도착지: <br /> ${arriveMyAddress}</div>`;
+        const arriveInfoContent = `<div style="padding: 20px;">${arriveAddress} &nbsp;</div>`;
         const arriveInfoPosition = new kakao.maps.LatLng(arrivePosition.Ma, arrivePosition.La);
     
         const arriveInfoWindow = new kakao.maps.InfoWindow({
@@ -129,7 +130,7 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
       new kakao.maps.LatLng(arrivePosition.Ma, arrivePosition.La),
     ];
 
-    polyline && new kakao.maps.Polyline({
+    arrivePosition && new kakao.maps.Polyline({
       map: map,
       path: polyline,
       strokeWeight: 7,
@@ -147,7 +148,7 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
       let bounds = new kakao.maps.LatLngBounds();
       for(let i = 0; i < polyline.length; i++) {
         // LatLngBounds 객체에 좌표 추가
-        console.log(polyline[i]);
+        // console.log(polyline[i]);
         bounds.extend(polyline[i]);
       }
   
@@ -156,9 +157,9 @@ const KakaoMap = memo(({ startMyAddress, arriveMyAddress }) => {
 
     map.relayout();
 
-  }, [startMyAddress, arriveMyAddress, startPosition.La, startPosition.Ma, arrivePosition.La, arrivePosition.Ma]);
+  }, [sendAddress, arriveAddress, startPosition.La, startPosition.Ma, arrivePosition.La, arrivePosition.Ma]);
 
-  return <div id="map" className="kakao-map" style={{ width: '100%', height: '600px' }} ref={mapRef} />;
+  return <div id="map" className="kakao-map" style={{ width: '100%', height: '500px' }} ref={mapRef} />
 });
 
 export default KakaoMap;

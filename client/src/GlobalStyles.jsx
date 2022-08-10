@@ -12,14 +12,15 @@ const GlobalStyles = createGlobalStyle`
   * {
     font-family: 'Roboto', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
     box-sizing: border-box;
-    list-style: none;
-    text-decoration: none;
     margin: 0;
     padding: 0;
   }
 
-  body {
-  }
+  a { text-decoration: none; }
+
+  input { outline: none; }
+
+  li, ul, li { list-style: none; }
 `;
 
 export default GlobalStyles;

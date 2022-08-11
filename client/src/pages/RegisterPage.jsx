@@ -15,7 +15,7 @@ import Spinner from '../components/Spinner';
 import RegexHelper from '../libs/RegexHelper';
 
 // slice 참조
-import { Register } from '../slices/UserSlice';
+import { postRegister } from '../slices/UserSlice';
 
 // 아이콘 참조
 import { FiUser, FiSmile } from 'react-icons/fi';
@@ -72,7 +72,7 @@ const RegisterPage = memo(({ loginPageState }) => {
     e.preventDefault();
 
     const { name, value } = e.target;
-    // 입력값
+    // 회원가입 상태값 갱신
     setRegister({ ...register, [name]: value });
 
     if(userId) {
@@ -185,7 +185,7 @@ const RegisterPage = memo(({ loginPageState }) => {
     // 아이디, 이메일, 전화번호 값 존재 여부 확인
     try {
       await axios.post('http://localhost:3001/api/users/check', register);
-      
+
       Swal.fire({
         icon: 'success',
         iconColor: '#f3b017',
@@ -212,7 +212,7 @@ const RegisterPage = memo(({ loginPageState }) => {
     };
     
     // Redux 값 갱신 요청
-    dispatch(Register(register));
+    dispatch(postRegister(register));
 
   }, [dispatch, register, navigate, loginPageState]);
 
@@ -248,7 +248,7 @@ const RegisterPage = memo(({ loginPageState }) => {
                 errStyle={idErrorStyle}
                 type={'text'}
                 name={'userId'}
-                value={userId || ''}
+                // value={userId || ''}
                 placeholder={'아이디를 입력하세요. (필수)'}
                 onChange={onChange}
                 errMsg={idErrorMsg}
@@ -268,7 +268,7 @@ const RegisterPage = memo(({ loginPageState }) => {
                 errStyle={passErrorStyle}
                 type={'password'}
                 name={'password'}
-                value={password || ''}
+                // value={password || ''}
                 placeholder={'비밀번호를 입력하세요. (필수)'}
                 onChange={onChange}
                 errMsg={passErrorMsg}
@@ -279,7 +279,7 @@ const RegisterPage = memo(({ loginPageState }) => {
                 errStyle={pwCheckErrorStyle}
                 type={'password'}
                 name={'passwordCheck'}
-                value={passwordCheck || ''}
+                // value={passwordCheck || ''}
                 placeholder={'비밀번호를 확인해주세요. (필수)'}
                 onChange={onChange}
                 errMsg={pwCheckErrorMsg}
@@ -290,7 +290,7 @@ const RegisterPage = memo(({ loginPageState }) => {
                 errStyle={nameErrorStyle}
                 type={'text'}
                 name={'userName'}
-                value={userName || ''}
+                // value={userName || ''}
                 placeholder={'이름을 입력하세요. (필수)'}
                 onChange={onChange}
                 errMsg={nameErrorMsg}
@@ -301,7 +301,7 @@ const RegisterPage = memo(({ loginPageState }) => {
                 errStyle={emailErrorStyle}
                 type={'email'}
                 name={'email'}
-                value={email || ''}
+                // value={email || ''}
                 placeholder={'이메일을 입력하세요. (필수)'}
                 onChange={onChange}
                 errMsg={emailErrorMsg}
@@ -312,7 +312,7 @@ const RegisterPage = memo(({ loginPageState }) => {
                 errStyle={phoneErrorStyle}
                 type={'text'}
                 name={'phoneNumber'}
-                value={phoneNumber || ''}
+                // value={phoneNumber || ''}
                 placeholder={'" - " 제외, 연락처를 입력하세요.(필수)'}
                 onChange={onChange}
                 errMsg={phoneErrorMsg}

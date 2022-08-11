@@ -7,6 +7,7 @@ import mysql from 'mysql2/promise';
 
 dotenv.config({ path: join(resolve(), '../env/config.env') });
 
+/** 환경변수 참조 */
 const connectionInfo = {
   host: process.env.DATABASE_HOST,
   port: process.env.DATABASE_PORT, 

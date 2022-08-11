@@ -1,7 +1,7 @@
 export const ScrollEvent = (
   logoRef,
-  receiveTextRef,
-  receiveImgRef,
+  receptionTextRef,
+  receptionImgRef,
   reviewImgRef,
   reviewTextRef,
   customerTextRef,
@@ -10,8 +10,8 @@ export const ScrollEvent = (
   useStartBtnRef
 ) => {
   const logo = logoRef.current.style;
-  const receiveText = receiveTextRef.current.style;
-  const receiveImg = receiveImgRef.current.style;
+  const receptionText = receptionTextRef.current.style;
+  const receptionImg = receptionImgRef.current.style;
   const reviewImg = reviewImgRef.current.style;
   const reviewText = reviewTextRef.current.style;
   const customerText = customerTextRef.current.style;
@@ -21,22 +21,22 @@ export const ScrollEvent = (
 
   const scrollEvent = window.addEventListener('scroll', (e) => {
     if (window.scrollY < 100) {
-      receiveText.display = 'none';
-      receiveImg.display = 'none';
+      receptionText.display = 'none';
+      receptionImg.display = 'none';
     } else {
-      receiveText.display = 'block';
-      receiveImg.display = 'block';
+      receptionText.display = 'block';
+      receptionImg.display = 'block';
     }
 
     if (window.scrollY > 350) {
-      receiveText.opacity = 1;
-      receiveText.transform = 'translateY(0)';
-      receiveImg.opacity = 1;
+      receptionText.opacity = 1;
+      receptionText.transform = 'translateY(0)';
+      receptionImg.opacity = 1;
       logo.opacity = 0;
     } else {
-      receiveText.opacity = 0;
-      receiveText.transform = 'translateY(60px)';
-      receiveImg.opacity = 0;
+      receptionText.opacity = 0;
+      receptionText.transform = 'translateY(60px)';
+      receptionImg.opacity = 0;
       logo.opacity = 1;
     }
 
@@ -79,5 +79,3 @@ export const ScrollEvent = (
 
   return scrollEvent;
 };
-
-// export { ScrollEvent };

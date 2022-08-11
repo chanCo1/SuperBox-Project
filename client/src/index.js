@@ -21,6 +21,8 @@ import GlobalStyles from './GlobalStyles';
 import Meta from './Meta';
 // store 구독
 import Store from './Store';
+// 페이지 이동시 스크롤 위로 이동
+import ScrollToTop from './utils/ScrollToTop';
 // 프로그램 시작
 import App from './App';
 
@@ -31,6 +33,7 @@ root.render(
     <Meta />
     <Provider store={Store}>
       <BrowserRouter>
+        <ScrollToTop />
         <App />
       </BrowserRouter>
     </Provider>

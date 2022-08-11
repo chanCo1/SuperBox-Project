@@ -9,7 +9,7 @@ import Header from './components/Header';
 
 import IntroPage from './pages/IntroPage';
 import MainPage from './pages/MainPage';
-import ReceivePage from './pages/ReceivePage';
+import ReceptionPage from './pages/ReceptionPage';
 import ReviewPage from './pages/ReviewPage';
 import NoticePage from './pages/NoticePage';
 import FaqPage from './pages/FaqPage';
@@ -53,8 +53,8 @@ const App = memo(() => {
         <Route path="/" exact={true} element={<IntroPage />} />
         <Route path="/main" element={<MainPage loginPageState={setLoginPageState} />} />
         <Route 
-          path="/receive" 
-          element={isLogin ? <ReceivePage /> : <ErrorPage error={error} />} 
+          path="/reception" 
+          element={isLogin ? <ReceptionPage /> : <ErrorPage error={error} />} 
         />
         <Route path="/review" element={<ReviewPage />} />
         <Route path="/mypage/*" element={<MyPage />} />

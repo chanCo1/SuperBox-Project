@@ -18,6 +18,7 @@ import expressSession from 'express-session'; // Session 처리
 import cors from 'cors';                      // cors 처리
 
 import users from './router/users.js';
+import reception from './router/reception.js';
 
 
 /** Express 객체 생성 */
@@ -75,6 +76,7 @@ app.use(cookieParser());
 
 /** router 사용 */
 app.use('/api/users', users);
+app.use('/api', reception);
 
 
 /** 서버 구동 */

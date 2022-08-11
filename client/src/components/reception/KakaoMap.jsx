@@ -8,7 +8,7 @@ import Map from 'react-kakao-maps-sdk';
 
 const { kakao } = window;
 
-const KakaoMap = memo(({ sendAddress, arriveAddress }) => {
+const KakaoMap = memo(({ sendAddress, sendAddress2, arriveAddress, arriveAddress2 }) => {
 
   const mapRef = useRef();
 
@@ -32,7 +32,9 @@ const KakaoMap = memo(({ sendAddress, arriveAddress }) => {
     // 주소-좌표 변환 객체 생성
     const geocoder = new kakao.maps.services.Geocoder();
 
-    /** 주소로 출발지 좌표를 검색한다. */
+    /** 
+     * 주소로 출발지 좌표를 검색한다. 
+     */
     sendAddress && geocoder.addressSearch(sendAddress, (result, status) => {
       if(status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -79,7 +81,9 @@ const KakaoMap = memo(({ sendAddress, arriveAddress }) => {
       }
     });
 
-    /** 주소로 도착지 좌표를 검색한다. */
+    /** 
+     * 주소로 도착지 좌표를 검색한다. 
+     */
     arriveAddress && geocoder.addressSearch(arriveAddress, (result, status) => {
       if(status === kakao.maps.services.Status.OK) {
         const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -142,7 +146,9 @@ const KakaoMap = memo(({ sendAddress, arriveAddress }) => {
     const zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-    // 지도 범위 재설정
+    /** 
+     * 지도 범위 재설정 
+     */
     if(startPosition.La && arrivePosition.La) {
 
       let bounds = new kakao.maps.LatLngBounds();

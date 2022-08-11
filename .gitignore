@@ -11,7 +11,7 @@
 # production
 /build
 
-#env
+#env -> .env가 안돼서 폴더를 ignore 처리
 /env
 
 # misc

@@ -10,7 +10,6 @@ dotenv.config({ path: join(resolve(), '../env/config.env') });
 const secret = process.env.SECRET_KEY;
 
 const auth = (req, res, next) => {
-  console.log(req.headers);
   const token = req.query.token || req.headers['access-token'];
 
   if (!token) {

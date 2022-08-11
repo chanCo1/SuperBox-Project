@@ -40,6 +40,22 @@ class RegexHelper {
     return true;
   };
 
+  /** TODO: 집 전화, 핸드폰 입력값에 대한 정규표현식 */
+  phone(field, msg) {
+    this.value(field, msg);
+
+    const content = field.value.trim();
+    let check1 = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/; // 핸드폰형식
+    let check2 = /^\d{2,3}\d{3,4}\d{4}$/; // 집전화 형식
+
+    // 형식이 핸드폰도 아니고 집전화도 아니라면
+    if (!check1.test(content) && !check2.test(content)) {
+      throw new BadRequestException(msg, field);
+    }
+
+    return true;
+  }
+
   /** - - - - - - - - - - - - - - - - - - 입력값에 대한 정규표현식 검사 */
   field(field, msg, regex) {
     this.value(field, msg);
@@ -76,6 +92,19 @@ class RegexHelper {
   cellphone(field, msg) {
     return this.field(field, msg, /^01([0|1|6|7|8|9])([0-9]{4})([0-9]{4})$/);
   }
+
+  /** TODO: 영어, 한글, 특수문자 입력값 정규표현식 */
+  inputCheck(field, msg) {
+    return this.field(field, msg, /^[0-9a-zA-Z가-힣 -_/,.!@#$%^&*()]{2,20}$/);
+  }
+
+  /**
+   * TODO: 숫자로만 이루어 졌는지 검사하기 위해 field()를 간접적으로 호출한다.
+   */
+   num(field, msg) {
+    return this.field(field, msg, /^[0-9,]{4,10}$/);
+  }
+
 };
 
 export default new RegexHelper();

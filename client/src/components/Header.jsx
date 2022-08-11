@@ -204,7 +204,7 @@ const Header = memo(({ loginPageState }) => {
   }, [dispatch, navigate]);
 
   // 로그인 상태가 false면 배송접수 버튼 차단
-  const connectReceivePage = useCallback(e => {
+  const connectReceptionPage = useCallback(e => {
     if(!isLogin) {
       Swal.fire({
         icon: 'warning',
@@ -235,7 +235,7 @@ const Header = memo(({ loginPageState }) => {
           </Link>
 
           <ul className="nav-wrap">
-            <NavLink className="NavLink nav" to={'/receive'} onClick={connectReceivePage}><li>배송접수</li></NavLink>
+            <NavLink className="NavLink nav" to={'/reception'} onClick={connectReceptionPage}><li>배송접수</li></NavLink>
             <NavLink className="NavLink nav" to={'/review'}><li>고객후기</li></NavLink>
             <li className="NavLink nav" onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
               고객센터

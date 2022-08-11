@@ -35,7 +35,7 @@ export const tokenVerify = createAsyncThunk('userSlice/tokenVerify', async (payl
 /** 
  * 회원가입에 대한 백엔드 통신
  */
-export const Register = createAsyncThunk('userSlice/register', async (payload, {rejectWithValue }) => {
+export const postRegister = createAsyncThunk('userSlice/register', async (payload, {rejectWithValue }) => {
   let result = null;
 
   try {
@@ -59,11 +59,12 @@ export const Register = createAsyncThunk('userSlice/register', async (payload, {
 /** 
  * reducer 정의 
  */
-const userSlice = createSlice({
+const UserSlice = createSlice({
   name: 'user',
   initialState: {
     data: null,
     loading: false,
+    memberData: null,
     error: null,
     isLogin: false,
   },
@@ -95,11 +96,11 @@ const userSlice = createSlice({
     [tokenVerify.rejected]: rejected,
 
     // 회원가입 reducer
-    [Register.pending]: pending,
-    [Register.fulfilled]: fulfilled,
-    [Register.rejected]: rejected,
+    [postRegister.pending]: pending,
+    [postRegister.fulfilled]: fulfilled,
+    [postRegister.rejected]: rejected,
   }
 });
 
-export default userSlice.reducer;
-export const { setIsLogin } = userSlice.actions;
+export default UserSlice.reducer;
+export const { setIsLogin } = UserSlice.actions;

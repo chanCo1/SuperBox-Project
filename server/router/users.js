@@ -7,11 +7,12 @@ import encrypt from '../libs/encrypt.js';
 import { createToken, createRefreshToken } from '../libs/jwt.js';
 import auth from '../middleware/auth.js';
 
+/** 라우터 생성 */
+const router = express.Router();
+
 /** 
  * 로그인 
  */
-const router = express.Router();
-
 router.post('/login', async (req, res) => {
   console.log('\t사용자 입력 값 >>> ', req.body);
 
@@ -80,7 +81,7 @@ router.post('/register', async (req, res, next) => {
   const param = [userId, encrypt(password), userName, email, phoneNumber];
 
   try {
-    mysqlPool(sql, param);
+    await mysqlPool(sql, param);
     res.status(200).json({ success: true, message: '회원가입 성공' });
   } catch (e) {
     res.status(400).json({ success: false, message: '회원가입 실패' });

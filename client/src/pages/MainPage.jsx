@@ -15,7 +15,7 @@ import { ScrollEvent } from '../utils/ScrollEvent';
 
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
-import receive from '../assets/image/receive-screenshot.png';
+import reception from '../assets/image/reception-screenshot.png';
 
 // 아이콘 참조
 import { FaRegComment, FaUserFriends } from 'react-icons/fa';
@@ -77,19 +77,19 @@ const MainLogoContainer = styled.div`
 `;
 
 /** 메인페이지 접수 섹션 스타일 */
-const MainReceiveContainer = styled.div`
+const MainReceptionContainer = styled.div`
   width: 100%;
   padding: 40px 0 0;
   background-color: #f7f8fb;
 
-  .main-receive-wrap {
+  .main-reception-wrap {
     position: relative;
     display: flex;
     width: 1200px;
     margin: auto;
     justify-content: space-between;
 
-    .receive-text {
+    .reception-text {
       width: 50%;
       padding: 40px 0;
       color: #404040;
@@ -109,7 +109,7 @@ const MainReceiveContainer = styled.div`
       }
     }
 
-    .receive-img {
+    .reception-img {
       padding: 40px 0 0;
       width: 50%;
       transition: 1s ease-in-out;
@@ -299,8 +299,8 @@ const MainPage = memo(({ loginPageState }) => {
 
   /** 사용할 useRef 호출 */
   const logoRef = useRef();
-  const receiveTextRef = useRef(null);
-  const receiveImgRef = useRef(null);
+  const receptionTextRef = useRef(null);
+  const receptionImgRef = useRef(null);
   const reviewImgRef = useRef(null);
   const reviewTextRef = useRef(null);
   const customerTextRef = useRef(null);
@@ -310,11 +310,11 @@ const MainPage = memo(({ loginPageState }) => {
 
   /** 스크롤 이벤트 함수 호출 */
   useEffect(() => {
-    ScrollEvent(logoRef, receiveTextRef, receiveImgRef, reviewImgRef, reviewTextRef, customerTextRef, customerImgRef, useStartTextRef, useStartBtnRef);
+    ScrollEvent(logoRef, receptionTextRef, receptionImgRef, reviewImgRef, reviewTextRef, customerTextRef, customerImgRef, useStartTextRef, useStartBtnRef);
   }, []);
 
   // 로그인 상태가 false면 배송접수 버튼 차단
-  const connectReceivePage = useCallback(e => {
+  const connectReceptionPage = useCallback(e => {
     if(!isLogin) {
       Swal.fire({
         icon: 'warning',
@@ -343,18 +343,18 @@ const MainPage = memo(({ loginPageState }) => {
         </div>
       </MainLogoContainer>
 
-      <MainReceiveContainer>
-        <div className='main-receive-wrap'>
-          <div className='receive-text' ref={receiveTextRef}>
+      <MainReceptionContainer>
+        <div className='main-reception-wrap'>
+          <div className='reception-text' ref={receptionTextRef}>
             <p>언제 어디서든<br />쉽고, 간편하게</p>
             <p>저희에게 설렘을 접수하세요.</p>
             <p>전국 어디든 원하시는 분에게 전달해 드립니다.</p>
           </div>
-          <div className='receive-img' ref={receiveImgRef}>
-            <img src={receive} alt="receive-img" />
+          <div className='reception-img' ref={receptionImgRef}>
+            <img src={reception} alt="reception-img" />
           </div>
         </div>
-      </MainReceiveContainer>
+      </MainReceptionContainer>
 
       <MainReviewContainer>
         <div className='main-review-wrap'>
@@ -388,7 +388,7 @@ const MainPage = memo(({ loginPageState }) => {
         <div className='main-useStart-wrap'>
           <p ref={useStartTextRef}>그럼 <span>Superbox</span> 한 번 사용해 볼까요?</p>
           <div className='useStart-btn-wrap' ref={useStartBtnRef}>
-            <Link to={'/receive'} className='useStart-btn' onClick={connectReceivePage}>
+            <Link to={'/reception'} className='useStart-btn' onClick={connectReceptionPage}>
               <button className='start-btn'>
                 <RiUserReceivedFill className='btn-icon' />
               </button>

@@ -162,7 +162,7 @@ const LoginPage = memo(({ loginPageState }) => {
               errStyle={idErrorStyle}
               type={'text'}
               name={'userId'}
-              value={userId || ''}
+              // value={userId || ''}
               placeholder={'아이디를 입력하세요.'}
               onChange={onChange}
               errMsg={idErrorMsg}
@@ -173,7 +173,7 @@ const LoginPage = memo(({ loginPageState }) => {
               errStyle={passErrorStyle}
               type={'password'}
               name={'password'}
-              value={password || ''}
+              // value={password || ''}
               placeholder={'비밀번호를 입력하세요.'}
               onChange={onChange}
               errMsg={passErrorMsg}

@@ -11,7 +11,7 @@ const InputBox = memo(({ icon, errStyle, type, name, value, placeholder, onChang
           className="input-area"
           type={type}
           name={name}
-          value={value}
+          // value={value}
           placeholder={placeholder}
           onChange={onChange}
         />

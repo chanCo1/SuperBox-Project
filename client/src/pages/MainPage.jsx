@@ -299,14 +299,14 @@ const MainPage = memo(({ loginPageState }) => {
 
   /** 사용할 useRef 호출 */
   const logoRef = useRef();
-  const receptionTextRef = useRef(null);
-  const receptionImgRef = useRef(null);
-  const reviewImgRef = useRef(null);
-  const reviewTextRef = useRef(null);
-  const customerTextRef = useRef(null);
-  const customerImgRef = useRef(null);
-  const useStartTextRef = useRef(null);
-  const useStartBtnRef = useRef(null);
+  const receptionTextRef = useRef();
+  const receptionImgRef = useRef();
+  const reviewImgRef = useRef();
+  const reviewTextRef = useRef();
+  const customerTextRef = useRef();
+  const customerImgRef = useRef();
+  const useStartTextRef = useRef();
+  const useStartBtnRef = useRef();
 
   /** 스크롤 이벤트 함수 호출 */
   useEffect(() => {
@@ -318,7 +318,7 @@ const MainPage = memo(({ loginPageState }) => {
     if(!isLogin) {
       Swal.fire({
         icon: 'warning',
-        // iconColor: '#f3b017',
+        iconColor: '#f3b017',
         text:'로그인 후 이용해주세요.',
         confirmButtonText: '확인',
         confirmButtonColor: '#f3b017',

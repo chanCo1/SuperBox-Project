@@ -3,7 +3,7 @@
  */
 
 /** 패키지 참조 */
-import React, { memo, useEffect, useState, useCallback } from 'react';
+import React, { memo, useEffect, useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDaumPostcodePopup } from 'react-daum-postcode';
@@ -14,11 +14,15 @@ import Meta from '../Meta';
 import Spinner from '../components/Spinner';
 import PageTitle from '../components/PageTitle';
 import KakaoMap from '../components/reception/KakaoMap';
+import { ReceptionTitle, SendColumn, SearchColumn, InputColumn } from '../components/reception/TagBox';
 
 import RegexHelper from '../libs/RegexHelper';
 
 // slice 참조
 import { postReception } from '../slices/ReceptionSlice';
+
+// 아이콘 참조
+import { MdOutlineKeyboardArrowUp } from 'react-icons/md'
 
 /** 스타일 */
 const ReceptionPageContainer = styled.form`
@@ -37,13 +41,23 @@ const ReceptionPageContainer = styled.form`
     .search-wrap {
       margin-bottom: 50px;
 
-      h3 {
-        font-size: 1.5rem;
-        font-weight: 500;
-        padding-bottom: 5px;
+      .reception-title {
+        display: flex;
+        justify-content: space-between;
         margin-bottom: 20px;
         border-bottom: 1px solid #404040;
+        
+        h3 {
+          font-size: 1.5rem;
+          font-weight: 500;
+          padding-bottom: 5px;
+        }
+
+        .reception-arrow {
+          font-size: 2rem;
+        }
       }
+
   
       .search-row { 
         display: flex; 
@@ -79,7 +93,7 @@ const ReceptionPageContainer = styled.form`
           font-size: 15px;
 
           &::-webkit-input-placeholder { color: #bcbcbc; }
-          &:focus { box-shadow: 0 0 5px #2a376888 }
+          &:focus { box-shadow: 0 0 10px #2a376888 }
         }
   
         .search-input-short { width: 110px; }
@@ -151,7 +165,6 @@ const ReceptionPage = memo(() => {
   const dispatch = useDispatch();
 
   const { memberData, loading } = useSelector(state => state.user);
-  console.log(memberData);
 
   /** 
    * 택배접수 입력 상태값 관리 
@@ -177,7 +190,12 @@ const ReceptionPage = memo(() => {
     deliveryMessage: null,
     user_no: memberData.user_no,
   });
-  // console.log(reception);
+  console.log(reception);
+
+  const sendRef = useRef();
+  const arriveRef = useRef();
+  const productRef = useRef();
+  const deliveryRef = useRef();
 
   /** 
    * input 입력값을 state에 저장 
@@ -265,7 +283,7 @@ const ReceptionPage = memo(() => {
       RegexHelper.value(current.sendAddress1, '보내는 분의 주소를 입력해주세요.');
 
       RegexHelper.value(current.sendAddress2, '보내는 분의 상세주소를 입력해주세요.');
-      RegexHelper.inputCheck(current.sendAddress2, '2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
+      RegexHelper.inputCheck(current.sendAddress2, '상세주소는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
 
       RegexHelper.value(current.arriveName, '받는 분의 이름을 입력해주세요.');
       RegexHelper.nameCheck(current.arriveName, '이름은 2~10자리의 영문(소문자), 한글만 가능합니다.');
@@ -276,6 +294,7 @@ const ReceptionPage = memo(() => {
       RegexHelper.value(current.arriveAddress1, '받는 분의 주소를 입력해주세요.');
 
       RegexHelper.value(current.arriveAddress2, '받는 분의 상세주소를 입력해주세요.');
+      RegexHelper.inputCheck(current.arriveAddress2, '상세주소는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
 
       RegexHelper.value(current.productName, '배송할 상품명을 입력해주세요.');
       RegexHelper.inputCheck(current.productName, '상품명은 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
@@ -298,6 +317,14 @@ const ReceptionPage = memo(() => {
         RegexHelper.inputCheck(current.deliveryMessage, '배송메세지는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
       }
 
+      Swal.fire({
+        icon: 'success',
+        iconColor: '#f3b017',
+        text:'접수가 완료되었습니다.',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#f3b017',
+      });
+
       dispatch(postReception(reception));
 
     } catch(err) {
@@ -308,14 +335,23 @@ const ReceptionPage = memo(() => {
         confirmButtonColor: '#f3b017',
 
       }).then(() => {
-
-        err.field.focus();
       });
-
+      
+      err.field.focus();
       return;
     };
 
   }, [dispatch, reception]);
+
+  // 내일 날짜 구하는 함수 -> yyyy-mm-dd
+  const tomorrow = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth()+1;
+    const tomorrow = date.getDate()+1
+
+    return `${year}-0${month}-${tomorrow}`
+  };
 
   return (
     <div>
@@ -328,81 +364,45 @@ const ReceptionPage = memo(() => {
         <div className='search-container'>
 
           {/* 보내는 분 */}
-          <div className='search-wrap'>
-            <h3>보내는 분 정보</h3>
+          <div className='search-wrap' ref={sendRef}>
+            <ReceptionTitle title={'보내는 분 정보'} icon={<MdOutlineKeyboardArrowUp />} />
             <div className='search-row'>
-              <div className='search-column'>
-                <label htmlFor="">이름 *</label>
-                <input className='search-input search-input-middle' type="text" name='sendName' placeholder="영문(소문자), 한글만 입력해주세요." defaultValue={memberData.user_name} onChange={onChange} />
-              </div>
-              <div className='search-column'>
-                <label htmlFor="">연락처 *</label>
-                <input className='search-input search-input-middle' type="text" name='sendContact' placeholder="' - ' 빼고 입력해주세요." defaultValue={memberData.user_phone} onChange={onChange} />
-              </div>
+              <SendColumn label={'이름 *'} name={'sendName'} placeholder={'영문(소문자), 한글만 입력해주세요.'} defaultValue={memberData.user_name} onChange={onChange} />
+              <SendColumn label={'연락처 *'} name={'sendContact'} placeholder={"' - ' 빼고 입력해주세요."} defaultValue={memberData.user_phone} onChange={onChange} />
             </div>
             <div className='search-row'>
-              <div className='search-column'>
-                <label htmlFor="">주소 *</label>
-                <input className='search-input search-input-long' type="text" name='sendAddress1' value={reception.sendAddress1 || ''} placeholder="주소검색을 통해 입력해주세요." readOnly />
-              </div>
+              <SearchColumn label={'주소 *'} className={'search-input search-input-long'} name={'sendAddress1'} value={reception.sendAddress1 || ''} placeholder={"주소검색을 통해 입력해주세요."} />
               <button type="button" onClick={startHandleClick}>주소검색</button>
             </div>
             <div className='search-row'>
-              <div className='search-column'>
-                <label htmlFor="">우편번호</label>
-                <input className='search-input search-input-short' type="text" name='sendPostCode' value={reception.sendPostCode || ''} placeholder="우편번호" readOnly />
-              </div>
-              <div className='search-column'>
-                <label htmlFor="">상세주소 *</label>
-                <input className='search-input search-input-long' type="text" name='sendAddress2' placeholder={'2~30글자 내로 입력해주세요.'} onChange={onChange} />
-              </div>
+              <SearchColumn label={'우편번호'} className={'search-input search-input-short'} name={'sendPostCode'} value={reception.sendPostCode || ''} placeholder={"우편번호"} />
+              <InputColumn label={'상세주소 *'} className={'search-input search-input-long'} name={'sendAddress2'} placeholder={'2~30글자 내로 입력해주세요.'} onChange={onChange} />
             </div>
           </div>
 
           {/* 받는 분 */}
-          <div className='search-wrap'>
-            <h3>받는 분 정보</h3>
+          <div className='search-wrap' ref={arriveRef}>
+            <ReceptionTitle title={'받는 분 정보'} icon={<MdOutlineKeyboardArrowUp />} />
             <div className='search-row'>
-              <div className='search-column'>
-                <label htmlFor="">이름 *</label>
-                <input className='search-input search-input-middle' type="text" name='arriveName' placeholder="영문(소문자), 한글만 입력해주세요." onChange={onChange} />
-              </div>
-              <div className='search-column'>
-                <label htmlFor="">연락처 *</label>
-                <input className='search-input search-input-middle' type="text" name='arriveContact' placeholder="' - ' 빼고 입력해주세요."  onChange={onChange} />
-              </div>
+              <InputColumn label={'이름 *'} className={'search-input search-input-middle'} name={'arriveName'} placeholder={'영문(소문자), 한글만 입력해주세요.'} onChange={onChange} />
+              <InputColumn label={'연락처 *'} className={'search-input search-input-middle'} name={'arriveContact'} placeholder={"' - ' 빼고 입력해주세요."} onChange={onChange} />
             </div>
             <div className='search-row'>
-              <div className='search-column'>
-                <label htmlFor="">주소 *</label>
-                <input className='search-input search-input-long' type="text" name='arriveAddress1' value={reception.arriveAddress1 || ''} placeholder="주소검색을 통해 입력해주세요." readOnly />
-              </div>
+              <SearchColumn label={'주소 *'} className={'search-input search-input-long'} name={'arriveAddress1'} value={reception.arriveAddress1 || ''} placeholder={"주소검색을 통해 입력해주세요."} />
               <button type="button" onClick={arriveHandleClick}>주소검색</button>
             </div>
             <div className='search-row'>
-              <div className='search-column'>
-                <label htmlFor="">우편번호</label>
-                <input className='search-input search-input-short' type="text" name='arrivePostCode' value={reception.arrivePostCode || ''} placeholder="우편번호" readOnly />
-              </div>
-              <div className='search-column'>
-                <label htmlFor="">상세주소 *</label>
-                <input className='search-input search-input-long' type="text" name='arriveAddress2' placeholder={'2~30글자 내로 입력해주세요.'} onChange={onChange} />
-              </div>
+              <SearchColumn label={'우편번호'} className={'search-input search-input-short'} name={'arrivePostCode'} value={reception.arrivePostCode || ''} placeholder={"우편번호"} />
+              <InputColumn label={'상세주소 *'} className={'search-input search-input-long'} name={'arriveAddress2'} placeholder={'2~30글자 내로 입력해주세요.'} onChange={onChange} />
             </div>
           </div>
 
           {/* 상품정보 */}
-          <div className='search-wrap'>
-            <h3>상품 정보</h3>
+          <div className='search-wrap' ref={productRef}>
+            <ReceptionTitle title={'상품 정보'} icon={<MdOutlineKeyboardArrowUp />} />
             <div className='search-row'>
-              <div className='search-column '>
-                <label htmlFor="">상품명 *</label>
-                <input className='search-input search-input-middle' type="text" name='productName' placeholder="자세히 기재해주세요. (예시: 의류,가방)" onChange={onChange} />
-              </div>
-              <div className='search-column'>
-                <label htmlFor="">상품가격</label>
-                <input className='search-input search-input-middle' type="text" name='productPrice' placeholder="4~10자리의 숫자만 입력. (선택)" onChange={onChange} />
-              </div>
+              <InputColumn label={'상품명 *'} className={'search-input search-input-middle'} name={'productName'} placeholder={'자세히 기재해주세요. (예시: 의류,가방)'} onChange={onChange} />
+              <InputColumn label={'상품가격'} className={'search-input search-input-middle'} name={'productPrice'} placeholder={'4~10자리의 숫자만 입력. (선택)'} onChange={onChange} />
             </div>
             <div className='search-row'>
               <div className='search-column'>
@@ -419,28 +419,20 @@ const ReceptionPage = memo(() => {
                 <label htmlFor="">수량 *</label>
                 <select className='search-input search-input-middle' name='productQty' style={{outline:'none'}} onChange={onChange}>
                   <option value="">수량을 선택하세요 (box)</option>
-                  {[...new Array(100)].map((v,i) => {
-                    return(
-                      <option key={i} value={i+1}>{i+1} (box)</option>
-                    );
-                  })}
+                  {[...new Array(100)].map((v,i) => <option key={i} value={i+1}>{i+1} (box)</option>)}
                 </select>
-                {/* <input className='search-input search-input-middle' type="text" name='productQty' placeholder='수량' onChange={onChange} /> */}
               </div>
             </div>
-            <div className='search-column'>
-              <label htmlFor="">특이사항</label>
-              <input className='search-input' type="text" name='productNote' placeholder='2~20글자 내로 입력해주세요. (선택)' onChange={onChange} />
-            </div>
+            <InputColumn label={'특이사항'} className={'search-input'} name={'productNote'} placeholder={'2~20글자 내로 입력해주세요. (선택)'} onChange={onChange} />
           </div>
 
           {/* 배송조건 */}
-          <div className='search-wrap search-wrap-last'>
-            <h3>배송 조건</h3>
+          <div className='search-wrap search-wrap-last' ref={deliveryRef}>
+            <ReceptionTitle title={'배송 조건'} icon={<MdOutlineKeyboardArrowUp />} />
             <div className='search-row'>
               <div className='search-column '>
                 <label htmlFor="">방문 희망일</label>
-                <input className='search-input search-input-middle' type="date" name='visitDate' min={new Date().toISOString().substring(0,10)} onChange={onChange} />
+                <input className='search-input search-input-middle' type="date" name='visitDate' min={tomorrow()} onChange={onChange} />
               </div>
               <div className='search-column'>
                 <label htmlFor="">결제방식 *</label>
@@ -451,10 +443,7 @@ const ReceptionPage = memo(() => {
                 </select>
               </div>
             </div>
-            <div className='search-column'>
-              <label htmlFor="">배송 메세지</label>
-              <input className='search-input' type="text" name='deliveryMessage' placeholder='2~20글자 내로 입력해주세요. (선택)' onChange={onChange} />
-            </div>
+            <InputColumn label={'배송 메세지'} className={'search-input'} name={'deliveryMessage'} placeholder={'2~20글자 내로 입력해주세요. (선택)'} onChange={onChange} />
           </div>
         </div>
 

@@ -71,6 +71,7 @@ const LoginPage = memo(({ loginPageState }) => {
       try {
         RegexHelper.value(current.userId, '아이디를 입력해주세요.');
         RegexHelper.value(current.password, '비밀번호를 입력해주세요.');
+
       } catch (err) {
         if (err.message === '아이디를 입력해주세요.') {
           setIdErrorMsg(err.message);
@@ -102,9 +103,10 @@ const LoginPage = memo(({ loginPageState }) => {
           text:'로그인 되었습니다.',
           showConfirmButton: false,
           timer: 1000,
+        }).then(() => {
+          loginPageState(false);
         });
 
-        loginPageState(false);
       } catch (e) {
         const errMsg = e.response.data.message;
         console.log(e);
@@ -144,7 +146,7 @@ const LoginPage = memo(({ loginPageState }) => {
   return (
     <div>
       <Meta title={'SuperBox :: 로그인'} />
-      {/* <Spinner visible={loading} /> */}
+      <Spinner visible={loading} />
       <LoginPageContainer>
         <Logo />
         <div className="login-wrap">

@@ -194,6 +194,9 @@ const RegisterPage = memo(({ loginPageState }) => {
       }).then(() => {
         navigate('/main');
         loginPageState(true);
+
+        // Redux 값 갱신 요청
+        dispatch(postRegister(register));
       });
 
     } catch(e) {
@@ -210,9 +213,6 @@ const RegisterPage = memo(({ loginPageState }) => {
       }
       return;
     };
-    
-    // Redux 값 갱신 요청
-    dispatch(postRegister(register));
 
   }, [dispatch, register, navigate, loginPageState]);
 

@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
-import { ScrollEvent } from '../utils/ScrollEvent';
+import { ScrollEvent } from '../utils/Event';
 
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';

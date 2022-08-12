@@ -1,4 +1,6 @@
-export const ScrollEvent = (
+
+/** 스크롤에 따라 등장하는 이벤트 */
+const ScrollEvent = (
   logoRef,
   receptionTextRef,
   receptionImgRef,
@@ -40,12 +42,6 @@ export const ScrollEvent = (
       logo.opacity = 1;
     }
 
-    // if(window.scrollY > 350) {
-    //   logo.opacity = 0;
-    // } else {
-    //   logo.opacity = 1;
-    // }
-
     if (window.scrollY > 1000) {
       reviewImg.opacity = 1;
       reviewText.transform = 'translateY(0)';
@@ -79,3 +75,55 @@ export const ScrollEvent = (
 
   return scrollEvent;
 };
+
+/** 화살표 클릭시 위/아래 슬라이드 이벤트 */
+const SlideUpDown = (e, ref, arrow, setArrow) => {
+  const refArea = ref.current.style;
+  const current = e.target;
+
+  setArrow(!arrow);
+
+  if(arrow) {
+    current.classList.add('arrow-active');
+    refArea.maxHeight = 0;
+    // sendArea.opacity = 0.2;
+
+  } else {
+    current.classList.remove('arrow-active');
+    refArea.maxHeight = '100vh';
+    // sendArea.opacity = 1;
+  }
+};
+const ReverseSlideUpDown = (ref, arrow, setArrow, icon) => {
+  const refArea = ref.current.style;
+  const iconArea = icon.current.style;
+  // const current = e.target;
+
+  setArrow(!arrow);
+
+  if(arrow) {
+    iconArea.transform = 'rotate(180deg)';
+    refArea.maxHeight = '100vh';
+    
+  } else {
+    iconArea.transform = 'rotate(360deg)';
+    // iconArea.classList.remove('arrow-active');
+    refArea.maxHeight = 0;
+  }
+};
+
+/** 화면에 보이게하는 이벤트 */
+const ShowItem = (ref) => {
+  const refArea = ref.current.style;
+
+  refArea.display = 'block';
+}
+
+/** 화면에 안보이게 하는 이벤트 */
+const HideItem = (ref) => {
+  const refArea = ref.current.style;
+
+  refArea.display = 'none';
+}
+
+export { ScrollEvent, SlideUpDown, ReverseSlideUpDown, ShowItem, HideItem }

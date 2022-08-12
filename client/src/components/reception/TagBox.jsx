@@ -1,10 +1,11 @@
 import React from 'react';
 
-const ReceptionTitle = ({ title, icon }) => {
+const ReceptionTitle = ({ title, img, onClick }) => {
   return (
     <div className="reception-title">
       <h3>{title}</h3>
-      <span className="reception-arrow">{icon}</span>
+      {/* <span className="reception-arrow" onClick={onClick}>{icon}</span> */}
+      <img className="reception-arrow" src={img} alt='' onClick={onClick} />
     </div>
   );
 };

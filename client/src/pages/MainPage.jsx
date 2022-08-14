@@ -16,13 +16,16 @@ import { ScrollEvent } from '../utils/Event';
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
 import reception from '../assets/image/reception-screenshot.png';
+import customer_center from '../assets/image/customer_center.png';
+import laptop from '../assets/image/laptop.png';
 
 // 아이콘 참조
 import { FaRegComment, FaUserFriends } from 'react-icons/fa';
 import { AiOutlineFileSearch } from 'react-icons/ai';
-import { RiUserReceivedFill, RiCustomerServiceLine } from 'react-icons/ri';
+import { RiUserReceivedFill } from 'react-icons/ri';
 import { BsPencilSquare } from 'react-icons/bs';
 import { MdDoubleArrow } from 'react-icons/md';
+import { HiOutlineChatAlt2 } from 'react-icons/hi';
 
 /** 메인페이지 로고 섹션 스타일 */
 const MainLogoContainer = styled.div`
@@ -34,7 +37,7 @@ const MainLogoContainer = styled.div`
     height: 100vh;
     margin: auto;
     padding: 225px 0 120px; 
-    font-weight: 500;
+    /* font-weight: 500; */
     transition: 1s ease-in-out;
     
     .logo {
@@ -93,7 +96,6 @@ const MainReceptionContainer = styled.div`
       width: 50%;
       padding: 40px 0;
       color: #404040;
-      font-weight: 500;
       transition: 1s ease-in-out;
 
       p:nth-child(1) {
@@ -106,6 +108,7 @@ const MainReceptionContainer = styled.div`
       }
       p:nth-child(3) {
         font-size: 1.2rem;
+        color: #999;
       }
     }
 
@@ -124,7 +127,7 @@ const MainReceptionContainer = styled.div`
 /** 메인페이지 고객후기 섹션 스타일 */
 const MainReviewContainer = styled.div`
   width: 100%;
-  padding: 40px 0;
+  padding: 90px 0;
 
   .main-review-wrap {
     position: relative;
@@ -134,10 +137,10 @@ const MainReviewContainer = styled.div`
 
     .review-icon-wrap {
       width: 50%;
-      color:#2a3768;
-      padding: 50px 0;
+      text-align: center;
       transition: 1s ease-in-out;
       
+      /*
       .review-icon1 {
         font-size: 18rem;
         margin: 10% 0 0 10%;
@@ -152,13 +155,16 @@ const MainReviewContainer = styled.div`
         width: 8%;
         top: 20%;
         left: 31%;
+      } */
+
+      img {
+        width: 70%;
       }
     }
 
     .review-text {
       width: 50%;
       color: #404040;
-      font-weight: 500;
       margin: auto 0;
       transition: 1s ease-in-out;
 
@@ -175,6 +181,7 @@ const MainReviewContainer = styled.div`
       p:nth-child(3) {
         font-size: 1.3rem;
         margin: 0;
+        color: #999;
       }
     }
   }
@@ -194,7 +201,6 @@ const MainCustomerContainer = styled.div`
     .customer-text {
       width: 60%;
       color: #404040;
-      font-weight: 500;
       margin: auto 0;
       transition: 1s ease-in-out;
 
@@ -209,6 +215,7 @@ const MainCustomerContainer = styled.div`
       }
       p:nth-child(3) {
         font-size: 1.2rem;
+        color: #999;
       }
     }
 
@@ -220,6 +227,8 @@ const MainCustomerContainer = styled.div`
       font-size: 20rem;
       color: #2a3768;
       transition: 1s ease-in-out;
+
+      img { width: 100%; }
     }
   }
 `;
@@ -236,7 +245,6 @@ const MainUseStartContainer = styled.div`
     
     P {
       font-size: 2rem;
-      font-weight: 500;
       color: #404040;
       margin-bottom: 50px;
       transition: 1s ease-in-out;
@@ -282,7 +290,6 @@ const MainUseStartContainer = styled.div`
           display: flex;
           align-items: center;
           font-size: 1.5rem;
-          font-weight: 500;
           padding: 0 20%;
           color: #404040;
           justify-content: space-around;
@@ -359,9 +366,10 @@ const MainPage = memo(({ loginPageState }) => {
       <MainReviewContainer>
         <div className='main-review-wrap'>
           <div className='review-icon-wrap' ref={reviewImgRef}>
-            <FaUserFriends className='review-icon1' />
+            {/* <FaUserFriends className='review-icon1' />
             <FaRegComment className='review-icon2' />
-            <img src={logo} alt="superbox-lgo" />
+            <img src={logo} alt="superbox-lgo" /> */}
+            <img src={laptop} alt="고객후기 이미지" />
           </div>
           <div className='review-text' ref={reviewTextRef}>
             <h3>고객후기</h3>
@@ -379,7 +387,7 @@ const MainPage = memo(({ loginPageState }) => {
             <p>공지사항과 자주찾는 질문,<br />1:1 문의는 여러분들을 위해 항상 열려있습니다.</p>
           </div>
           <div className='customer-icon' ref={customerImgRef}>
-            <AiOutlineFileSearch />
+            <img src={customer_center} alt="고객센터 이미지" />
           </div>
         </div>
       </MainCustomerContainer>
@@ -402,7 +410,7 @@ const MainPage = memo(({ loginPageState }) => {
             </Link>
             <Link to={'/customer/inquiry'} className='useStart-btn'>
               <button className='start-btn'>
-                <RiCustomerServiceLine className='btn-icon' />
+                <HiOutlineChatAlt2 className='btn-icon' />
               </button>
               <span>1:1 문의<MdDoubleArrow /></span>
             </Link>

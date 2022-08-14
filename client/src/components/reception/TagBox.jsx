@@ -10,13 +10,16 @@ const ReceptionTitle = ({ title, img, onClick }) => {
   );
 };
 
-const SendColumn = ({ label, type, name, placeholder, defaultValue, onChange }) => {
+const Input = ({ label, require, className1, className2, type, name, placeholder, defaultValue, onChange }) => {
   return (
-    <div className="search-column">
-      <label htmlFor="">{label}</label>
+    <div className={className1}>
+      <label htmlFor="">
+        {label}
+        <span>{require}</span>
+      </label>
       <input
-        className="search-input search-input-middle"
-        type="text"
+        className={className2}
+        type={type}
         name={name}
         placeholder={placeholder}
         defaultValue={defaultValue}
@@ -26,13 +29,16 @@ const SendColumn = ({ label, type, name, placeholder, defaultValue, onChange }) 
   );
 };
 
-const SearchColumn = ({ label, className, type, name, placeholder, value }) => {
+const ReadOnlyInput = ({ label, require, className1, className2, type, name, placeholder, value }) => {
   return (
-    <div className="search-column">
-      <label htmlFor="">{label}</label>
+    <div className={className1}>
+      <label htmlFor="">
+        {label}
+        <span>{require}</span>
+      </label>
       <input
-        className={className}
-        type="text"
+        className={className2}
+        type={type}
         name={name}
         value={value}
         placeholder={placeholder}
@@ -42,19 +48,19 @@ const SearchColumn = ({ label, className, type, name, placeholder, value }) => {
   );
 };
 
-const InputColumn = ({ label, className, type, name, placeholder, onChange }) => {
-  return (
-    <div className="search-column">
-      <label htmlFor="">{label}</label>
-      <input
-        className={className}
-        type="text"
-        name={name}
-        placeholder={placeholder}
-        onChange={onChange}
-      />
-    </div>
-  );
-};
+// const InputColumn = ({ label, className, type, name, placeholder, onChange }) => {
+//   return (
+//     <div className="search-column">
+//       <label htmlFor="">{label}</label>
+//       <input
+//         className={className}
+//         type="text"
+//         name={name}
+//         placeholder={placeholder}
+//         onChange={onChange}
+//       />
+//     </div>
+//   );
+// };
 
-export { ReceptionTitle, SendColumn, SearchColumn, InputColumn };
+export { ReceptionTitle, Input, ReadOnlyInput };

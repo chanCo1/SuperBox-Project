@@ -18,7 +18,7 @@ const GlobalStyles = createGlobalStyle`
 
   a { text-decoration: none; }
 
-  input { outline: none; }
+  input, select, textarea { outline: none; }
 
   li, ul, li { list-style: none; }
 `;

@@ -63,10 +63,12 @@ const ScrollEvent = (
     }
 
     if (window.scrollY > 2000) {
+      useStartBtn.transform = 'translateY(0)';
       useStartBtn.opacity = 1;
       useStartText.transform = 'translateY(0)';
       useStartText.opacity = 1;
     } else {
+      useStartBtn.transform = 'translateY(60px)';
       useStartBtn.opacity = 0;
       useStartText.transform = 'translateY(60px)';
       useStartText.opacity = 0;
@@ -77,6 +79,7 @@ const ScrollEvent = (
 };
 
 /** 화살표 클릭시 위/아래 슬라이드 이벤트 */
+// 보이는거 숨기기
 const SlideUpDown = (e, ref, arrow, setArrow) => {
   const refArea = ref.current.style;
   const current = e.target;
@@ -94,6 +97,7 @@ const SlideUpDown = (e, ref, arrow, setArrow) => {
     // sendArea.opacity = 1;
   }
 };
+// 숨어있는거 보이기
 const ReverseSlideUpDown = (ref, arrow, setArrow, icon) => {
   const refArea = ref.current.style;
   const iconArea = icon.current.style;

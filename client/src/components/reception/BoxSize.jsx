@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 const BoxSizeContainer = styled.table`
   position: relative;
-  width: 1000px;
+  width: 850px;
   padding: 20px;
   background-color: #fff;
-  box-shadow: 0 0 10px #000000ba;
+  box-shadow: 0 0 5px #000000ba;
   border-spacing: 0;
   border-collapse: collapse;
   border-radius: 10px;
@@ -71,12 +71,12 @@ const BoxSize = memo(() => {
       <thead className="thead">
         <tr>
           <th>구분</th>
-          <th>Super-1호</th>
-          <th>Super-2호</th>
-          <th>Super-3호</th>
-          <th>Super-4호</th>
-          <th>Super-5호</th>
-          <th>Super-6호</th>
+          <th>Super 1호</th>
+          <th>Super 2호</th>
+          <th>Super 3호</th>
+          <th>Super 4호</th>
+          <th>Super 5호</th>
+          <th>Super 6호</th>
         </tr>
       </thead>
       <tbody className='tbody'>

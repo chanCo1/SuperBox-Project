@@ -9,12 +9,12 @@ const PageTitleContainer = styled.div`
   color: #404040;
 
   h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 500;
   }
   
   p {
-    border-bottom: 1px solid #404040;
+    border-bottom: 1px solid #bcbcbc;
     padding-bottom: 10px;
   }
 `;
@@ -24,7 +24,7 @@ const PageTitle = memo(({ title, subtitle }) => {
     <PageTitleContainer>
       <h1>{title}</h1>
       <p>{subtitle}</p>
-      <hr />
+      {/* <hr /> */}
     </PageTitleContainer>
   );
 });

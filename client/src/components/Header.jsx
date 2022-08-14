@@ -20,10 +20,11 @@ import { FaUserCircle } from 'react-icons/fa';
 const HeaderContainer = styled.div`
   position: fixed;
   width: 100%;
-  border-bottom: 4px solid #f3b017;
+  /* border-bottom: 2px solid #f3b017; */
   background-color: #fff;
+  /* opacity: .9; */
   z-index: 9;
-
+  
   .header-wrap {
     position: relative;
     width: 1200px;
@@ -89,8 +90,9 @@ const HeaderContainer = styled.div`
         border: 1px solid #f3b017;
         border-radius: 15px;
         overflow: hidden;
-        transition: .3s ease-in;
-
+        transition: .5s ease;
+        opacity: 1;
+        
         li {
           margin: 0;
           padding: 10px 0;

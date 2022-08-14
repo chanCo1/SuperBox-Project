@@ -17,7 +17,7 @@ const FaqPageContainer = styled.div`
   position: relative;
   width: 1200px;
   margin: 0 auto;
-  padding-bottom: 50px;
+  padding-bottom: 90px;
 
   .faq-wrap {
     color: #404040;
@@ -27,28 +27,31 @@ const FaqPageContainer = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 1100px;
+      width: 1000px;
+      height: 50px;
       margin: 0 auto;
-      padding-bottom: 10px;
-      margin-bottom: 30px;
-      /* border-bottom: 1px solid #404040; */
       cursor: pointer;
+      border-radius: 15px;
+
+      &:hover {
+        background-color: #f7f8fb;
+      }
 
       .question-icon {
         color: #f3b017;
         font-size: 30px;
+        margin-left: 10px;
       }
 
       p {
-        font-size: 25px;
-        font-weight: 500;
+        font-size: 20px;
         width: 90%;
       }
 
       img {
         margin-right: 20px;
-        width: 20px;
-        opacity: .7;
+        width: 15px;
+        opacity: .4;
         cursor: pointer;
         transition: .5s ease;
 
@@ -60,8 +63,8 @@ const FaqPageContainer = styled.div`
       display: flex;
       align-items: center;
       flex-direction: column;
-      width: 1100px;
-      margin: 0 auto;
+      width: 900px;
+      margin: 20px auto;
       transition: 0.7s ease-out;
       max-height: 0;
       overflow: hidden;
@@ -70,12 +73,14 @@ const FaqPageContainer = styled.div`
         position: relative;
         margin-top: 40px;
         left: -29%;
-        padding-bottom: 50px; 
       }
     }
   }
 
-  hr { margin: 50px 0; }
+  hr { 
+    margin: 90px auto;
+    opacity: .5;
+  }
 
   .more-question {
     width: 1100px;
@@ -85,13 +90,13 @@ const FaqPageContainer = styled.div`
       color: #404040;
       
       &:nth-child(1) {
-        font-size: 2.3rem;
+        font-size: 2rem;
         font-weight: 500;
         padding-bottom: 20px;
       }
 
       &:nth-child(2) {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
       }
 
       &:nth-child(3) {
@@ -101,19 +106,22 @@ const FaqPageContainer = styled.div`
   }
 
   .inquiry-btn {
-    width: 40%;
+    width: 33%;
     padding: 10px;
     border-radius: 10px;
     border: none;
-    background-color: #f3b017;
-    color: #fff;
+    color: #404040;
+    border: 1px solid #f3b017;
+    background-color: #fff;
     font-size: 1.2rem;
     cursor: pointer;
-    transition: .5s;
+    transition: .3s ease;
 
-    &:active {
-      transform: scale(.9, .9);
+    &:hover {
+      background-color: #f3b017;
+      color: #fff;
     }
+    &:active { transform: scale(.9, .9); }
   }
 `;
 
@@ -134,6 +142,26 @@ const FaqPage = memo(() => {
 
       <FaqPageContainer>
         <div className='faq-wrap'>
+          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, testIconRef)}>
+            <TbZoomQuestion className='question-icon' />
+            <p>자주찾는질문자주찾는질문자주찾는질문</p>
+            <img src={arrow_down} alt="arrow button" ref={testIconRef}/>
+          </div>
+          <div className='faq-answer' ref={testRef}>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?
+          </div>
+        </div>
+        <div className='faq-wrap'>
+          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, testIconRef)}>
+            <TbZoomQuestion className='question-icon' />
+            <p>자주찾는질문자주찾는질문자주찾는질문</p>
+            <img src={arrow_down} alt="arrow_btn" ref={testIconRef}/>
+          </div>
+          <div className='faq-answer' ref={testRef}>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?
+          </div>
+        </div>
+        <div className='faq-wrap'>
           <div className='faq-question' onClick={(e) => ReverseSlideUpDown(priceRef, priceArrow, setPriceArrow, priceIconRef)}>
             <TbZoomQuestion className='question-icon' />
             <p>이용 요금은 어떻게 되나요?</p>
@@ -147,26 +175,6 @@ const FaqPage = memo(() => {
               <li>* 도서산간 할증 요금 4000원</li>
               <li>* 물품가격 50만원 이상일 경우, 고액할증료 2000원 추가</li>
             </ul>
-          </div>
-        </div>
-        <div className='faq-wrap'>
-          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, testIconRef)}>
-            <TbZoomQuestion className='question-icon' />
-            <p>자주찾는질문자주찾는질문자주찾는질문</p>
-            <img src={arrow_down} alt="arrow_btn" ref={testIconRef}/>
-          </div>
-          <div className='faq-answer' ref={testRef}>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?
-          </div>
-        </div>
-        <div className='faq-wrap'>
-          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, testIconRef)}>
-            <TbZoomQuestion className='question-icon' />
-            <p>자주찾는질문자주찾는질문자주찾는질문</p>
-            <img src={arrow_down} alt="arrow_btn" ref={testIconRef}/>
-          </div>
-          <div className='faq-answer' ref={testRef}>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?
           </div>
         </div>
 

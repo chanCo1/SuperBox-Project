@@ -15,11 +15,7 @@ import Spinner from '../components/Spinner';
 import PageTitle from '../components/PageTitle';
 import KakaoMap from '../components/reception/KakaoMap';
 import {
-  ReceptionTitle,
-  SendColumn,
-  SearchColumn,
-  InputColumn,
-} from '../components/reception/TagBox';
+  ReceptionTitle, Input, ReadOnlyInput } from '../components/reception/TagBox';
 import BoxSize from '../components/reception/BoxSize';
 
 import RegexHelper from '../libs/RegexHelper';
@@ -48,24 +44,26 @@ const ReceptionPageContainer = styled.form`
       display: flex;
       justify-content: space-between;
       margin-bottom: 20px;
-      border-bottom: 1px solid #404040;
+      border-bottom: 1px solid #bcbcbc;
 
       h3 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: 500;
         padding-bottom: 5px;
       }
 
       .reception-arrow {
         position: relative;
-        top: 10px;
-        height: 20px;
+        top: 15px;
+        height: 15px;
         cursor: pointer;
         transition: 0.5s ease;
         margin-right: 10px;
-        opacity: 0.7;
+        opacity: 0.3;
       }
-      .arrow-active { transform: rotate(180deg); }
+      .arrow-active {
+        transform: rotate(180deg);
+      }
     }
 
     .search-wrap {
@@ -90,7 +88,9 @@ const ReceptionPageContainer = styled.form`
           transition: 0.5s ease;
           cursor: pointer;
 
-          &:active { transform: scale(0.9, 0.9); }
+          &:active {
+            transform: scale(0.9, 0.9);
+          }
         }
       }
 
@@ -98,6 +98,17 @@ const ReceptionPageContainer = styled.form`
         display: flex;
         flex-direction: column;
         margin-bottom: 20px;
+
+        label {
+          font-size: 1rem;
+          margin-bottom: 5px;
+
+          span {
+            font-size: 1.1em;
+            margin-left: 5px;
+            color: #f3b017;
+          }
+        }
 
         .box-size-wrap {
           position: absolute;
@@ -113,29 +124,19 @@ const ReceptionPageContainer = styled.form`
 
         .search-input {
           border: none;
-          border: 1px solid #404040;
           border-radius: 5px;
-          padding: 10px 10px;
+          border: 1px solid #bcbcbc;
+          padding: 10px;
           color: #404040;
           font-size: 15px;
 
-          &::-webkit-input-placeholder {
-            color: #bcbcbc;
-          }
-          &:focus {
-            box-shadow: 0 0 10px #2a376888;
-          }
+          &::-webkit-input-placeholder { color: #bcbcbc; }
+          &:focus { box-shadow: 0 0 5px #2a376888; }
         }
 
-        .search-input-short {
-          width: 110px;
-        }
-        .search-input-middle {
-          width: 260px;
-        }
-        .search-input-long {
-          width: 410px;
-        }
+        .search-input-short { width: 110px; }
+        .search-input-middle { width: 260px; }
+        .search-input-long { width: 410px; }
       }
     }
     .search-wrap-last { margin-bottom: 0; }
@@ -452,15 +453,23 @@ const ReceptionPage = memo(() => {
           />
           <div className="search-wrap" ref={sendRef}>
             <div className="search-row">
-              <SendColumn
-                label={'이름 *'}
+              <Input
+                label={'이름'}
+                require={'*'}
+                className1={'search-column'}
+                className2={'search-input search-input-middle'}
+                type={'text'}
                 name={'sendName'}
                 placeholder={'영문(소문자), 한글만 입력해주세요.'}
                 defaultValue={memberData.user_name}
                 onChange={onChange}
               />
-              <SendColumn
-                label={'연락처 *'}
+              <Input
+                label={'연락처'}
+                require={'*'}
+                className1={'search-column'}
+                className2={'search-input search-input-middle'}
+                type={'text'}
                 name={'sendContact'}
                 placeholder={"' - ' 빼고 입력해주세요."}
                 defaultValue={memberData.user_phone}
@@ -468,9 +477,12 @@ const ReceptionPage = memo(() => {
               />
             </div>
             <div className="search-row">
-              <SearchColumn
-                label={'주소 *'}
-                className={'search-input search-input-long'}
+              <ReadOnlyInput
+                label={'주소'}
+                require={'*'}
+                className1={'search-column'}
+                className2={'search-input search-input-long'}
+                type={'text'}
                 name={'sendAddress1'}
                 value={reception.sendAddress1 || ''}
                 placeholder={'주소검색을 통해 입력해주세요.'}
@@ -480,16 +492,21 @@ const ReceptionPage = memo(() => {
               </button>
             </div>
             <div className="search-row">
-              <SearchColumn
+              <ReadOnlyInput
                 label={'우편번호'}
-                className={'search-input search-input-short'}
+                className1={'search-column'}
+                className2={'search-input search-input-short'}
+                type={'text'}
                 name={'sendPostCode'}
                 value={reception.sendPostCode || ''}
                 placeholder={'우편번호'}
               />
-              <InputColumn
-                label={'상세주소 *'}
-                className={'search-input search-input-long'}
+              <Input
+                label={'상세주소'}
+                require={'*'}
+                className1={'search-column'}
+                className2={'search-input search-input-long'}
+                type={'text'}
                 name={'sendAddress2'}
                 placeholder={'2~30글자 내로 입력해주세요.'}
                 onChange={onChange}
@@ -505,25 +522,34 @@ const ReceptionPage = memo(() => {
           />
           <div className="search-wrap" ref={arriveRef}>
             <div className="search-row">
-              <InputColumn
-                label={'이름 *'}
-                className={'search-input search-input-middle'}
+              <Input
+                label={'이름'}
+                require={'*'}
+                className1={'search-column'}
+                className2={'search-input search-input-middle'}
+                type={'text'}
                 name={'arriveName'}
                 placeholder={'영문(소문자), 한글만 입력해주세요.'}
                 onChange={onChange}
               />
-              <InputColumn
-                label={'연락처 *'}
-                className={'search-input search-input-middle'}
+              <Input
+                label={'연락처'}
+                require={'*'}
+                className1={'search-column'}
+                className2={'search-input search-input-middle'}
+                type={'text'}
                 name={'arriveContact'}
                 placeholder={"' - ' 빼고 입력해주세요."}
                 onChange={onChange}
               />
             </div>
             <div className="search-row">
-              <SearchColumn
-                label={'주소 *'}
-                className={'search-input search-input-long'}
+              <ReadOnlyInput
+                label={'주소'}
+                require={'*'}
+                className1={'search-column'}
+                className2={'search-input search-input-long'}
+                type={'text'}
                 name={'arriveAddress1'}
                 value={reception.arriveAddress1 || ''}
                 placeholder={'주소검색을 통해 입력해주세요.'}
@@ -533,16 +559,21 @@ const ReceptionPage = memo(() => {
               </button>
             </div>
             <div className="search-row">
-              <SearchColumn
+              <ReadOnlyInput
                 label={'우편번호'}
-                className={'search-input search-input-short'}
+                className1={'search-column'}
+                className2={'search-input search-input-short'}
+                type={'text'}
                 name={'arrivePostCode'}
                 value={reception.arrivePostCode || ''}
                 placeholder={'우편번호'}
               />
-              <InputColumn
-                label={'상세주소 *'}
-                className={'search-input search-input-long'}
+              <Input
+                label={'상세주소'}
+                require={'*'}
+                className1={'search-column'}
+                className2={'search-input search-input-long'}
+                type={'text'}
                 name={'arriveAddress2'}
                 placeholder={'2~30글자 내로 입력해주세요.'}
                 onChange={onChange}
@@ -558,16 +589,21 @@ const ReceptionPage = memo(() => {
           />
           <div className="search-wrap" ref={productRef}>
             <div className="search-row">
-              <InputColumn
-                label={'상품명 *'}
-                className={'search-input search-input-middle'}
+              <Input
+                label={'상품명'}
+                require={'*'}
+                className1={'search-column'}
+                className2={'search-input search-input-middle'}
+                type={'text'}
                 name={'productName'}
                 placeholder={'자세히 기재해주세요. (예시: 의류,가방)'}
                 onChange={onChange}
               />
-              <InputColumn
+              <Input
                 label={'상품가격'}
-                className={'search-input search-input-middle'}
+                className1={'search-column'}
+                className2={'search-input search-input-middle'}
+                type={'text'}
                 name={'productPrice'}
                 placeholder={'4~10자리의 숫자만 입력. (선택)'}
                 onChange={onChange}
@@ -576,10 +612,10 @@ const ReceptionPage = memo(() => {
             <div className="search-row">
               <div className="search-column">
                 <div>
-                  <div className='box-size-wrap' ref={boxSizeRef}>
+                  <div className="box-size-wrap" ref={boxSizeRef}>
                     <BoxSize />
                   </div>
-                  <label htmlFor="">크기 *</label>
+                  <label htmlFor="">크기<span>*</span></label>
                   <BsQuestionCircle
                     className="question-mark"
                     onMouseOver={() => ShowItem(boxSizeRef)}
@@ -594,14 +630,14 @@ const ReceptionPage = memo(() => {
                 >
                   <option value="">상자 크기를 선택하세요</option>
                   {[...new Array(6)].map((v, i) => (
-                    <option key={i} value={`Super-${i + 1}호`}>
-                      Super-{i + 1}호
+                    <option key={i} value={`Super ${i + 1}호`}>
+                      Super {i + 1}호
                     </option>
                   ))}
                 </select>
               </div>
               <div className="search-column">
-                <label htmlFor="">수량 *</label>
+                <label htmlFor="">수량<span>*</span></label>
                 <select
                   className="search-input search-input-middle"
                   name="productQty"
@@ -617,9 +653,11 @@ const ReceptionPage = memo(() => {
                 </select>
               </div>
             </div>
-            <InputColumn
+            <Input
               label={'특이사항'}
-              className={'search-input'}
+              className1={'search-column'}
+              className2={'search-input'}
+              type={'text'}
               name={'productNote'}
               placeholder={'2~20글자 내로 입력해주세요. (선택)'}
               onChange={onChange}
@@ -647,7 +685,7 @@ const ReceptionPage = memo(() => {
                 />
               </div>
               <div className="search-column">
-                <label htmlFor="">결제방식 *</label>
+                <label htmlFor="">결제방식<span>*</span></label>
                 <select
                   className="search-input search-input-middle"
                   name="payment"
@@ -660,9 +698,11 @@ const ReceptionPage = memo(() => {
                 </select>
               </div>
             </div>
-            <InputColumn
+            <Input
               label={'배송 메세지'}
-              className={'search-input'}
+              className1={'search-column'}
+              className2={'search-input'}
+              type={'text'}
               name={'deliveryMessage'}
               placeholder={'2~20글자 내로 입력해주세요. (선택)'}
               onChange={onChange}

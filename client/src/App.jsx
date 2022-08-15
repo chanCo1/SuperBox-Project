@@ -64,7 +64,14 @@ const App = memo(() => {
         />
         <Route path="/customer/notice" element={<NoticePage />} />
         <Route path="/customer/faq" element={<FaqPage />} />
-        <Route path="/customer/inquiry" element={<InquiryPage />} />
+        {/* <Route 
+          path="/customer/inquiry" 
+          element={isLogin ? <InquiryPage /> : <ErrorPage error={error} />} 
+        /> */}
+        <Route 
+          path="/customer/inquiry" 
+          element={<InquiryPage />} 
+        />
         <Route path="/*" element={<ErrorPage />} />
       </Routes>
 

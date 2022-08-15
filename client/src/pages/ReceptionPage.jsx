@@ -6,6 +6,7 @@
 import React, { memo, useEffect, useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+// 주소검색 팝업
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 import Swal from 'sweetalert2';
 
@@ -14,8 +15,7 @@ import Meta from '../Meta';
 import Spinner from '../components/Spinner';
 import PageTitle from '../components/PageTitle';
 import KakaoMap from '../components/reception/KakaoMap';
-import {
-  ReceptionTitle, Input, ReadOnlyInput } from '../components/reception/TagBox';
+import { ReceptionTitle, Input, ReadOnlyInput } from '../components/reception/TagBox';
 import BoxSize from '../components/reception/BoxSize';
 
 import RegexHelper from '../libs/RegexHelper';
@@ -207,8 +207,8 @@ const ReceptionPage = memo(() => {
    * 택배접수 입력 상태값 관리
    */
   const [reception, setReception] = useState({
-    sendName: memberData.user_name,
-    sendContact: memberData.user_phone,
+    sendName: memberData?.user_name,
+    sendContact: memberData?.user_phone,
     sendPostCode: '',
     sendAddress1: '',
     sendAddress2: '',
@@ -225,7 +225,7 @@ const ReceptionPage = memo(() => {
     visitDate: null,
     payment: '',
     deliveryMessage: null,
-    user_no: memberData.user_no,
+    user_no: memberData?.user_no,
   });
   console.log(reception);
 
@@ -461,7 +461,7 @@ const ReceptionPage = memo(() => {
                 type={'text'}
                 name={'sendName'}
                 placeholder={'영문(소문자), 한글만 입력해주세요.'}
-                defaultValue={memberData.user_name}
+                defaultValue={memberData?.user_name}
                 onChange={onChange}
               />
               <Input
@@ -472,7 +472,7 @@ const ReceptionPage = memo(() => {
                 type={'text'}
                 name={'sendContact'}
                 placeholder={"' - ' 빼고 입력해주세요."}
-                defaultValue={memberData.user_phone}
+                defaultValue={memberData?.user_phone}
                 onChange={onChange}
               />
             </div>
@@ -721,10 +721,10 @@ const ReceptionPage = memo(() => {
           />
           <div className="reception-info">
             {reception.productSize && (
-              <span># 박스는 {reception.productSize}로 하겠습니다.</span>
+              <span># 박스는 크기는 {reception.productSize} 입니다!</span>
             )}
             {reception.productQty && (
-              <span># 수량은 {reception.productQty}박스 입니다.</span>
+              <span># 수량은 {reception.productQty}박스예요.</span>
             )}
             {reception.visitDate && (
               <span># 방문은 {reception.visitDate} 일에 와주세요~ </span>

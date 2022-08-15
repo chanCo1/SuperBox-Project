@@ -15,13 +15,11 @@ import { ScrollEvent } from '../utils/Event';
 
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
-import reception from '../assets/image/reception-screenshot.png';
+import reception from '../assets/image/reception.png';
 import customer_center from '../assets/image/customer_center.png';
 import laptop from '../assets/image/laptop.png';
 
 // 아이콘 참조
-import { FaRegComment, FaUserFriends } from 'react-icons/fa';
-import { AiOutlineFileSearch } from 'react-icons/ai';
 import { RiUserReceivedFill } from 'react-icons/ri';
 import { BsPencilSquare } from 'react-icons/bs';
 import { MdDoubleArrow } from 'react-icons/md';
@@ -82,7 +80,7 @@ const MainLogoContainer = styled.div`
 /** 메인페이지 접수 섹션 스타일 */
 const MainReceptionContainer = styled.div`
   width: 100%;
-  padding: 40px 0 0;
+  /* padding: 40px 0; */
   background-color: #f7f8fb;
 
   .main-reception-wrap {
@@ -94,7 +92,8 @@ const MainReceptionContainer = styled.div`
 
     .reception-text {
       width: 50%;
-      padding: 40px 0;
+      margin: auto 0;
+      /* padding: 0 0 50px; */
       color: #404040;
       transition: 1s ease-in-out;
 
@@ -113,12 +112,17 @@ const MainReceptionContainer = styled.div`
     }
 
     .reception-img {
-      padding: 40px 0 0;
+      position: relative;
+      display: flex;
+      align-content: flex-end;
       width: 50%;
       transition: 1s ease-in-out;
-
+      
       img {
+        position: relative;
+        top: 10%;
         width: 100%;
+        height: 90%;
       }
     }
   }
@@ -137,25 +141,7 @@ const MainReviewContainer = styled.div`
 
     .review-icon-wrap {
       width: 50%;
-      text-align: center;
       transition: 1s ease-in-out;
-      
-      /*
-      .review-icon1 {
-        font-size: 18rem;
-        margin: 10% 0 0 10%;
-      }
-      .review-icon2 {
-        position: absolute;
-        font-size: 10rem;
-      }
-
-      img {
-        position: absolute;
-        width: 8%;
-        top: 20%;
-        left: 31%;
-      } */
 
       img {
         width: 70%;
@@ -366,9 +352,6 @@ const MainPage = memo(({ loginPageState }) => {
       <MainReviewContainer>
         <div className='main-review-wrap'>
           <div className='review-icon-wrap' ref={reviewImgRef}>
-            {/* <FaUserFriends className='review-icon1' />
-            <FaRegComment className='review-icon2' />
-            <img src={logo} alt="superbox-lgo" /> */}
             <img src={laptop} alt="고객후기 이미지" />
           </div>
           <div className='review-text' ref={reviewTextRef}>
@@ -384,7 +367,7 @@ const MainPage = memo(({ loginPageState }) => {
           <div className='customer-text' ref={customerTextRef}>
             <h3>고객센터</h3>
             <p>궁금한게 있으면 언제든지 물어보세요.</p>
-            <p>공지사항과 자주찾는 질문,<br />1:1 문의는 여러분들을 위해 항상 열려있습니다.</p>
+            <p>자주 찾는 질문과 1:1 문의는<br />여러분들을 위해 항상 열려있습니다.</p>
           </div>
           <div className='customer-icon' ref={customerImgRef}>
             <img src={customer_center} alt="고객센터 이미지" />

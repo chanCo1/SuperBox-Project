@@ -1,16 +1,22 @@
 /** 패키지 참조 */
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
 import PageTitle from '../components/PageTitle';
 import { Input } from '../components/reception/TagBox';
+import ImageUpload from '../components/inquiry/ImageUpload';
+import Spinner from '../components/Spinner';
 
-// import { HiOutlineChatAlt2 } from 'react-icons/hi';
-import { RiQuestionnaireLine } from 'react-icons/ri';
+import RegexHelper from '../libs/RegexHelper';
+
+// 이미지 참조
 import faq from '../assets/image/faq.png';
 
+/** 스타일 */
 const InquiryContainer = styled.div`
   width: 1200px;
   margin: 0 auto;
@@ -42,14 +48,14 @@ const InquiryContainer = styled.div`
 
       .inquiry-icon {
         position: relative;
-        font-size: 20rem;
         width: 60%;
-        color: #2a3768;
         display: flex;
-        justify-content: center;
         align-items: center;
 
-        img { width: 100%; }
+        img { 
+          width: 100%;
+          opacity: .7;
+        }
       }
     }
 
@@ -75,7 +81,7 @@ const InquiryContainer = styled.div`
         border: 1px solid #bcbcbc;
         padding: 10px;
         color: #404040;
-        font-size: 15px;
+        font-size: 1rem;
 
         &::-webkit-input-placeholder { color: #bcbcbc; }
         &:focus { box-shadow: 0 0 5px #2a376888; }
@@ -90,38 +96,45 @@ const InquiryContainer = styled.div`
 
     button {
       position: relative;
-      /* left: 50%; */
-      text-align: center;
-      width: 30%;
+      left: 50%;
+      transform: translate(-50%);
+      right: 0px;
+      width: 35%;
       font-size: 1.3rem;
       color: #404040;
       padding: 10px 40px;
+      margin-top: 50px;
       border-radius: 10px;
       border: 1px solid #f3b017;
       background-color: #fff;
       cursor: pointer;
-      transition: 0.2s ease;
+      transition: 0.3s ease;
 
       &:hover {
         background-color: #f3b017;
         color: #fff;
       }
-      &:active { transform: scale(0.9, 0.9); }
+      /* &:active { transform: scale(0.9, 0.9); } */
     }
   }
 `;
 
 const InquiryPage = memo(() => {
+
+  const { memberData, loading, isLogin } = useSelector((state) => state.user);
+  console.log(isLogin)
+
   /**
-   * 문의 입력 상태값 관리
+   * 1:1문의 입력 상태값 관리
    */
   const [inquiry, setInquiry] = useState({
     type: '',
     title: '',
-    name: '',
-    email: '',
-    contact: '',
+    name: memberData?.user_name,
+    email: memberData?.user_email,
+    contact: memberData?.user_phone,
     content: '',
+    user_no: memberData?.user_no,
   });
   console.log(inquiry);
 
@@ -136,8 +149,14 @@ const InquiryPage = memo(() => {
     [inquiry]
   );
 
+  // 문의하기 버튼의 submit 이벤트 발생시
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
+  }, []);
+
   return (
     <div>
+      <Spinner loading={loading} />
       <Meta title={'SuperBox :: 1:1 문의'} />
       <PageTitle
         title={'1:1 문의'}
@@ -149,7 +168,7 @@ const InquiryPage = memo(() => {
           <h4>1:1 문의</h4>
         </div>
 
-        <form className="inquiry-content">
+        <form className="inquiry-content" onSubmit={onSubmit}>
           <div className="inquiry-container">
             <div className="inquiry-wrap">
               <div className="inquiry-row">
@@ -166,7 +185,7 @@ const InquiryPage = memo(() => {
               </div>
 
               <Input
-                label={'문의제목'}
+                label={'문의 제목'}
                 require={'*'}
                 className1="inquiry-row"
                 className2="inquiry-input"
@@ -183,7 +202,7 @@ const InquiryPage = memo(() => {
                 type={'text'}
                 name={'name'}
                 placeholder={'이름을 입력해주세요'}
-                defaultValue={''}
+                defaultValue={isLogin ? memberData?.user_name : ''}
                 onChange={onChange}
               />
               <Input
@@ -194,7 +213,7 @@ const InquiryPage = memo(() => {
                 type={'email'}
                 name={'email'}
                 placeholder={'이메일 주소를 입력해주세요'}
-                defaultValue={''}
+                defaultValue={memberData?.user_email}
                 onChange={onChange}
               />
               <Input
@@ -205,7 +224,7 @@ const InquiryPage = memo(() => {
                 type={'text'}
                 name={'contact'}
                 placeholder={"' - ' 빼고 입력해주세요"}
-                defaultValue={''}
+                defaultValue={memberData?.user_phone}
                 onChange={onChange}
               />
             </div>
@@ -227,6 +246,8 @@ const InquiryPage = memo(() => {
               onChange={onChange}
             />
           </div>
+
+          {/* <ImageUpload /> */}
 
           <button type="submit">문의하기</button>
         </form>

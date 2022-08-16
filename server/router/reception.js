@@ -6,7 +6,7 @@ import mysqlPool from '../middleware/pool.js';
 /** 라우터 생성 */
 const router = express.Router();
 
-router.post('/reception', async (req, res) => {
+router.post('/', async (req, res) => {
   console.log(req.body);
 
   const {

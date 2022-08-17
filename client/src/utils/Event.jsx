@@ -22,6 +22,7 @@ const ScrollEvent = (
   const useStartBtn = useStartBtnRef.current.style;
 
   const scrollEvent = window.addEventListener('scroll', (e) => {
+    // console.log(window.scrollY);
     if (window.scrollY < 100) {
       receptionText.display = 'none';
       receptionImg.display = 'none';
@@ -30,7 +31,7 @@ const ScrollEvent = (
       receptionImg.display = 'block';
     }
 
-    if (window.scrollY > 350) {
+    if (window.scrollY > 500) {
       receptionText.opacity = 1;
       receptionText.transform = 'translateY(0)';
       receptionImg.opacity = 1;
@@ -42,7 +43,7 @@ const ScrollEvent = (
       logo.opacity = 1;
     }
 
-    if (window.scrollY > 1000) {
+    if (window.scrollY > 1100) {
       reviewImg.opacity = 1;
       reviewText.transform = 'translateY(0)';
       reviewText.opacity = 1;
@@ -52,7 +53,7 @@ const ScrollEvent = (
       reviewText.opacity = 0;
     }
 
-    if (window.scrollY > 1500) {
+    if (window.scrollY > 1600) {
       customerImg.opacity = 1;
       customerText.transform = 'translateY(0)';
       customerText.opacity = 1;
@@ -62,7 +63,7 @@ const ScrollEvent = (
       customerText.opacity = 0;
     }
 
-    if (window.scrollY > 2000) {
+    if (window.scrollY > 2300) {
       useStartBtn.transform = 'translateY(0)';
       useStartBtn.opacity = 1;
       useStartText.transform = 'translateY(0)';
@@ -79,55 +80,76 @@ const ScrollEvent = (
 };
 
 /** 화살표 클릭시 위/아래 슬라이드 이벤트 */
-// 보이는거 숨기기
+// 보이는거 숨기기 -> css 클래스 활용
 const SlideUpDown = (e, ref, arrow, setArrow) => {
-  const refArea = ref.current.style;
+  const refStyle = ref.current.style;
+  const refArea = ref.current
   const current = e.target;
 
   setArrow(!arrow);
 
   if(arrow) {
     current.classList.add('arrow-active');
-    refArea.maxHeight = 0;
+    refStyle.maxHeight = 0;
     // sendArea.opacity = 0.2;
 
   } else {
     current.classList.remove('arrow-active');
-    refArea.maxHeight = '100vh';
+    // refArea.maxHeight = '100vh';
+    refStyle.maxHeight = refArea.scrollHeight + 'px';
     // sendArea.opacity = 1;
   }
 };
-// 숨어있는거 보이기
+// 숨어있는거 보이기 (with arrow icon)
 const ReverseSlideUpDown = (ref, arrow, setArrow, icon) => {
-  const refArea = ref.current.style;
-  const iconArea = icon.current.style;
-  // const current = e.target;
+  const refStyle = ref.current.style;
+  const refArea = ref.current
+  const iconStyle = icon.current.style;
 
   setArrow(!arrow);
 
   if(arrow) {
-    iconArea.transform = 'rotate(180deg)';
-    refArea.maxHeight = '100vh';
+    iconStyle.transform = 'rotate(180deg)';
+    refStyle.maxHeight = refArea.scrollHeight + 'px';
     
   } else {
-    iconArea.transform = 'rotate(360deg)';
-    // iconArea.classList.remove('arrow-active');
-    refArea.maxHeight = 0;
+    iconStyle.transform = 'rotate(360deg)';
+    refStyle.maxHeight = 0;
   }
 };
 
+/** 화면에 슬라이드 형식으로 보이게하는 이벤트 */
+const ShowSlideItem = (ref) => {
+  const refStyle = ref.current.style;
+  const refArea = ref.current
+
+  // refStyle.display = 'block';
+  refStyle.opacity = 1;
+  refStyle.maxHeight = refArea.scrollHeight + 'px';
+}
+
+/** 화면에 슬라이드 형식으로 안보이게 하는 이벤트 */
+const HideSlideItem = (ref) => {
+  const refStyle = ref.current.style;
+  const refArea = ref.current
+
+  // refStyle.display = 'none';
+  refStyle.maxHeight = 0;
+  refStyle.opacity = 0;
+}
+
 /** 화면에 보이게하는 이벤트 */
 const ShowItem = (ref) => {
-  const refArea = ref.current.style;
+  const refStyle = ref.current.style;
 
-  refArea.display = 'block';
+  refStyle.display = 'block';
 }
 
 /** 화면에 안보이게 하는 이벤트 */
 const HideItem = (ref) => {
-  const refArea = ref.current.style;
+  const refStyle = ref.current.style;
 
-  refArea.display = 'none';
+  refStyle.display = 'none';
 }
 
-export { ScrollEvent, SlideUpDown, ReverseSlideUpDown, ShowItem, HideItem }
+export { ScrollEvent, SlideUpDown, ReverseSlideUpDown, ShowSlideItem, HideSlideItem, ShowItem, HideItem }

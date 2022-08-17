@@ -16,8 +16,9 @@ import { ScrollEvent } from '../utils/Event';
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
 import reception from '../assets/image/reception.png';
-import customer_center from '../assets/image/customer_center.png';
-import laptop from '../assets/image/laptop.png';
+import customerCenter from '../assets/image/customer2.png';
+import review from '../assets/image/review.png';
+import delivery from '../assets/image/delivery.png';
 
 // 아이콘 참조
 import { RiUserReceivedFill } from 'react-icons/ri';
@@ -27,6 +28,7 @@ import { HiOutlineChatAlt2 } from 'react-icons/hi';
 
 /** 메인페이지 로고 섹션 스타일 */
 const MainLogoContainer = styled.div`
+  position: relative;
   width: 100%;
   text-align: center;
   
@@ -74,13 +76,21 @@ const MainLogoContainer = styled.div`
         color: #f3b017;
       }
     }
+
+    .delivery-character {
+      position: relative;
+      top: -15rem;
+      right: -30rem;
+
+      img { width: 13%; }
+    }
   }
 `;
 
 /** 메인페이지 접수 섹션 스타일 */
 const MainReceptionContainer = styled.div`
   width: 100%;
-  /* padding: 40px 0; */
+  padding: 40px 0;
   background-color: #f7f8fb;
 
   .main-reception-wrap {
@@ -100,15 +110,13 @@ const MainReceptionContainer = styled.div`
       p:nth-child(1) {
         font-size: 1.5rem;
         margin: 0 0 30px;
+        color: #999;
       }
       p:nth-child(2) {
         font-size: 2.5rem;
         margin: 0;
       }
-      p:nth-child(3) {
-        font-size: 1.2rem;
-        color: #999;
-      }
+      p:nth-child(3) { font-size: 1.2rem; }
     }
 
     .reception-img {
@@ -120,9 +128,7 @@ const MainReceptionContainer = styled.div`
       
       img {
         position: relative;
-        top: 10%;
         width: 100%;
-        height: 90%;
       }
     }
   }
@@ -177,7 +183,7 @@ const MainReviewContainer = styled.div`
 const MainCustomerContainer = styled.div`
   width: 100%;
   background-color: #f7f8fb;
-  padding: 90px 0;
+  padding: 40px 0;
   
   .main-customer-wrap {
     display: flex;
@@ -333,6 +339,9 @@ const MainPage = memo(({ loginPageState }) => {
           <h2>SuperBox</h2>
           <p>누구나 한번 쯤은 택배 상자를 받고 설레는 기분을 느꼈을거예요.</p>
           <p>그 기분, <span>SuperBox</span>를 통해 더 오래, 더 많이 느껴보세요.</p>
+          <div className='delivery-character'>
+            <img src={delivery} alt="delivery 이미지" />
+          </div>
         </div>
       </MainLogoContainer>
 
@@ -352,7 +361,7 @@ const MainPage = memo(({ loginPageState }) => {
       <MainReviewContainer>
         <div className='main-review-wrap'>
           <div className='review-icon-wrap' ref={reviewImgRef}>
-            <img src={laptop} alt="고객후기 이미지" />
+            <img src={review} alt="고객후기 이미지" />
           </div>
           <div className='review-text' ref={reviewTextRef}>
             <h3>고객후기</h3>
@@ -370,7 +379,7 @@ const MainPage = memo(({ loginPageState }) => {
             <p>자주 찾는 질문과 1:1 문의는<br />여러분들을 위해 항상 열려있습니다.</p>
           </div>
           <div className='customer-icon' ref={customerImgRef}>
-            <img src={customer_center} alt="고객센터 이미지" />
+            <img src={customerCenter} alt="고객센터 이미지" />
           </div>
         </div>
       </MainCustomerContainer>

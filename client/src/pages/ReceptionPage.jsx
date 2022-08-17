@@ -5,10 +5,15 @@
 /** 패키지 참조 */
 import React, { memo, useEffect, useState, useCallback, useRef } from 'react';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-// 주소검색 팝업
-import { useDaumPostcodePopup } from 'react-daum-postcode';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+
+// 주소검색 팝업 참조
+import { useDaumPostcodePopup } from 'react-daum-postcode';
+
+// 리덕스
+import { useDispatch, useSelector } from 'react-redux';
+import { postReception } from '../slices/ReceptionSlice';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
@@ -19,12 +24,10 @@ import { ReceptionTitle, Input, ReadOnlyInput } from '../components/reception/Ta
 import BoxSize from '../components/reception/BoxSize';
 
 import RegexHelper from '../libs/RegexHelper';
-import arrow_btn from '../assets/image/arrow_up.png';
 import { SlideUpDown, ShowItem, HideItem } from '../utils/Event';
-import { BsQuestionCircle } from 'react-icons/bs';
 
-// slice 참조
-import { postReception } from '../slices/ReceptionSlice';
+import arrow_btn from '../assets/image/arrow_up.png';
+import { BsQuestionCircle } from 'react-icons/bs';
 
 /** 스타일 */
 const ReceptionPageContainer = styled.form`
@@ -70,12 +73,13 @@ const ReceptionPageContainer = styled.form`
       margin-bottom: 50px;
       max-height: 100vh;
       overflow: hidden;
-      transition: 0.7s ease-out;
+      transition: 0.4s ease-out;
 
       .search-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 0 2px;
 
         button {
           width: 20%;
@@ -112,8 +116,8 @@ const ReceptionPageContainer = styled.form`
 
         .box-size-wrap {
           position: absolute;
-          display: none;
           left: 15%;
+          display: none;
           z-index: 99;
         }
 
@@ -200,14 +204,16 @@ const ReceptionPage = memo(() => {
 
   // 리덕스의 디스패치 사용
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  /** Store를 통해 user 상태값 호출 */
   const { memberData, loading } = useSelector((state) => state.user);
 
   /**
    * 택배접수 입력 상태값 관리
    */
   const [reception, setReception] = useState({
-    sendName: memberData?.user_name,
+    sendName:  memberData?.user_name,
     sendContact: memberData?.user_phone,
     sendPostCode: '',
     sendAddress1: '',
@@ -329,57 +335,33 @@ const ReceptionPage = memo(() => {
       const current = e.target;
 
       try {
-        RegexHelper.value(current.sendName, '보내는 분의 이름을 입력해주세요..');
-        RegexHelper.nameCheck(
-          current.sendName,
-          '이름은 2~10자리의 영문(소문자), 한글만 가능합니다.'
-        );
+        RegexHelper.value(current.sendName, '보내는 분의 이름을 입력해주세요.');
+        RegexHelper.nameCheck(current.sendName, '이름은 2~10자리의 영문(소문자), 한글만 가능합니다.');
 
         RegexHelper.value(current.sendContact, '보내는 분의 연락처를 입력해주세요.');
-        RegexHelper.phone(
-          current.sendContact,
-          "전화번호 형식이 아닙니다. ' - '이 있다면 빼고 입력해주세요."
-        );
+        RegexHelper.phone(current.sendContact, "전화번호 형식이 아닙니다. ' - '이 있다면 빼고 입력해주세요.");
 
         RegexHelper.value(current.sendAddress1, '보내는 분의 주소를 입력해주세요.');
 
         RegexHelper.value(current.sendAddress2, '보내는 분의 상세주소를 입력해주세요.');
-        RegexHelper.inputCheck(
-          current.sendAddress2,
-          '상세주소는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.'
-        );
+        RegexHelper.inputCheck(current.sendAddress2, '상세주소는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
 
         RegexHelper.value(current.arriveName, '받는 분의 이름을 입력해주세요.');
-        RegexHelper.nameCheck(
-          current.arriveName,
-          '이름은 2~10자리의 영문(소문자), 한글만 가능합니다.'
-        );
+        RegexHelper.nameCheck(current.arriveName, '이름은 2~10자리의 영문(소문자), 한글만 가능합니다.');
 
         RegexHelper.value(current.arriveContact, '받는 분의 연락처를 입력해주세요.');
-        RegexHelper.phone(
-          current.arriveContact,
-          "전화번호 형식이 아닙니다. ' - '이 있다면 빼고 입력해주세요."
-        );
+        RegexHelper.phone(current.arriveContact, "전화번호 형식이 아닙니다. ' - '이 있다면 빼고 입력해주세요.");
 
         RegexHelper.value(current.arriveAddress1, '받는 분의 주소를 입력해주세요.');
 
         RegexHelper.value(current.arriveAddress2, '받는 분의 상세주소를 입력해주세요.');
-        RegexHelper.inputCheck(
-          current.arriveAddress2,
-          '상세주소는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.'
-        );
+        RegexHelper.inputCheck(current.arriveAddress2, '상세주소는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
 
         RegexHelper.value(current.productName, '배송할 상품명을 입력해주세요.');
-        RegexHelper.inputCheck(
-          current.productName,
-          '상품명은 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.'
-        );
+        RegexHelper.inputCheck(current.productName, '상품명은 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
 
         if (current.productPrice.value.length >= 1) {
-          RegexHelper.num(
-            current.productPrice,
-            '상품가격은 4~10자 내로 숫자만 입력해주세요.'
-          );
+          RegexHelper.num(current.productPrice,'상품가격은 4~10자 내로 숫자만 입력해주세요.');
         }
 
         RegexHelper.value(current.productSize, '배송할 상품의 크기를 선택해주세요.');
@@ -387,19 +369,13 @@ const ReceptionPage = memo(() => {
         RegexHelper.value(current.productQty, '배송할 상품의 수량을 선택해주세요.');
 
         if (current.productNote.value.length >= 1) {
-          RegexHelper.inputCheck(
-            current.productNote,
-            '특이사항은 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.'
-          );
+          RegexHelper.inputCheck(current.productNote, '특이사항은 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
         }
 
         RegexHelper.value(current.payment, '결제방식을 선택해주세요.');
 
         if (current.deliveryMessage.value.length >= 1) {
-          RegexHelper.inputCheck(
-            current.deliveryMessage,
-            '배송메세지는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.'
-          );
+          RegexHelper.inputCheck(current.deliveryMessage, '배송메세지는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
         }
 
         Swal.fire({
@@ -408,22 +384,29 @@ const ReceptionPage = memo(() => {
           text: '접수가 완료되었습니다.',
           confirmButtonText: '확인',
           confirmButtonColor: '#f3b017',
+        }).then(() => {
+          dispatch(postReception(reception));
+          navigate('/mypage');
         });
 
-        dispatch(postReception(reception));
       } catch (err) {
         Swal.fire({
           icon: 'error',
           iconColor: '#f3b017',
           text: err.message,
           confirmButtonColor: '#f3b017',
-        }).then(() => {});
+        }).then(() => {
+          // focus가 풀리는 문제를 setTimeout으로 해결
+          setTimeout(() => {
+            err.field.focus();
+            err.field.style.boxShadow = '0 0 5px #ff0000';
+          }, 300);
+        });
 
-        err.field.focus();
         return;
       }
     },
-    [dispatch, reception]
+    [dispatch, reception, navigate]
   );
 
   // 내일 날짜 구하는 함수 -> yyyy-mm-dd

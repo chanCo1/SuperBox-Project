@@ -1,12 +1,14 @@
 /** 패키지 참조 */
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
 
+// 컴포넌트 참조
 import Spinner from './Spinner';
 import { setIsLogin } from '../slices/UserSlice';
+import { ShowSlideItem, HideSlideItem } from '../utils/Event';
 
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
@@ -90,8 +92,9 @@ const HeaderContainer = styled.div`
         border: 1px solid #f3b017;
         border-radius: 15px;
         overflow: hidden;
-        transition: .5s ease;
-        opacity: 1;
+        transition: .4s ease;
+        opacity: 0;
+        max-height: 0;
         
         li {
           margin: 0;
@@ -157,9 +160,7 @@ const MyPage = styled.div`
   }
 
   // props로 css 상태값 변경
-  ${(props) => props.state && css`
-    max-height: 100vh;
-  `}
+  ${(props) => props.state && css` max-height: 100vh; `}
 `;
 
 /** 
@@ -170,19 +171,10 @@ const Header = memo(({ loginPageState }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  /** Store를 통해 상태값 호출 */
+  const subMenuRef = useRef();
+
+  /** Store를 통해 user 상태값 호출 */
   const { loading, isLogin } = useSelector(state => state.user);
-
-  // 고객센터 서브메뉴 on/off -> 최대높이값을 주는걸로 해결
-  const [customerStyle, setCustomerStyle] = useState({ maxHeight: 0, opacity: 0 });
-
-  // 고객센터 서브메뉴를 마우스 상태에 따라 변환
-  const onMouseOver = useCallback(() => {
-    setCustomerStyle({ maxHeight: '100vh', opacity: 1 });
-  }, []);
-  const onMouseOut = useCallback(() => {
-    setCustomerStyle({ maxHeight: 0, opacity: 0 });
-  }, []);
 
   // 로그인 버튼 클릭시 app.jsx에서 받은 상태값을 true 바꾼다.
   const loginBtnClick = useCallback(() => {
@@ -239,9 +231,13 @@ const Header = memo(({ loginPageState }) => {
           <ul className="nav-wrap">
             <NavLink className="NavLink nav" to={'/reception'} onClick={connectReceptionPage}><li>배송접수</li></NavLink>
             <NavLink className="NavLink nav" to={'/review'}><li>고객후기</li></NavLink>
-            <li className="NavLink nav" onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+            <li 
+              className="NavLink nav" 
+              onMouseOver={() => ShowSlideItem(subMenuRef)}
+              onMouseOut={() => HideSlideItem(subMenuRef)}
+            >
               고객센터
-              <ul className='customer-Subnav' style={customerStyle}>
+              <ul className='customer-Subnav' ref={subMenuRef}>
                 <Link to={'/customer/notice'}><li>공지사항</li></Link>
                 <Link to={'/customer/faq'}><li>자주 찾는 질문</li></Link>
                 <Link to={'/customer/inquiry'}><li>1:1 문의</li></Link>

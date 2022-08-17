@@ -9,6 +9,7 @@ import PageTitle from '../components/PageTitle';
 import BoxSize from '../components/reception/BoxSize';
 import { ReverseSlideUpDown } from '../utils/Event';
 
+// 기타 이미지 및 아이콘
 import { TbZoomQuestion } from 'react-icons/tb';
 import arrow_down from '../assets/image/arrow_down.png';
 
@@ -21,7 +22,7 @@ const FaqPageContainer = styled.div`
 
   .faq-wrap {
     color: #404040;
-    transition: .7s ease-in-out;
+    transition: .4s ease-in-out;
     
     .faq-question {
       display: flex;
@@ -56,7 +57,7 @@ const FaqPageContainer = styled.div`
         transition: .5s ease;
 
       }
-      .arrow-active { transform: rotate(180deg); }
+      /* .arrow-active { transform: rotate(180deg); } */
     }
 
     .faq-answer {
@@ -65,7 +66,7 @@ const FaqPageContainer = styled.div`
       flex-direction: column;
       width: 900px;
       margin: 20px auto;
-      transition: 0.7s ease-out;
+      transition: 0.4s ease-out;
       max-height: 0;
       overflow: hidden;
 
@@ -133,7 +134,7 @@ const FaqPage = memo(() => {
   const priceRef = useRef();
   const priceIconRef = useRef();
   const testRef = useRef();
-  const testIconRef = useRef();
+  const arrowIconRef = useRef();
 
   return (
     <div>
@@ -142,20 +143,20 @@ const FaqPage = memo(() => {
 
       <FaqPageContainer>
         <div className='faq-wrap'>
-          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, testIconRef)}>
+          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, arrowIconRef)}>
             <TbZoomQuestion className='question-icon' />
             <p>자주찾는질문자주찾는질문자주찾는질문</p>
-            <img src={arrow_down} alt="arrow button" ref={testIconRef}/>
+            <img src={arrow_down} alt="arrow_button" ref={arrowIconRef}/>
           </div>
           <div className='faq-answer' ref={testRef}>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?
           </div>
         </div>
         <div className='faq-wrap'>
-          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, testIconRef)}>
+          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, arrowIconRef)}>
             <TbZoomQuestion className='question-icon' />
             <p>자주찾는질문자주찾는질문자주찾는질문</p>
-            <img src={arrow_down} alt="arrow_btn" ref={testIconRef}/>
+            <img src={arrow_down} alt="arrow_btn" ref={arrowIconRef}/>
           </div>
           <div className='faq-answer' ref={testRef}>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?

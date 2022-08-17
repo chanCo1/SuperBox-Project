@@ -9,7 +9,7 @@ import { join, extname } from 'path';
 const router = express.Router();
 
 /**
- * 파일 업로드 함수
+ * 다중 파일 업로드 함수
  */
 // multer 객체 생성
 const initMulter = () => {
@@ -18,8 +18,7 @@ const initMulter = () => {
     storage: multer.diskStorage({
       // 업로드 된 파일이 저장될 디렉토리 설정
       destination: (req, file, cb) => {
-        console.log(file);
-        cb(null, 'image/');
+        cb(null, 'img/inquiry');
       },
   
       // 업로드 된 파일이 저장될 이름 설정
@@ -44,24 +43,65 @@ const initMulter = () => {
 };
 
 /**
+ * 에러 확인 함수
+ */
+const checkUploadError = err => {
+  // 결과 코드와 결과 메세지 변수
+  let result_code = 200;
+  let result_msg = '업로드 성공';
+
+  if(err) {
+    if(err instanceof multer.MulterError) {
+      switch (err.code) {
+        case 'LIMIT_FILE_COUNT':
+          err.result_code = 500;
+          err.result_msg = '업로드 가능한 파일 수를 초과했습니다.';
+          break;
+        case 'LIMIT_FILE_SIZE':
+          err.result_code = 500;
+          err.result_msg = '업로드 가능한 파일 용량을 초과했습니다.';
+          break;
+        default:
+          err.result_code = 500;
+          err.result_msg = '알 수 없는 에러가 발생했습니다.';
+          break;
+      }
+    }
+    result_code = err.result_code;
+    result_msg = err.result_msg;
+  };
+
+  return {
+    result_code: result_code,
+    result_msg: result_msg
+  };
+};
+
+/**
  * 파일 업로드
  */
 router.post('/upload', (req, res) => {
-  req.file = [];
-
+  // 업로드 처리 시 배열로 설정
+  // req.files=[];
+  
   // name 속성이 imageUpload 인 경우에 대한 업로드 수행
-  const uploade = initMulter().array('imageUpload'); 
-  uploade(req, res, (err) => {
-    console.log(req.file);
+  const upload = initMulter().array('imgFile'); 
+  
 
+  upload(req, res, (err) => {
+    console.log(req.files);
+    
+    // 에러여부를 확인하여 결과코드와 메시지를 생성한다.
+    let { result_code, result_msg } = checkUploadError(err);
+    
     if(err) {
-      res.status(400).json({ success: false });
+      res.status(result_code).json({ success: false, message: result_msg });
     } else {
-      res.status(200).json({
-        success: true, filePath: res.req.file.path
+      res.status(result_code).json({
+        success: true, message: result_msg, filePath: req.files
       });
     }
   })
-})
+});
 
 export default router;

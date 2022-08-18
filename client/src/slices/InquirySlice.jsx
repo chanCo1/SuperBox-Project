@@ -32,13 +32,22 @@ export const postInquiry = createAsyncThunk('inquirySlice/postInquiry', async (p
 /** 
  * reducer 정의 
  */
-const inquirySlice = createSlice({
-  name: 'inquity',
+const InquirySlice = createSlice({
+  name: 'inquiry',
   initialState: {
     data: null,
     loading: false,
     error: null,
+    inquiryImg: null,
   },
+
+  // // 이미지 파일 첨부 관리
+  // reducers: {
+  //   setInquiryImg: (state, { payload }) => {
+  //     console.log(payload);
+  //     return { ...state, inquiryImg: payload }
+  //   }
+  // },
 
   extraReducers: {
     // 회원가입 reducer
@@ -48,4 +57,5 @@ const inquirySlice = createSlice({
   }
 });
 
-export default inquirySlice.reducer;
+export default InquirySlice.reducer;
+// export const { setInquiryImg } = InquirySlice.actions;

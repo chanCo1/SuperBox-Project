@@ -32,7 +32,7 @@ export const postReception = createAsyncThunk('receptionSlice/postReception', as
 /** 
  * reducer 정의 
  */
-const receptionSlice = createSlice({
+const ReceptionSlice = createSlice({
   name: 'reception',
   initialState: {
     data: null,
@@ -48,4 +48,4 @@ const receptionSlice = createSlice({
   }
 });
 
-export default receptionSlice.reducer;
+export default ReceptionSlice.reducer;

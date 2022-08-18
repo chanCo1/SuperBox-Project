@@ -7,10 +7,11 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
+import axios from '../config/axios';
 
 // 리덕스
 import { useSelector, useDispatch } from 'react-redux';
-import { postInquiry } from '../slices/InquirySlice'; 
+import { postInquiry, setInquiryImg } from '../slices/InquirySlice'; 
 
 // 컴포넌트 참조
 import Meta from '../Meta';
@@ -100,7 +101,7 @@ const InquiryContainer = styled.div`
       }
     }
 
-    button {
+    .submit-btn {
       position: relative;
       left: 50%;
       transform: translate(-50%);
@@ -133,11 +134,19 @@ const InquiryPage = memo(() => {
 
   /** Store를 통해 user 상태값 호출 */
   const { memberData, loading, isLogin } = useSelector((state) => state.user);
+  // const { data, setInquiryImg } = useSelector(state => state.inquiry);
+
+  // formData
+  const formData = new FormData();
+
+  // 백엔드에 보낼 이미지 상태값
+  const [uploadImg, setUploadImg] = useState();
+  console.log(uploadImg);
 
   /**
    * 1:1문의 입력 상태값 관리
    */
-   const [inquiry, setInquiry] = useState({});
+  const [inquiry, setInquiry] = useState({});
   console.log(inquiry);
 
   // 새로고침 했을 때 값이 안들어가는 현상 해결
@@ -156,6 +165,11 @@ const InquiryPage = memo(() => {
     });
   }, [memberData, isLogin]);
 
+  useEffect(() => {
+    setInquiry({ ...inquiry, img: uploadImg });
+
+  }, [uploadImg, setInquiry]);
+
   // 문의 입력 값 갱신
   const onChange = useCallback(
     (e) => {
@@ -168,11 +182,12 @@ const InquiryPage = memo(() => {
   );
 
   // 문의하기 버튼의 submit 이벤트 발생시
-  const onSubmit = useCallback((e) => {
+  const onSubmit = useCallback( async (e) => {
     e.preventDefault();
 
     const current = e.target;
 
+    // 유효성 검사
     try {
       RegexHelper.value(current.type, '문의 유형을 선택해주세요');
 
@@ -219,7 +234,26 @@ const InquiryPage = memo(() => {
       });
 
       return;
-    }
+    };
+
+    // // formData
+    // for (let i = 0; i < uploadImg.length; i++) {
+    //   formData.append('imgFile', uploadImg[i]);
+    // }
+
+    // for (const i of formData) {
+    //   console.log('!!!formData >>> ', i);
+    // }
+
+    // try {
+    //   const response = await axios.post('api/image/upload', formData);
+    //   console.log(response.data.filePath);
+    //   // for(let i = 0; i < response.data.filePath.length; i++) {
+    //   // }
+    // } catch(err) {
+    //   console.error(err);
+    // }
+    
   }, [dispatch, inquiry, navigate]);
 
   return (
@@ -315,9 +349,9 @@ const InquiryPage = memo(() => {
             />
           </div>
 
-          <ImageUpload setInquiry={setInquiry} />
+          <ImageUpload setUploadImg={setUploadImg} />
 
-          <button type="submit">문의하기</button>
+          <button className='submit-btn' type="submit">문의하기</button>
         </form>
       </InquiryContainer>
     </div>

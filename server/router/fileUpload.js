@@ -81,24 +81,23 @@ const checkUploadError = err => {
  * 파일 업로드
  */
 router.post('/upload', (req, res) => {
-  // 업로드 처리 시 배열로 설정
-  // req.files=[];
   
   // name 속성이 imageUpload 인 경우에 대한 업로드 수행
-  const upload = initMulter().array('imgFile'); 
+  const upload = initMulter().single('imgFile'); 
   
 
   upload(req, res, (err) => {
-    console.log(req.files);
+    // file은 single, files는 array에 사용
+    console.log('2 >>> ', req.file);
     
     // 에러여부를 확인하여 결과코드와 메시지를 생성한다.
     let { result_code, result_msg } = checkUploadError(err);
     
     if(err) {
-      res.status(result_code).json({ success: false, message: result_msg });
+      res.status(result_code).json({ success: false, message: err, result: result_msg });
     } else {
       res.status(result_code).json({
-        success: true, message: result_msg, filePath: req.files
+        success: true, message: result_msg, filePath: req.file
       });
     }
   })

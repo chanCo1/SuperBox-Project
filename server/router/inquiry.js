@@ -11,6 +11,7 @@ router.post('/', async (req, res) => {
 
   const { type, title, name, email, contact, content, img, user_no } = req.body;
 
+  // sql 파일 저장 몇개 할껀지 수정해야함 ..
   const sql = 'INSERT INTO inquiry (type, title, name, email, contact, content, img, user_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
 
   const param = [type, title, name, email, contact, content, img, user_no];

@@ -134,20 +134,18 @@ const InquiryPage = memo(() => {
 
   /** Store를 통해 user 상태값 호출 */
   const { memberData, loading, isLogin } = useSelector((state) => state.user);
-  // const { data, setInquiryImg } = useSelector(state => state.inquiry);
-
-  // formData
-  const formData = new FormData();
 
   // 백엔드에 보낼 이미지 상태값
   const [uploadImg, setUploadImg] = useState();
-  console.log(uploadImg);
+
+  // 이미지 첨부 확인 여부
+  const [confirm, setConfirm] = useState(false);
 
   /**
    * 1:1문의 입력 상태값 관리
    */
   const [inquiry, setInquiry] = useState({});
-  console.log(inquiry);
+  // console.log(inquiry);
 
   // 새로고침 했을 때 값이 안들어가는 현상 해결
   useEffect(() => {
@@ -236,29 +234,20 @@ const InquiryPage = memo(() => {
       return;
     };
 
-    // // formData
-    // for (let i = 0; i < uploadImg.length; i++) {
-    //   formData.append('imgFile', uploadImg[i]);
-    // }
-
-    // for (const i of formData) {
-    //   console.log('!!!formData >>> ', i);
-    // }
-
-    // try {
-    //   const response = await axios.post('api/image/upload', formData);
-    //   console.log(response.data.filePath);
-    //   // for(let i = 0; i < response.data.filePath.length; i++) {
-    //   // }
-    // } catch(err) {
-    //   console.error(err);
-    // }
+    if(confirm) {
+      Swal.fire({
+        icon: 'error',
+        iconColor: '#f3b017',
+        text: '이미지 사용 여부를 확인해주세요',
+        confirmButtonColor: '#f3b017',
+      })
+    };
     
-  }, [dispatch, inquiry, navigate]);
+  }, [dispatch, inquiry, navigate, confirm]);
 
   return (
     <div>
-      <Spinner loading={loading} />
+      <Spinner visible={loading} />
       <Meta title={'SuperBox :: 1:1 문의'} />
       <PageTitle
         title={'1:1 문의'}
@@ -349,7 +338,7 @@ const InquiryPage = memo(() => {
             />
           </div>
 
-          <ImageUpload setUploadImg={setUploadImg} />
+          <ImageUpload setUploadImg={setUploadImg} setConfirm={setConfirm} />
 
           <button className='submit-btn' type="submit">문의하기</button>
         </form>

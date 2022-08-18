@@ -28,7 +28,10 @@ const RegisterPage = memo(({ loginPageState }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // 리덕스
   const { loading } = useSelector(state => state.user);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   /** 
    * 회원가입 입력 상태값 관리 
@@ -184,6 +187,7 @@ const RegisterPage = memo(({ loginPageState }) => {
 
     // 아이디, 이메일, 전화번호 값 존재 여부 확인
     try {
+      setIsLoading(true);
       await axios.post('http://localhost:3001/api/users/check', register);
 
       Swal.fire({
@@ -212,7 +216,9 @@ const RegisterPage = memo(({ loginPageState }) => {
         setEmailErrorStyle({color: 'red'});
       }
       return;
-    };
+    } finally {
+      setIsLoading(false);
+    }
 
   }, [dispatch, register, navigate, loginPageState]);
 
@@ -232,7 +238,7 @@ const RegisterPage = memo(({ loginPageState }) => {
     <div>
       <>
         <Meta title={'SuperBox :: 회원가입'} />
-        <Spinner visible={loading} />
+        <Spinner visible={loading || isLoading} />
 
         <LoginPageContainer style={{background: '#f7f8fb'}}>
           <Logo />

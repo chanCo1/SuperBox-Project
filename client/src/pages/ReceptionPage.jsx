@@ -421,7 +421,7 @@ const ReceptionPage = memo(() => {
 
   return (
     <div>
-      <Spinner loading={loading} />
+      <Spinner visible={loading} />
       <Meta title={'SuperBox :: 배송접수'} />
       <PageTitle title={'배송접수'} subtitle={'배송정보를 정확하게 입력해주세요'} />
 

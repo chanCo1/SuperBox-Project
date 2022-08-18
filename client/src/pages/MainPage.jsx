@@ -19,12 +19,12 @@ import reception from '../assets/image/reception.png';
 import customerCenter from '../assets/image/customer2.png';
 import review from '../assets/image/review.png';
 import delivery from '../assets/image/delivery.png';
+import receptionIcon from '../assets/image/reception-icon2.png';
+import reviewIcon from '../assets/image/review-icon.png';
+import inquirynIcon from '../assets/image/inquiry-icon.png';
 
 // 아이콘 참조
-import { RiUserReceivedFill } from 'react-icons/ri';
-import { BsPencilSquare } from 'react-icons/bs';
 import { MdDoubleArrow } from 'react-icons/md';
-import { HiOutlineChatAlt2 } from 'react-icons/hi';
 
 /** 메인페이지 로고 섹션 스타일 */
 const MainLogoContainer = styled.div`
@@ -273,8 +273,8 @@ const MainUseStartContainer = styled.div`
           }
 
           .btn-icon {
-            color: #2a3768;
-            font-size: 10rem;
+            width: 15vw;
+            height: 20vh;
           }
         }
 
@@ -390,19 +390,22 @@ const MainPage = memo(({ loginPageState }) => {
           <div className='useStart-btn-wrap' ref={useStartBtnRef}>
             <Link to={'/reception'} className='useStart-btn' onClick={connectReceptionPage}>
               <button className='start-btn'>
-                <RiUserReceivedFill className='btn-icon' />
+                {/* <RiUserReceivedFill className='btn-icon' /> */}
+                <img className='btn-icon' src={receptionIcon} alt="" />
               </button>
               <span>배송접수<MdDoubleArrow /></span>
             </Link>
             <Link to={'/review'} className='useStart-btn'>
               <button className='start-btn'>
-                <BsPencilSquare className='btn-icon'/>
+                {/* <BsPencilSquare className='btn-icon'/> */}
+                <img className='btn-icon' src={reviewIcon} alt="" />
               </button>
               <span>고객후기<MdDoubleArrow /></span>
             </Link>
             <Link to={'/customer/inquiry'} className='useStart-btn'>
               <button className='start-btn'>
-                <HiOutlineChatAlt2 className='btn-icon' />
+                {/* <HiOutlineChatAlt2 className='btn-icon' /> */}
+                <img className='btn-icon' src={inquirynIcon} alt="" />
               </button>
               <span>1:1 문의<MdDoubleArrow /></span>
             </Link>

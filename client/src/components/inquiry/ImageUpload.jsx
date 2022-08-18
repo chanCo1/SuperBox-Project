@@ -18,7 +18,7 @@ const ImageUploadContainer = styled.div`
   border-radius: 5px;
   padding: 30px 60px;
   color: #404040;
-
+  
   fieldset {
     text-align: center;
     border: 1px solid #bcbcbc;
@@ -33,13 +33,10 @@ const ImageUploadContainer = styled.div`
       margin: 0 20px 10px;
       font-size: 0.9rem;
       cursor: pointer;
+      /* display: none; */
 
-      .upload-icon {
-        font-size: 3.5rem;
-      }
-      &:hover {
-        color: blue;
-      }
+      .upload-icon { font-size: 3.5rem; }
+      &:hover { color: blue; }
     }
 
     .img-preview-wrap {
@@ -48,9 +45,6 @@ const ImageUploadContainer = styled.div`
       .img-preview {
         width: 50%;
         padding: 20px 20px 20px 50px;
-        /* display: inline-block; */
-        /*flex-wrap: wrap;
-        justify-content: space-evenly; */
 
         .upload-img-wrap {
           position: relative;
@@ -71,9 +65,7 @@ const ImageUploadContainer = styled.div`
             color: #bcbcbc;
             cursor: pointer;
 
-            &:hover {
-              color: #404040;
-            }
+            &:hover { color: #404040; }
           }
         }
 
@@ -97,9 +89,7 @@ const ImageUploadContainer = styled.div`
 
         .file-confirm {
           
-          p {
-            margin-bottom: 10px;
-          }
+          p { margin-bottom: 10px; }
           
           button {
             padding: 5px 20px;
@@ -134,6 +124,7 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
   const [imgConfirm, setImgConfirm] = useState(false);
 
   const imgRef = useRef();
+  const inputRef = useRef();
   
   useEffect(() => {
     setConfirm(imgConfirm);
@@ -181,7 +172,9 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
       }
 
       const imgRefStyle = imgRef.current.style;
+      const inputRefStyle = inputRef.current.style;
       imgRefStyle.opacity = 0.5;
+      inputRefStyle.display = 'none';
     },
     [formDataImg, setUploadImg]
   );
@@ -195,6 +188,7 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
       setShowImgFiles('');
       setFormDataImg('');
       setCount('0/1');
+      setImgConfirm(false);
 
       const imgRefStyle = imgRef.current.style;
       imgRefStyle.opacity = 1;
@@ -205,10 +199,11 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
   return (
     <>
       <Spinner visible={isLoading} />
+      <p style={{ fontSize: '1.2rem',  marginBottom: '5px' }}>파일첨부</p>
       <ImageUploadContainer>
         <fieldset>
           <legend>
-            <label htmlFor="imageUpload" onChange={fileSelect}>
+            <label htmlFor="imageUpload" onChange={fileSelect} ref={inputRef}>
               <MdOutlineDriveFolderUpload className="upload-icon" />
               여기를 클릭하면 이미지 파일을 첨부할 수 있어요
               <input

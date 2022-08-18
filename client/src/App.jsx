@@ -50,28 +50,44 @@ const App = memo(() => {
       {loginPageState && <LoginPage loginPageState={setLoginPageState} />}
 
       <Routes>
+        {/* 첫 페이지 */}
         <Route path="/" exact={true} element={<IntroPage />} />
+
+        {/* 메인페이지 */}
         <Route path="/main" element={<MainPage loginPageState={setLoginPageState} />} />
+
+        {/* 배송접수 */}
         <Route 
           path="/reception" 
           element={isLogin ? <ReceptionPage /> : <ErrorPage error={error} />} 
         />
+        
+        {/* 고객후기 */}
         <Route path="/review" element={<ReviewPage />} />
+
+        {/* 마이페이지 */}
         <Route path="/mypage/*" element={<MyPage />} />
+
+        {/* 회원가입 */}
         <Route
           path="/register"
           element={<RegisterPage loginPageState={setLoginPageState} />}
         />
+
+        {/* 공지사항 */}
         <Route path="/customer/notice" element={<NoticePage />} />
+
+        {/* 자주찾는질문 */}
         <Route path="/customer/faq" element={<FaqPage />} />
+
+        {/* 1:1문의 */}
+        <Route path="/customer/inquiry" element={<InquiryPage />} />
         {/* <Route 
           path="/customer/inquiry" 
           element={isLogin ? <InquiryPage /> : <ErrorPage error={error} />} 
         /> */}
-        <Route 
-          path="/customer/inquiry" 
-          element={<InquiryPage />} 
-        />
+
+        {/* 잘못 된 주소로 접속 시 */}
         <Route path="/*" element={<ErrorPage />} />
       </Routes>
 

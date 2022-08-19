@@ -7,11 +7,10 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
-import axios from '../config/axios';
 
 // 리덕스
 import { useSelector, useDispatch } from 'react-redux';
-import { postInquiry, setInquiryImg } from '../slices/InquirySlice'; 
+import { postInquiry } from '../slices/InquirySlice'; 
 
 // 컴포넌트 참조
 import Meta from '../Meta';
@@ -85,7 +84,7 @@ const InquiryContainer = styled.div`
       .inquiry-input {
         border: none;
         border-radius: 5px;
-        border: 1px solid #bcbcbc;
+        border: 1px solid #ddd;
         padding: 10px;
         color: #404040;
         font-size: 1rem;
@@ -251,12 +250,12 @@ const InquiryPage = memo(() => {
       <Meta title={'SuperBox :: 1:1 문의'} />
       <PageTitle
         title={'1:1 문의'}
-        subtitle={'궁금하신게 있으시면 1:1문의로 알려주세요.'}
+        subtitle={'궁금하신게 있으시면 1:1문의로 알려주세요'}
       />
 
       <InquiryContainer>
         <div className="page-subtitle">
-          <h4>1:1 문의</h4>
+          <p>1:1 문의</p>
         </div>
 
         <form className="inquiry-content" onSubmit={onSubmit}>
@@ -321,7 +320,7 @@ const InquiryPage = memo(() => {
             </div>
 
             <div className="inquiry-icon">
-              <img src={inquiryCharacter} alt="1:1문의 로고" />
+              <img src={inquiryCharacter} alt="1:1문의 캐릭터" />
             </div>
           </div>
 

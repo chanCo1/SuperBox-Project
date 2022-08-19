@@ -14,14 +14,14 @@ import { MdOutlineDriveFolderUpload } from 'react-icons/md';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const ImageUploadContainer = styled.div`
-  border: 1px solid #bcbcbc;
+  border: 1px solid #ddd;
   border-radius: 5px;
   padding: 30px 60px;
   color: #404040;
   
   fieldset {
     text-align: center;
-    border: 1px solid #bcbcbc;
+    border: 1px solid #ddd;
     border-radius: 5px;
     padding: 20px;
 
@@ -48,7 +48,7 @@ const ImageUploadContainer = styled.div`
 
         .upload-img-wrap {
           position: relative;
-          border: 1px dashed #bcbcbc;
+          border: 1px dashed #ddd;
 
           img {
             width: 100%;

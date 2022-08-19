@@ -273,8 +273,8 @@ const MainUseStartContainer = styled.div`
           }
 
           .btn-icon {
-            width: 15vw;
-            height: 20vh;
+            width: 200px;
+            height: 180px;
           }
         }
 

@@ -16,7 +16,9 @@ import methodOverride from 'method-override'; // PUT 파라미터 처리
 import cookieParser from 'cookie-parser';     // Cookie 처리
 import expressSession from 'express-session'; // Session 처리
 import cors from 'cors';                      // cors 처리
+import serveStatic from 'serve-static';       // 특정 폴더의 파일을 URL로 노출시킴
 
+/** 라우터 */
 import users from './router/users.js';
 import reception from './router/reception.js';
 import inquiry from './router/inquiry.js';
@@ -49,6 +51,10 @@ app.use((req, res, next) => {
 /** Express 객체 추가 설정 */
 // cors 해결
 app.use(cors());
+
+// 업로드 된 파일이 저장될 폴더를 URL에 노출함
+app.use('/', serveStatic(process.env.PUBLIC_PATH));
+app.use(process.env.UPLOAD_URL, serveStatic(process.env.UPLOAD_DIR));
 
 // POST 파라미터 수신 모듈 설정
 app.use(bodyParser.urlencoded({extended: true}));

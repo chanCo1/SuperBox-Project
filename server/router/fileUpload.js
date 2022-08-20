@@ -9,7 +9,7 @@ import { join, extname } from 'path';
 const router = express.Router();
 
 /**
- * 다중 파일 업로드 함수
+ * 파일 업로드 함수
  */
 // multer 객체 생성
 const initMulter = () => {
@@ -18,7 +18,7 @@ const initMulter = () => {
     storage: multer.diskStorage({
       // 업로드 된 파일이 저장될 디렉토리 설정
       destination: (req, file, cb) => {
-        cb(null, 'img/inquiry');
+        cb(null, 'public/img/');
       },
   
       // 업로드 된 파일이 저장될 이름 설정
@@ -78,9 +78,9 @@ const checkUploadError = err => {
 };
 
 /**
- * 파일 업로드
+ * 단일 파일 업로드
  */
-router.post('/upload', (req, res) => {
+router.post('/upload/single', (req, res) => {
   
   // name 속성이 imageUpload 인 경우에 대한 업로드 수행
   const upload = initMulter().single('imgFile'); 
@@ -88,19 +88,47 @@ router.post('/upload', (req, res) => {
 
   upload(req, res, (err) => {
     // file은 single, files는 array에 사용
-    console.log('2 >>> ', req.file);
+    console.log('이미지 정보 >>> ', req.file);
     
     // 에러여부를 확인하여 결과코드와 메시지를 생성한다.
     let { result_code, result_msg } = checkUploadError(err);
     
     if(err) {
-      res.status(result_code).json({ success: false, message: err, result: result_msg });
+      res.status(result_code).json({ 
+        success: false, message: err, result: result_msg 
+      });
     } else {
       res.status(result_code).json({
         success: true, message: result_msg, filePath: req.file
       });
-    }
-  })
+    };
+  });
+});
+
+
+/**
+ * 다중 파일 업로드
+ */
+router.post('/upload/multiple', (req, res) => {
+
+  const upload = initMulter().array('imgFile');
+
+  upload(req, res, (err) => {
+    console.log('이미지 정보 >>> ', req.files);
+
+    // 에러여부를 확인하여 결과코드와 메시지를 생성한다.
+    let { result_code, result_msg } = checkUploadError(err);
+    
+    if(err) {
+      res.status(result_code).json({ 
+        success: false, message: err, result: result_msg 
+      });
+    } else {
+      res.status(result_code).json({
+        success: true, message: result_msg, filePath: req.files
+      });
+    };
+  });
 });
 
 export default router;

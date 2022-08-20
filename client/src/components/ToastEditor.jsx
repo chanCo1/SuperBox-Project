@@ -1,16 +1,21 @@
 /**
  * toast UI
  */
-import React from 'react';
+import React, { useRef, memo, useCallback } from 'react';
+import styled from 'styled-components';
 
 // Toast 에디터
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import '@toast-ui/editor/dist/i18n/ko-kr';
 
 // plugin
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+
+import fontSize from 'tui-editor-plugin-font-size';
+import 'tui-editor-plugin-font-size/dist/tui-editor-plugin-font-size.css';
 
 import chart from '@toast-ui/editor-plugin-chart';
 import '@toast-ui/chart/dist/toastui-chart.css';
@@ -20,36 +25,58 @@ import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-tab
 
 import uml from '@toast-ui/editor-plugin-uml';
 
+/** 스타일 */
+const EditorContainer = styled.div`
+  /* .toastui-editor-defaultUI-toolbar {
+    background-color: #2A3768;
+  } */
 
-export default function ToastEditor() {
+  img {
+    width: 30%;
+  }
+`;
+
+const ToastEditor = memo(({ review, setReview }) => {
+// export default function ToastEditor() {
+  const editorRef = useRef();
+
+  // const editCurrent = editorRef.current.getInstance(); -> 왜 에러가..
+
+  // 부모 컴포넌트로 입력값 전달
+  const onChange = useCallback(e => {
+    const editorInputData = editorRef.current.getInstance().getHTML();
+    // const data = editorRef.current.getInstance().getMarkdown();
+
+    setReview({ ...review, content: editorInputData });
+  }, [review, setReview]);
 
   return (
-    <div>
+    <EditorContainer>
       <Editor
         placeholder="내용을 입력해주세요."
         previewStyle="vertical" // 미리보기 스타일 지정
         height="600px" // 에디터 창 높이
         initialEditType="wysiwyg" // 초기 입력모드 설정(디폴트 markdown)
         initialValue=" "
-        plugins={[colorSyntax, chart, tableMergedCell, uml]}
-        // toolbarItems={[
-        //   // 툴바 옵션 설정
-        //   ['heading', 'bold', 'italic', 'strike'],
-        //   ['hr', 'quote'],
-        //   ['ul', 'ol', 'task', 'indent', 'outdent'],
-        //   ['table', 'image', 'link'],
-        //   ['code', 'codeblock']
-        // ]}
-      >
-
-      </Editor>
-
-    </div>
+        plugins={[colorSyntax, chart, tableMergedCell, uml, fontSize]}
+        useCommandShortcut={true}
+        language="ko-KR"
+        toolbarItems={[
+          // 툴바 옵션 설정
+          ['heading', 'bold', 'italic', 'strike'],
+          ['hr', 'quote'],
+          ['ul', 'ol', 'task', 'indent', 'outdent'],
+          ['table', 'image'],
+          ['code', 'codeblock']
+        ]}
+        ref={editorRef}
+        onChange={onChange}
+      />
+    </EditorContainer>
   );
-}
+});
 
-
-
+export default ToastEditor;
 
 /**
  * wysiwyg

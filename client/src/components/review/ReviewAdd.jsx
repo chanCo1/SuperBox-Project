@@ -3,7 +3,7 @@
  */
 
 /** 패키지 참조 */
-import React, { memo } from 'react';
+import React, { memo, useRef, useCallback, useState, forwardRef } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -104,6 +104,27 @@ const ReviewAddContainer = styled.div`
 `;
 
 const ReviewAdd = memo(() => {
+
+  const editorRef = useRef();
+  // console.log(editorRef);
+
+  /**
+   * 후기작성 상태값 관리
+   */
+  const [review, setReview] = useState({
+    title: '',
+    content: '',
+  });
+  console.log(review);
+
+  /** input 입력값 저장 */
+  const onChange = useCallback((e) => {
+    e.preventDefault();
+
+    const { name, value } = e.target;
+    setReview({ ...review, [name]: value });
+  }, [review]);
+
   return (
     <div>
       {/* <Spinner visible={loading} /> */}
@@ -140,7 +161,7 @@ const ReviewAdd = memo(() => {
                   type={'text'}
                   name={'title'}
                   placeholder={'최대 20자 이하로 입력해주세요'}
-                  // onChange={onChange}
+                  onChange={onChange}
                 />
               </div>
             </div>
@@ -155,7 +176,7 @@ const ReviewAdd = memo(() => {
                 placeholder="내용을 입력해주세요"
                 // onChange={onChange}
               /> */}
-              <ToastEditor />
+              <ToastEditor review={review} setReview={setReview} />
             </div>
           </div>
           <div className="btn-area">

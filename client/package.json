@@ -32,6 +32,7 @@
     "redux-devtools-extension": "^2.13.9",
     "sass": "^1.54.0",
     "styled-components": "^5.3.5",
+    "tui-editor-plugin-font-size": "^1.0.3",
     "web-vitals": "^2.1.0"
   },
   "scripts": {

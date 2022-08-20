@@ -257,6 +257,7 @@ const MainUseStartContainer = styled.div`
 
         .start-btn {
           font-size: 1.5rem;
+          /* border: none; */
           border: 3px solid #f3b017;
           border-radius: 20%;
           background-color: #fff;
@@ -285,6 +286,7 @@ const MainUseStartContainer = styled.div`
           padding: 0 20%;
           color: #404040;
           justify-content: space-around;
+          z-index: 9;
         }
       }
     }

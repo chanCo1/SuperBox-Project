@@ -112,6 +112,7 @@ const ReviewAdd = memo(() => {
    * 후기작성 상태값 관리
    */
   const [review, setReview] = useState({
+    head: '',
     title: '',
     content: '',
   });
@@ -146,7 +147,7 @@ const ReviewAdd = memo(() => {
                 <label htmlFor="">
                   말머리<span>*</span>
                 </label>
-                <select name="type" className="review-input">
+                <select name="head" className="review-input" onChange={onChange}>
                   <option value="">말머리를 선택해주세요</option>
                   <option value="좋아요">좋아요</option>
                   <option value="그냥그래요">그냥그래요</option>

@@ -13,6 +13,151 @@ import Spinner from '../Spinner';
 import { MdOutlineDriveFolderUpload } from 'react-icons/md';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
+const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
+  // formData 사용
+  const formData = new FormData();
+
+  // 보여줄 이미지 상태값 관리
+  const [showImgFiles, setShowImgFiles] = useState('');
+  // 백엔드에 보낼 이미지 상태값
+  const [formDataImg, setFormDataImg] = useState('');
+
+  const [count, setCount] = useState('0/1');
+  const [imgConfirm, setImgConfirm] = useState(false);
+
+  const imgRef = useRef();
+  const inputRef = useRef();
+  
+  useEffect(() => {
+    setConfirm(imgConfirm);
+  }, [imgConfirm, setConfirm])
+
+  // 백엔드 통신 로딩 상태
+  const [isLoading, setIsLoading] = useState(false);
+
+  // 이미지 선택
+  const fileSelect = useCallback((e) => {
+    e.preventDefault();
+
+    const file = e.target.files[0];
+    setShowImgFiles(URL.createObjectURL(file));
+    setFormDataImg(file);
+
+    setCount('1/1');
+    setImgConfirm(true);
+  }, []);
+
+  // // formData에 저장
+  // useEffect(() => {
+  //   formData.append('imgFile', formDataImg);
+  //   for (const i of formData) console.log('!!!formData >>> ', i);
+  // }, [formDataImg]);
+
+  // 이미지 업로드
+  const uploadFile = useCallback(
+    async (e) => {
+      e.preventDefault();
+
+      formData.append('imgFile', formDataImg);
+      for (const i of formData) console.log('!!!formData >>> ', i);
+
+      try {
+        setIsLoading(true)
+
+        const response = await axios.post('api/image/upload/single', formData);
+        console.log(response.data.filePath.path);
+
+        setUploadImg(response.data.filePath.path);
+        setImgConfirm(false);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+
+      const imgRefStyle = imgRef.current.style;
+      const inputRefStyle = inputRef.current.style;
+      imgRefStyle.opacity = 0.5;
+      inputRefStyle.display = 'none';
+    },
+    [formDataImg, setUploadImg]
+  );
+
+  // 삭제
+  const deleteFile = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      URL.revokeObjectURL(showImgFiles);
+      setShowImgFiles('');
+      setFormDataImg('');
+      setCount('0/1');
+      setImgConfirm(false);
+
+      const imgRefStyle = imgRef.current.style;
+      imgRefStyle.opacity = 1;
+    },
+    [showImgFiles]
+  );
+
+  return (
+    <>
+      <Spinner visible={isLoading} />
+      <p style={{ fontSize: '1.2rem',  marginBottom: '5px' }}>파일첨부</p>
+      <ImageUploadContainer>
+        <fieldset>
+          <legend>
+            <label htmlFor="imageUpload" onChange={fileSelect} ref={inputRef}>
+              <MdOutlineDriveFolderUpload className="upload-icon" />
+              여기를 클릭하면 이미지 파일을 첨부할 수 있어요
+              <input
+                type="file"
+                id="imageUpload"
+                name="imageUpload"
+                accept="image/*"
+                // multiple
+                style={{ display: 'none' }}
+              />
+            </label>
+          </legend>
+
+          <div>{count}</div>
+
+          <div className="img-preview-wrap">
+            <div className="img-preview">
+              {showImgFiles && (
+                <>
+                  <div className="upload-img-wrap">
+                    <img src={showImgFiles} alt={showImgFiles} ref={imgRef} />
+                    {imgConfirm && (
+                      <AiOutlineCloseCircle className="close-btn" onClick={deleteFile} />
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+            {formDataImg && (
+              <div className="file-name">
+                <p>파일: {formDataImg.name}</p>
+                {imgConfirm && (
+                  <div className='file-confirm'>
+                    <p>이 이미지를 사용할까요?</p>
+                    <button onClick={uploadFile}>네</button>
+                    <button onClick={deleteFile}>아니요</button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </fieldset>
+      </ImageUploadContainer>
+    </>
+  );
+});
+
+export default ImageUpload;
+
+/** 스타일 */
 const ImageUploadContainer = styled.div`
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -111,150 +256,6 @@ const ImageUploadContainer = styled.div`
   }
 `;
 
-const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
-  // formData 사용
-  const formData = new FormData();
-
-  // 보여줄 이미지 상태값 관리
-  const [showImgFiles, setShowImgFiles] = useState('');
-  // 백엔드에 보낼 이미지 상태값
-  const [formDataImg, setFormDataImg] = useState('');
-
-  const [count, setCount] = useState('0/1');
-  const [imgConfirm, setImgConfirm] = useState(false);
-
-  const imgRef = useRef();
-  const inputRef = useRef();
-  
-  useEffect(() => {
-    setConfirm(imgConfirm);
-  }, [imgConfirm, setConfirm])
-
-  // 백엔드 통신 로딩 상태
-  const [isLoading, setIsLoading] = useState(false);
-
-  // 이미지 선택
-  const fileSelect = useCallback((e) => {
-    e.preventDefault();
-
-    const file = e.target.files[0];
-    setShowImgFiles(URL.createObjectURL(file));
-    setFormDataImg(file);
-
-    setCount('1/1');
-    setImgConfirm(true);
-  }, []);
-
-  // // formData에 저장
-  // useEffect(() => {
-  //   formData.append('imgFile', formDataImg);
-  //   for (const i of formData) console.log('!!!formData >>> ', i);
-  // }, [formDataImg]);
-
-  // 이미지 업로드
-  const uploadFile = useCallback(
-    async (e) => {
-      e.preventDefault();
-
-      formData.append('imgFile', formDataImg);
-      for (const i of formData) console.log('!!!formData >>> ', i);
-
-      try {
-        setIsLoading(true)
-        const response = await axios.post('api/image/upload', formData);
-        console.log(response.data.filePath.path);
-        setUploadImg(response.data.filePath.path);
-        setImgConfirm(false);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-
-      const imgRefStyle = imgRef.current.style;
-      const inputRefStyle = inputRef.current.style;
-      imgRefStyle.opacity = 0.5;
-      inputRefStyle.display = 'none';
-    },
-    [formDataImg, setUploadImg]
-  );
-
-  // 삭제
-  const deleteFile = useCallback(
-    (e) => {
-      e.preventDefault();
-
-      URL.revokeObjectURL(showImgFiles);
-      setShowImgFiles('');
-      setFormDataImg('');
-      setCount('0/1');
-      setImgConfirm(false);
-
-      const imgRefStyle = imgRef.current.style;
-      imgRefStyle.opacity = 1;
-    },
-    [showImgFiles]
-  );
-
-  return (
-    <>
-      <Spinner visible={isLoading} />
-      <p style={{ fontSize: '1.2rem',  marginBottom: '5px' }}>파일첨부</p>
-      <ImageUploadContainer>
-        <fieldset>
-          <legend>
-            <label htmlFor="imageUpload" onChange={fileSelect} ref={inputRef}>
-              <MdOutlineDriveFolderUpload className="upload-icon" />
-              여기를 클릭하면 이미지 파일을 첨부할 수 있어요
-              <input
-                type="file"
-                id="imageUpload"
-                name="imageUpload"
-                accept="image/*"
-                // multiple
-                style={{ display: 'none' }}
-              />
-            </label>
-          </legend>
-
-          <div>{count}</div>
-
-          <div className="img-preview-wrap">
-            <div className="img-preview">
-              {showImgFiles && (
-                <>
-                  <div className="upload-img-wrap">
-                    <img src={showImgFiles} alt={showImgFiles} ref={imgRef} />
-                    {imgConfirm && (
-                      <AiOutlineCloseCircle className="close-btn" onClick={deleteFile} />
-                    )}
-                  </div>
-                </>
-              )}
-            </div>
-            {formDataImg && (
-              <div className="file-name">
-                <p>파일: {formDataImg.name}</p>
-                {imgConfirm && (
-                  <div className='file-confirm'>
-                    <p>이 이미지를 사용할까요?</p>
-                    <button onClick={uploadFile}>네</button>
-                    <button onClick={deleteFile}>아니요</button>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </fieldset>
-      </ImageUploadContainer>
-    </>
-  );
-});
-
-export default ImageUpload;
-
-
-
 
 
 
@@ -267,7 +268,7 @@ export default ImageUpload;
 //   // // 보여줄 이미지 상태값 관리
 //   const [showImgFiles, setShowImgFiles] = useState([]);
 //   // 백엔드에 보낼 이미지 상태값
-//   const [formDataImg, setFormDataImg] = useState([]);
+  // const [formDataImg, setFormDataImg] = useState([]);
 //   // console.log('formDataImg >>> ',formDataImg);
 
 //   // useEffect(() => {

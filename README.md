@@ -101,10 +101,10 @@
 
 8/19(금)
 * 후기 작성 페이지 UI
-* toastui editor 적용
+* 후기 작성 toastui editor 적용
 
 8/20(토)
-* toastui 이미지 업로드 구현
+* 후기 작성 toastui 이미지 업로드 구현
 
 8/21(일)
 * 이미지 업로드 백엔드 연동

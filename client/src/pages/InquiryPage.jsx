@@ -24,107 +24,6 @@ import RegexHelper from '../libs/RegexHelper';
 // 이미지 참조
 import inquiryCharacter from '../assets/image/inquiry-character.png';
 
-/** 스타일 */
-const InquiryContainer = styled.div`
-  width: 1200px;
-  margin: 0 auto;
-  /* border: 1px solid #999; */
-  border-radius: 11px;
-  margin-bottom: 50px;
-  box-shadow: 0px 0px 10px #00000027;
-
-  .page-subtitle {
-    padding: 10px 40px;
-    background-color: #2a3768;
-    color: #fff;
-    font-size: 1.5rem;
-    border-radius: 10px 10px 0 0;
-  }
-
-  .inquiry-content {
-    position: relative;
-    padding: 50px;
-    color: #404040;
-
-    .inquiry-container {
-      position: relative;
-      display: flex;
-
-      .inquiry-wrap {
-        width: 50%;
-      }
-
-      .inquiry-icon {
-        position: relative;
-        width: 60%;
-        text-align: center;
-        
-        img { 
-          width: 50%;;
-        }
-      }
-    }
-
-    .inquiry-row {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 30px;
-
-      label {
-        font-size: 1.2rem;
-        margin-bottom: 5px;
-
-        span {
-          font-size: 1em;
-          color: #f3b017;
-          margin-left: 5px;
-        }
-      }
-
-      .inquiry-input {
-        border: none;
-        border-radius: 5px;
-        border: 1px solid #ddd;
-        padding: 10px;
-        color: #404040;
-        font-size: 1rem;
-
-        &::-webkit-input-placeholder { color: #bcbcbc; }
-        &:focus { box-shadow: 0 0 5px #2a376888; }
-      }
-
-      textarea {
-        min-height: 350px;
-        resize: none;
-        padding: 30px !important;
-      }
-    }
-
-    .submit-btn {
-      position: relative;
-      left: 50%;
-      transform: translate(-50%);
-      right: 0px;
-      width: 35%;
-      font-size: 1.3rem;
-      color: #404040;
-      padding: 10px 40px;
-      margin-top: 50px;
-      border-radius: 10px;
-      border: 1px solid #f3b017;
-      background-color: #fff;
-      cursor: pointer;
-      transition: 0.3s ease;
-
-      &:hover {
-        background-color: #f3b017;
-        color: #fff;
-      }
-      /* &:active { transform: scale(0.9, 0.9); } */
-    }
-  }
-`;
-
 const InquiryPage = memo(() => {
 
   // 리덕스의 디스패치 사용
@@ -347,3 +246,104 @@ const InquiryPage = memo(() => {
 });
 
 export default InquiryPage;
+
+/** 스타일 */
+const InquiryContainer = styled.div`
+  width: 1200px;
+  margin: 0 auto;
+  /* border: 1px solid #999; */
+  border-radius: 11px;
+  margin-bottom: 50px;
+  box-shadow: 0px 0px 10px #00000027;
+
+  .page-subtitle {
+    padding: 10px 40px;
+    background-color: #2a3768;
+    color: #fff;
+    font-size: 1.5rem;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .inquiry-content {
+    position: relative;
+    padding: 50px;
+    color: #404040;
+
+    .inquiry-container {
+      position: relative;
+      display: flex;
+
+      .inquiry-wrap {
+        width: 50%;
+      }
+
+      .inquiry-icon {
+        position: relative;
+        width: 60%;
+        text-align: center;
+        
+        img { 
+          width: 50%;;
+        }
+      }
+    }
+
+    .inquiry-row {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 30px;
+
+      label {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+
+        span {
+          font-size: 1em;
+          color: #f3b017;
+          margin-left: 5px;
+        }
+      }
+
+      .inquiry-input {
+        border: none;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        color: #404040;
+        font-size: 1rem;
+
+        &::-webkit-input-placeholder { color: #bcbcbc; }
+        &:focus { box-shadow: 0 0 5px #2a376888; }
+      }
+
+      textarea {
+        min-height: 350px;
+        resize: none;
+        padding: 30px !important;
+      }
+    }
+
+    .submit-btn {
+      position: relative;
+      left: 50%;
+      transform: translate(-50%);
+      right: 0px;
+      width: 35%;
+      font-size: 1.3rem;
+      color: #404040;
+      padding: 10px 40px;
+      margin-top: 50px;
+      border-radius: 10px;
+      border: 1px solid #f3b017;
+      background-color: #fff;
+      cursor: pointer;
+      transition: 0.3s ease;
+
+      &:hover {
+        background-color: #f3b017;
+        color: #fff;
+      }
+      /* &:active { transform: scale(0.9, 0.9); } */
+    }
+  }
+`;

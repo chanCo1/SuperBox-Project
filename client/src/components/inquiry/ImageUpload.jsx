@@ -28,6 +28,7 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
   const imgRef = useRef();
   const inputRef = useRef();
   
+  // 부모 컴포넌트로 이미지 사용 확인 값 전달
   useEffect(() => {
     setConfirm(imgConfirm);
   }, [imgConfirm, setConfirm])
@@ -65,9 +66,8 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
         setIsLoading(true)
 
         const response = await axios.post('api/image/upload/single', formData);
-        console.log(response.data.filePath.path);
 
-        setUploadImg(response.data.filePath.path);
+        setUploadImg(`http://localhost:3001/image/${response.data.filePath.filename}`);
         setImgConfirm(false);
       } catch (err) {
         console.error(err);

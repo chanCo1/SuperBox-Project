@@ -341,9 +341,9 @@ const MainPage = memo(({ loginPageState }) => {
           <h2>SuperBox</h2>
           <p>누구나 한번 쯤은 택배 상자를 받고 설레는 기분을 느꼈을거예요.</p>
           <p>그 기분, <span>SuperBox</span>를 통해 더 오래, 더 많이 느껴보세요.</p>
-          <div className='delivery-character'>
+          {/* <div className='delivery-character'>
             <img src={delivery} alt="delivery 이미지" />
-          </div>
+          </div> */}
         </div>
       </MainLogoContainer>
 

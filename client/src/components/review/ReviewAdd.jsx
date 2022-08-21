@@ -3,8 +3,9 @@
  */
 
 /** 패키지 참조 */
-import React, { memo, useRef, useCallback, useState, forwardRef } from 'react';
+import React, { memo, useRef, useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 // 컴포넌트 참조
@@ -13,6 +14,114 @@ import PageTitle from '../PageTitle';
 import Spinner from '../Spinner';
 import { Input } from '../reception/TagBox';
 import ToastEditor from '../ToastEditor';
+
+const ReviewAdd = memo(() => {
+
+  // 리덕스의 디스패치 사용
+  const dispatch = useDispatch();
+
+  /** Store를 통해 user 상태값 호출 */
+  const { memberData, loading } = useSelector((state) => state.user);
+
+  // 백엔드에 보낼 이미지 상태값
+  const [uploadImg, setUploadImg] = useState([]);
+  console.log(uploadImg);
+
+  /**
+   * 후기작성 상태값 관리
+   */
+  const [review, setReview] = useState({
+    head: '',
+    title: '',
+    content: '',
+    img: null,
+    user_no: memberData?.user_no,
+  });
+  console.log(review);
+
+  /** input 입력값 저장 */
+  const onChange = useCallback((e) => {
+    e.preventDefault();
+
+    const { name, value } = e.target;
+    setReview({ ...review, [name]: value });
+  }, [review]);
+
+  // 자식컴포넌트에서 받은 이미지 url 배열을 백엔드에 전달할 useState에 저장
+  useEffect(() => {
+    setReview({ ...review, img: uploadImg });
+
+  }, [uploadImg, setReview]);
+
+  return (
+    <div>
+      {/* <Spinner visible={loading} /> */}
+      <Meta title={'SuperBox :: 후기작성'} />
+      <PageTitle
+        title={'후기 작성'}
+        subtitle={'저희 서비스를 이용하시고 생생한 후기를 공유해 주세요'}
+      />
+
+      <ReviewAddContainer>
+        <div className="page-subtitle">
+          <p>새 글 쓰기</p>
+        </div>
+
+        <form className="review-content">
+          <div className="review-wrap">
+            <div className="review-container">
+              <div className="review-row">
+                <label htmlFor="">
+                  말머리<span>*</span>
+                </label>
+                <select name="head" className="review-input" onChange={onChange}>
+                  <option value="">말머리를 선택해주세요</option>
+                  <option value="좋아요">좋아요</option>
+                  <option value="그냥그래요">그냥그래요</option>
+                  <option value="별로예요">별로예요</option>
+                </select>
+
+                <Input
+                  label={'제목'}
+                  require={'*'}
+                  className1="review-row"
+                  className2="review-input"
+                  type={'text'}
+                  name={'title'}
+                  placeholder={'최대 20자 이하로 입력해주세요'}
+                  onChange={onChange}
+                />
+              </div>
+            </div>
+            <div className="review-row">
+              <label htmlFor="">
+                내용<span>*</span>
+              </label>
+              {/* <textarea
+                className="review-input"
+                type="text"
+                name="content"
+                placeholder="내용을 입력해주세요"
+                // onChange={onChange}
+              /> */}
+              <ToastEditor review={review} setReview={setReview} setUploadImg={setUploadImg} />
+            </div>
+          </div>
+          <div className="btn-area">
+            <Link to={'/review'}>
+              <button>뒤로가기</button>
+            </Link>
+            <button className="submit-btn" type="submit">
+              글쓰기
+            </button>
+          </div>
+        </form>
+      </ReviewAddContainer>
+    </div>
+  );
+});
+
+export default ReviewAdd;
 
 /** 스타일 */
 const ReviewAddContainer = styled.div`
@@ -72,11 +181,11 @@ const ReviewAddContainer = styled.div`
           }
         }
       }
-      textarea {
+      /* textarea {
         min-height: 350px;
         resize: none;
         padding: 30px !important;
-      }
+      } */
     }
 
     .btn-area {
@@ -102,96 +211,3 @@ const ReviewAddContainer = styled.div`
     }
   }
 `;
-
-const ReviewAdd = memo(() => {
-
-  const editorRef = useRef();
-  // console.log(editorRef);
-
-  /**
-   * 후기작성 상태값 관리
-   */
-  const [review, setReview] = useState({
-    head: '',
-    title: '',
-    content: '',
-  });
-  console.log(review);
-
-  /** input 입력값 저장 */
-  const onChange = useCallback((e) => {
-    e.preventDefault();
-
-    const { name, value } = e.target;
-    setReview({ ...review, [name]: value });
-  }, [review]);
-
-  return (
-    <div>
-      {/* <Spinner visible={loading} /> */}
-      <Meta title={'SuperBox :: 후기작성'} />
-      <PageTitle
-        title={'후기 작성'}
-        subtitle={'저희 서비스를 이용하시고 생생한 후기를 공유해 주세요'}
-      />
-
-      <ReviewAddContainer>
-        <div className="page-subtitle">
-          <p>새 글 쓰기</p>
-        </div>
-
-        <form className="review-content">
-          <div className="review-wrap">
-            <div className="review-container">
-              <div className="review-row">
-                <label htmlFor="">
-                  말머리<span>*</span>
-                </label>
-                <select name="head" className="review-input" onChange={onChange}>
-                  <option value="">말머리를 선택해주세요</option>
-                  <option value="좋아요">좋아요</option>
-                  <option value="그냥그래요">그냥그래요</option>
-                  <option value="별로예요">별로예요</option>
-                </select>
-
-                <Input
-                  label={'제목'}
-                  require={'*'}
-                  className1="review-row"
-                  className2="review-input"
-                  type={'text'}
-                  name={'title'}
-                  placeholder={'최대 20자 이하로 입력해주세요'}
-                  onChange={onChange}
-                />
-              </div>
-            </div>
-            <div className="review-row">
-              <label htmlFor="">
-                내용<span>*</span>
-              </label>
-              {/* <textarea
-                className="review-input"
-                type="text"
-                name="content"
-                placeholder="내용을 입력해주세요"
-                // onChange={onChange}
-              /> */}
-              <ToastEditor review={review} setReview={setReview} />
-            </div>
-          </div>
-          <div className="btn-area">
-            <Link to={'/review'}>
-              <button>뒤로가기</button>
-            </Link>
-            <button className="submit-btn" type="submit">
-              글쓰기
-            </button>
-          </div>
-        </form>
-      </ReviewAddContainer>
-    </div>
-  );
-});
-
-export default ReviewAdd;

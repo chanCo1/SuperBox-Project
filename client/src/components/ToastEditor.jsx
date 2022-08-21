@@ -1,9 +1,10 @@
 /**
  * toast UI
  */
-import React, { useRef, memo, useCallback, useEffect } from 'react';
+import React, { useRef, memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from '../config/axios';
+import Swal from 'sweetalert2';
 
 // Toast 에디터
 import { Editor } from '@toast-ui/react-editor';
@@ -37,11 +38,18 @@ const EditorContainer = styled.div`
   }
 `;
 
-const ToastEditor = memo(({ review, setReview }) => {
+const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
 // export default function ToastEditor() {
 
   const editorRef = useRef();
   const formData = new FormData();
+
+  const [img, setImg] = useState([]);
+  
+  // 부모컴포넌트로 이미지(배열) 전달
+  useEffect(() => {
+    setUploadImg(img);
+  }, [img, setUploadImg]);
 
   // const editCurrent = editorRef.current.getInstance(); -> 왜 에러가..
 
@@ -62,6 +70,7 @@ const ToastEditor = memo(({ review, setReview }) => {
 
     // 이미지 객체 추가
     formData.append('imgFile', blob);
+    // for(const i of formData) console.log(i);
 
     try {
       // 비동기 처리
@@ -69,18 +78,27 @@ const ToastEditor = memo(({ review, setReview }) => {
 
       // 백엔드에서 전달 받은 파일 정보 사용
       const filePath = response.data.filePath;
-
+      
       // 여러 이미지를 사용하려다 보니 이전 이미지까지 같이 불러와진다.
       // -> i 값을 filePath의 길이 -1 값으로 줘서 이전 이미지는 불러오지 않게 처리
       // -> 하지만 이전 이미지의 filename을 읽을 수 없다는 에러가 뜬다 .. 겉으로 보기엔 정상 작동..
       for(let i = filePath.length - 1; i <= filePath.length; i++) {
-        callback(`http://localhost:3001/img/${filePath[i].filename}`, 'review-image');
-      };
+        callback(`http://localhost:3001/image/${filePath[i].filename}`, 'review-image');
+        
+        // 부모컴포넌트로 보낼 상태값에 배열로 저장
+        setImg(img => [...img, `http://localhost:3001/image/${filePath[i].filename}`]);
 
+      };
     } catch(err) {
-      console.log(err);
+
+      Swal.fire({
+        icon: 'error',
+        iconColor: '#f3b017',
+        text: err.response.data.result,
+        confirmButtonColor: '#f3b017',
+      });
+      // console.log(err.response.data.result);
     }
-    return false;
   };
 
   return (
@@ -112,6 +130,13 @@ const ToastEditor = memo(({ review, setReview }) => {
 });
 
 export default ToastEditor;
+
+
+
+
+
+
+
 
 /**
  * wysiwyg

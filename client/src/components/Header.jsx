@@ -25,7 +25,7 @@ const HeaderContainer = styled.div`
   /* border-bottom: 2px solid #f3b017; */
   background-color: #fff;
   /* opacity: .9; */
-  z-index: 9999;
+  z-index: 99;
   
   .header-wrap {
     position: relative;

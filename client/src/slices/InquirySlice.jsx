@@ -20,7 +20,7 @@ export const postInquiry = createAsyncThunk('inquirySlice/postInquiry', async (p
       const err = new Error();
       err.reponse = { status: 500, statusText: result.data.faultInfo.message };
       throw err;
-    }
+    };
 
   } catch(err) {
     // console.error(err.response.data);

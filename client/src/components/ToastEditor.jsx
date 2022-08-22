@@ -76,14 +76,14 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
       // 비동기 처리
       const response = await axios.post('api/image/upload/multiple', formData);
 
-      // 백엔드에서 전달 받은 파일 정보 사용
+      // 백엔드에서 전달 받은 파일정보 사용
       const filePath = response.data.filePath;
       
       // 여러 이미지를 사용하려다 보니 이전 이미지까지 같이 불러와진다.
       // -> i 값을 filePath의 길이 -1 값으로 줘서 이전 이미지는 불러오지 않게 처리
       // -> 하지만 이전 이미지의 filename을 읽을 수 없다는 에러가 뜬다 .. 겉으로 보기엔 정상 작동..
       for(let i = filePath.length - 1; i <= filePath.length; i++) {
-        callback(`http://localhost:3001/image/${filePath[i].filename}`, 'review-image');
+        callback(`http://localhost:3001/image/${filePath[i].filename}`, `review-image${i}`);
         
         // 부모컴포넌트로 보낼 상태값에 배열로 저장
         setImg(img => [...img, `http://localhost:3001/image/${filePath[i].filename}`]);

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // 컴포넌트 참조
 import Meta from '../Meta';
 import PageTitle from '../components/PageTitle';
+import ReviewList from '../components/review/ReviewList';
 
 // 리덕스
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,10 +22,12 @@ const ReviewPage = memo(() => {
         subtitle={'이용하신 고객님들의 후기를 공유해보세요'}
       />
       {isLogin && 
-        <Link to={'/review/review_add'}>
+        <Link to={'/review/review_write'}>
           <button>새 글 쓰기</button>
         </Link>
       }
+
+      <ReviewList />
     </div>
   );
 });

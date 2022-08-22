@@ -56,7 +56,7 @@ const InquiryPage = memo(() => {
         contact: isLogin ? memberData?.user_phone : '',
         content: '',
         img: null,
-        user_no: isLogin ? memberData?.user_no : '',
+        user_no: isLogin ? memberData?.user_no : null,
       })
     });
   }, [memberData, isLogin]);
@@ -109,8 +109,11 @@ const InquiryPage = memo(() => {
         confirmButtonColor: '#f3b017',
       }).then(() => {
         dispatch(postInquiry(inquiry));
-        navigate('/mypage');
-      })
+        
+        if(isLogin) navigate('/mypage');
+
+        navigate('/main');
+      });
 
     } catch(err) {
       Swal.fire({

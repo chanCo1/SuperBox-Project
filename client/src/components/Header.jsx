@@ -192,6 +192,7 @@ const Header = memo(({ loginPageState }) => {
       text:'로그아웃 되었습니다.',
       showConfirmButton: false,
       timer: 1000,
+      footer: '다음에 또 만나요! 👋'
     });
 
     navigate('/main');

@@ -103,6 +103,7 @@ const LoginPage = memo(({ loginPageState }) => {
           text:'로그인 되었습니다.',
           showConfirmButton: false,
           timer: 1000,
+          footer: '만나서 반가워요! 😆'
         }).then(() => {
           loginPageState(false);
         });

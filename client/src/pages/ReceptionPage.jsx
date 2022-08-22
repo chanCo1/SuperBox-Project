@@ -225,6 +225,7 @@ const ReceptionPage = memo(() => {
           icon: 'error',
           iconColor: '#f3b017',
           text: err.message,
+          confirmButtonText: '확인',
           confirmButtonColor: '#f3b017',
         }).then(() => {
           // focus가 풀리는 문제를 setTimeout으로 해결

@@ -1,9 +1,6 @@
 // 로딩 상태
 const pending = (state, { payload }) => {
-  return { 
-    ...state, 
-    loading: true,
-  };
+  return { ...state, loading: true };
 };
 
 // ajax 처리 완료시

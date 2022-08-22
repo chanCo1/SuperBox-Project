@@ -11,7 +11,6 @@ const API_URL = 'http://localhost:3001/api/review/';
  */
  export const getReview = createAsyncThunk('ReviewSlice/getReview', async (payload, { rejectWithValue }) => {
   let result = null;
-  console.log(payload);
 
   try {
     result = await axios.get(`${API_URL}`);

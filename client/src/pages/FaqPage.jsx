@@ -13,6 +13,80 @@ import { ReverseSlideUpDown } from '../utils/Event';
 import { TbZoomQuestion } from 'react-icons/tb';
 import arrow_down from '../assets/image/arrow_down.png';
 
+/** 
+ * FAQ 페이지 시작 
+ */
+const FaqPage = memo(() => {
+
+  const [priceArrow, setPriceArrow] = useState(true);
+  const [testArrow, setTestArrow] = useState(true);
+
+  const priceRef = useRef();
+  const priceIconRef = useRef();
+  const testRef = useRef();
+  const arrowIconRef = useRef();
+
+  return (
+    <div>
+      <Meta title={'SuperBox :: 자주 찾는 질문'} />
+      <PageTitle title={'자주 찾는 질문'} subtitle={'자주 찾으시는 질문은 여기에 모여있어요'} />
+
+      <FaqPageContainer>
+        <div className='faq-wrap'>
+          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, arrowIconRef)}>
+            <TbZoomQuestion className='question-icon' />
+            <p>자주찾는질문자주찾는질문자주찾는질문</p>
+            <img src={arrow_down} alt="arrow_button" ref={arrowIconRef}/>
+          </div>
+          <div className='faq-answer' ref={testRef}>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?
+          </div>
+        </div>
+        <div className='faq-wrap'>
+          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, arrowIconRef)}>
+            <TbZoomQuestion className='question-icon' />
+            <p>자주찾는질문자주찾는질문자주찾는질문</p>
+            <img src={arrow_down} alt="arrow_btn" ref={arrowIconRef}/>
+          </div>
+          <div className='faq-answer' ref={testRef}>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?
+          </div>
+        </div>
+        <div className='faq-wrap'>
+          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(priceRef, priceArrow, setPriceArrow, priceIconRef)}>
+            <TbZoomQuestion className='question-icon' />
+            <p>이용 요금은 어떻게 되나요?</p>
+            <img src={arrow_down} alt="arrow_btn" ref={priceIconRef}/>
+          </div>
+          <div className='faq-answer' ref={priceRef}>
+            <BoxSize />
+            <ul className='faq-list'>
+              <li>* 타권역 추가요금 0원</li>
+              <li>* 제주도 할증 요금 3000원</li>
+              <li>* 도서산간 할증 요금 4000원</li>
+              <li>* 물품가격 50만원 이상일 경우, 고액할증료 2000원 추가</li>
+            </ul>
+          </div>
+        </div>
+
+        <hr />
+
+        <div className='more-question'>
+          <p>다른 궁금증이 있으신가요?</p>
+          <p>1:1 문의로 알려주세요.</p>
+          <p>친절히 안내 해드릴께요.</p>
+          <Link to={'/customer/inquiry'}>
+            <button className='inquiry-btn'>1:1 문의 하기</button>
+          </Link>
+        </div>
+      </FaqPageContainer>
+    </div>
+  );
+});
+
+export default FaqPage;
+
+
 /** 스타일 */
 const FaqPageContainer = styled.div`
   position: relative;
@@ -125,73 +199,3 @@ const FaqPageContainer = styled.div`
     &:active { transform: scale(.9, .9); }
   }
 `;
-
-const FaqPage = memo(() => {
-
-  const [priceArrow, setPriceArrow] = useState(true);
-  const [testArrow, setTestArrow] = useState(true);
-
-  const priceRef = useRef();
-  const priceIconRef = useRef();
-  const testRef = useRef();
-  const arrowIconRef = useRef();
-
-  return (
-    <div>
-      <Meta title={'SuperBox :: 자주 찾는 질문'} />
-      <PageTitle title={'자주 찾는 질문'} subtitle={'자주 찾으시는 질문은 여기에 모여있어요'} />
-
-      <FaqPageContainer>
-        <div className='faq-wrap'>
-          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, arrowIconRef)}>
-            <TbZoomQuestion className='question-icon' />
-            <p>자주찾는질문자주찾는질문자주찾는질문</p>
-            <img src={arrow_down} alt="arrow_button" ref={arrowIconRef}/>
-          </div>
-          <div className='faq-answer' ref={testRef}>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?
-          </div>
-        </div>
-        <div className='faq-wrap'>
-          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, arrowIconRef)}>
-            <TbZoomQuestion className='question-icon' />
-            <p>자주찾는질문자주찾는질문자주찾는질문</p>
-            <img src={arrow_down} alt="arrow_btn" ref={arrowIconRef}/>
-          </div>
-          <div className='faq-answer' ref={testRef}>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?
-          </div>
-        </div>
-        <div className='faq-wrap'>
-          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(priceRef, priceArrow, setPriceArrow, priceIconRef)}>
-            <TbZoomQuestion className='question-icon' />
-            <p>이용 요금은 어떻게 되나요?</p>
-            <img src={arrow_down} alt="arrow_btn" ref={priceIconRef}/>
-          </div>
-          <div className='faq-answer' ref={priceRef}>
-            <BoxSize />
-            <ul className='faq-list'>
-              <li>* 타권역 추가요금 0원</li>
-              <li>* 제주도 할증 요금 3000원</li>
-              <li>* 도서산간 할증 요금 4000원</li>
-              <li>* 물품가격 50만원 이상일 경우, 고액할증료 2000원 추가</li>
-            </ul>
-          </div>
-        </div>
-
-        <hr />
-
-        <div className='more-question'>
-          <p>다른 궁금증이 있으신가요?</p>
-          <p>1:1 문의로 알려주세요.</p>
-          <p>친절히 안내 해드릴께요.</p>
-          <Link to={'/customer/inquiry'}>
-            <button className='inquiry-btn'>1:1 문의 하기</button>
-          </Link>
-        </div>
-      </FaqPageContainer>
-    </div>
-  );
-});
-
-export default FaqPage;

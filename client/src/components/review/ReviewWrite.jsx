@@ -101,10 +101,7 @@ const ReviewWrite = memo(() => {
       RegexHelper.value(current.head, '말머리를 선택해주세요.');
 
       RegexHelper.value(current.title, '제목을 입력해주세요');
-      RegexHelper.inputCheck(
-        current.title,
-        '제목은 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.'
-      );
+      RegexHelper.inputCheck(current.title, '제목은 40자 내로 입력해주세요');
 
       if (review.content === '') {
         Swal.fire({
@@ -179,7 +176,7 @@ const ReviewWrite = memo(() => {
                   className2="review-input"
                   type={'text'}
                   name={'title'}
-                  placeholder={'최대 20자 이하로 입력해주세요'}
+                  placeholder={'최대 40자 이하로 입력해주세요'}
                   onChange={onChange}
                 />
               </div>

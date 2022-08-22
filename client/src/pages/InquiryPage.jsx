@@ -88,7 +88,7 @@ const InquiryPage = memo(() => {
       RegexHelper.value(current.type, '문의 유형을 선택해주세요');
 
       RegexHelper.value(current.title, '문의 제목을 입력해주세요');
-      RegexHelper.inputCheck(current.title, '문의 제목은 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
+      RegexHelper.inputCheck(current.title, '문의 제목은 2~20자 내로 입력해주세요');
 
       RegexHelper.value(current.name, '이름을 입력해주세요');
       RegexHelper.nameCheck(current.name, '이름은 2~10자리의 영문(소문자), 한글만 가능합니다.');

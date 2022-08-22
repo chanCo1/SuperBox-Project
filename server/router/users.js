@@ -106,6 +106,7 @@ router.post('/check', async (req, res) => {
     for (const data of result) {
       memberData = data;
     }
+    // 중복되는 내용이 없다면 null 반환
     console.log('MEMBER DATA >>> ',memberData);
 
     if (userId !== (memberData && memberData.user_id)) {

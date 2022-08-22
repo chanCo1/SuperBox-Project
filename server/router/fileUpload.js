@@ -1,7 +1,5 @@
 /** 패키지 참조 */
 import express from 'express';
-import axios from 'axios';
-import mysqlPool from '../middleware/pool.js';
 import multer from 'multer';
 import { join, extname } from 'path';
 
@@ -18,7 +16,10 @@ const initMulter = () => {
     storage: multer.diskStorage({
       // 업로드 된 파일이 저장될 디렉토리 설정
       destination: (req, file, cb) => {
-        cb(null, 'public/img/');
+        // // 역슬래시를 슬래시로 변경
+        // file.upload_dir = process.env.UPLOAD_DIR.replace(/\\/gi, '/');
+
+        cb(null, process.env.UPLOAD_DIR);
       },
   
       // 업로드 된 파일이 저장될 이름 설정
@@ -55,7 +56,7 @@ const checkUploadError = err => {
       switch (err.code) {
         case 'LIMIT_FILE_COUNT':
           err.result_code = 500;
-          err.result_msg = '업로드 가능한 파일 수를 초과했습니다.';
+          err.result_msg = '이미지 업로드는 5개 까지 가능합니다.';
           break;
         case 'LIMIT_FILE_SIZE':
           err.result_code = 500;

@@ -22,6 +22,7 @@ import serveStatic from 'serve-static';       // 특정 폴더의 파일을 URL�
 import users from './router/users.js';
 import reception from './router/reception.js';
 import inquiry from './router/inquiry.js';
+import review from './router/review.js';
 import fileUpload from './router/fileUpload.js';
 
 
@@ -86,6 +87,8 @@ app.use(cookieParser());
 app.use('/api/users', users);
 app.use('/api/reception', reception);
 app.use('/api/inquiry', inquiry);
+app.use('/api/review', review);
+
 app.use('/api/image', fileUpload);
 
 

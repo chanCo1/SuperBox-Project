@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
   } = req.body;
 
   const sql =
-    'INSERT INTO reception (send_name, send_contact, send_postcode, send_address1, send_address2, arrive_name, arrive_contact, arrive_postcode,arrive_address1, arrive_address2, product_name, product_price, product_size, product_qty,product_note, visit_date, payment, message, receive_date, user_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ?)';
+    'INSERT INTO reception (send_name, send_contact, send_postcode, send_address1, send_address2, arrive_name, arrive_contact, arrive_postcode,arrive_address1, arrive_address2, product_name, product_price, product_size, product_qty,product_note, visit_date, payment, message, user_no) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
   const param = [
     sendName,
@@ -57,7 +57,12 @@ router.post('/', async (req, res) => {
   ];
 
   try {
-    await mysqlPool(sql, param);
+    const { insertId, affectedRows } = await mysqlPool(sql, param);
+
+    if(affectedRows === 0) {
+      throw new RuntimeException('데이터 저장에 실패하였습니다.');
+    }
+
     res.status(200).json({ success: true, message: '배송접수 성공' });
   } catch (e) {
     res.status(400).json({ success: false, message: '배송접수 실패' });

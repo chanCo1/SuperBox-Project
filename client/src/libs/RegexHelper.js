@@ -94,8 +94,12 @@ class RegexHelper {
   }
 
   /** TODO: 영어, 한글, 특수문자 입력값 정규표현식 */
+  // // 기존 정규식
+  // inputCheck(field, msg) {
+  //   return this.field(field, msg, /^[0-9a-zA-Zㄱ-ㅎ가-힣 -_/,.!@#$%^&*()~'"]{1,40}$/);
+  // }
   inputCheck(field, msg) {
-    return this.field(field, msg, /^[0-9a-zA-Zㄱ-ㅎ가-힣 -_/,.!@#$%^&*()~'"]{1,40}$/);
+    return this.field(field, msg, /^.{1,40}$/);  // 40글자 이하 모든 글
   }
 
   /**

@@ -101,7 +101,9 @@ const ReviewDetail = memo(() => {
 
               <div className='review-detail-title-wrap'>
                 <h2 className='review-detail-title'>{v.title}</h2>
-                {memberData.user_no === userNo && <MoreBtn /> }
+                {memberData.user_no === userNo && 
+                  <MoreBtn reviewNo={v.review_no} /> 
+                }
               </div>
 
               <p className='review-date'>

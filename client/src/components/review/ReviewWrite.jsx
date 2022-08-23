@@ -75,7 +75,7 @@ const ReviewWrite = memo(() => {
       Swal.fire({
         icon: 'question',
         iconColor: '#f3b017',
-        text: '정말 목록페이지로 돌아갈까요?',
+        text: '목록 페이지로 돌아갈까요?',
         showCancelButton: true,
         confirmButtonText: '네!',
         confirmButtonColor: '#f3b017',

@@ -1,18 +1,14 @@
 /** 패키지 참조 */
 import React, { memo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 // 리덕스
 import { useSelector, useDispatch } from 'react-redux';
-import { getReview } from '../../slices/ReviewSlice';
+import { getReviewList } from '../../slices/ReviewSlice';
 
 // 컴포넌트 참조
 import Spinner from '../Spinner';
-
-// toast-ui
-import { Viewer } from '@toast-ui/react-editor';
-import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
 // 1회용 아이콘 -> 나중에 수정
 import { FaUserCircle, FaRegEye } from 'react-icons/fa';
@@ -29,7 +25,7 @@ const ReviewList = memo(() => {
 
   // 게시판 들어가면 리스트 호출
   useEffect(() => {
-    dispatch(getReview());
+    dispatch(getReviewList());
   }, [dispatch]);
 
   return (
@@ -43,7 +39,9 @@ const ReviewList = memo(() => {
                 <p>#{v.review_no}</p>
                 <p>{v.head}</p>
               </div>
-              <h2 className='review-title'>{v.title}</h2>
+              <Link to={`/review/${v.review_no}`}>
+                <h2 className='review-title'>{v.title}</h2>
+              </Link>
               <p className='review-date'>{v.regdate && new Date(v.regdate).toLocaleString()}</p>
             </div>
             <div className='review-list-tail'>
@@ -67,8 +65,7 @@ const ReviewListContainer = styled.div`
   margin: 10px 0;
   /* border-radius: 15px; */
   color: #404040;
-  cursor: pointer;
-  padding: 20px;
+  padding: 20px 20px 30px;
   border-bottom: 1px solid #ddd;
 
   .review-list-head {
@@ -90,10 +87,18 @@ const ReviewListContainer = styled.div`
       }
     }
 
-    .review-title {
-      font-size: 1.5rem;
-      font-weight: 500;
-      margin: 10px 0;
+    a {
+      color: #404040;
+
+      .review-title {
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin: 10px 0;
+        transition: .2s ease;
+        cursor: pointer;
+  
+        &:hover { color: #999; }
+      }
     }
 
     .review-date {
@@ -104,6 +109,7 @@ const ReviewListContainer = styled.div`
 
   .review-list-tail {
     display: flex;
+    width: 120px;
     flex-direction: column;
     justify-content: center;
 
@@ -130,9 +136,5 @@ const ReviewListContainer = styled.div`
         margin-right: 5px;
       }
     }
-  }
-
-  &:hover {
-    background-color: #f7f8fb;
   }
 `;

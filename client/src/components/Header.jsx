@@ -150,7 +150,7 @@ const MyPage = styled.div`
     justify-content: end;
     
     .user-circle {
-      color: #999;
+      color: #bcbcbc;
       transition: ease .3s;
       
       &:active {

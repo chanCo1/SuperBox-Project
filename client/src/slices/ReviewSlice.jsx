@@ -9,7 +9,7 @@ const API_URL = 'http://localhost:3001/api/review/';
 /**
  * 후기 조회
  */
- export const getReview = createAsyncThunk('ReviewSlice/getReview', async (payload, { rejectWithValue }) => {
+ export const getReviewList = createAsyncThunk('ReviewSlice/getReviewList', async (payload, { rejectWithValue }) => {
   let result = null;
 
   try {
@@ -73,9 +73,9 @@ const ReviewSlice = createSlice({
   extraReducers: {
 
     /** 데이터 조회를 위한 액션 함수 */
-    [getReview.pending]: pending,
-    [getReview.fulfilled]: fulfilled,
-    [getReview.rejected]: rejected,
+    [getReviewList.pending]: pending,
+    [getReviewList.fulfilled]: fulfilled,
+    [getReviewList.rejected]: rejected,
 
     /** 데이터 저장을 위한 액션 함수 */
     [postReview.pending]: pending,

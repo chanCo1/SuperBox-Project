@@ -10,8 +10,11 @@ import Header from './components/Header';
 import IntroPage from './pages/IntroPage';
 import MainPage from './pages/MainPage';
 import ReceptionPage from './pages/ReceptionPage';
+
 import ReviewPage from './pages/ReviewPage';
 import ReviewWrite from './components/review/ReviewWrite';
+import ReviewDetail from './components/review/ReviewDetail';
+
 import NoticePage from './pages/NoticePage';
 import FaqPage from './pages/FaqPage';
 import InquiryPage from './pages/InquiryPage';
@@ -66,6 +69,7 @@ const App = memo(() => {
         {/* 고객후기 */}
         <Route path="/review" element={<ReviewPage />} />
         <Route path="/review/review_write" element={<ReviewWrite />} />
+        <Route path="/review/:review_no" element={<ReviewDetail />} />
 
         {/* 마이페이지 */}
         <Route path="/mypage/*" element={<MyPage />} />

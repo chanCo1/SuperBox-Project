@@ -88,7 +88,7 @@ const InquiryPage = memo(() => {
       RegexHelper.value(current.type, '문의 유형을 선택해주세요');
 
       RegexHelper.value(current.title, '문의 제목을 입력해주세요');
-      RegexHelper.inputCheck(current.title, '문의 제목은 2~20자 내로 입력해주세요');
+      RegexHelper.inputCheck(current.title, '문의 제목은 40자 내로 입력해주세요');
 
       RegexHelper.value(current.name, '이름을 입력해주세요');
       RegexHelper.nameCheck(current.name, '이름은 2~10자리의 영문(소문자), 한글만 가능합니다.');
@@ -144,7 +144,7 @@ const InquiryPage = memo(() => {
       })
     };
     
-  }, [dispatch, inquiry, navigate, confirm]);
+  }, [dispatch, inquiry, navigate, confirm, isLogin]);
 
   return (
     <div>
@@ -157,7 +157,7 @@ const InquiryPage = memo(() => {
 
       <InquiryContainer>
         <div className="page-subtitle">
-          <p>1:1 문의</p>
+          <h3>1:1 문의</h3>
         </div>
 
         <form className="inquiry-content" onSubmit={onSubmit}>
@@ -183,7 +183,7 @@ const InquiryPage = memo(() => {
                 className2="inquiry-input"
                 type={'text'}
                 name={'title'}
-                placeholder={'최대 20자 이하로 입력해주세요'}
+                placeholder={'문의하실 제목을 입력해주세요'}
                 onChange={onChange}
               />
               <Input
@@ -263,8 +263,12 @@ const InquiryContainer = styled.div`
     padding: 10px 40px;
     background-color: #2a3768;
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     border-radius: 10px 10px 0 0;
+
+    h3 {
+      font-weight: 400;
+    }
   }
 
   .inquiry-content {

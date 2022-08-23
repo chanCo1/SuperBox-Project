@@ -32,6 +32,7 @@ const ReviewPage = memo(() => {
           </Link>
         )}
       </div>
+      
       <ReviewList />
     </ReviewPageContainer>
   );
@@ -62,6 +63,7 @@ const ReviewPageContainer = styled.div`
         background-color: #f3b017;
         color: #fff;
       }
+      &:active { transform: scale(.8, .8); }
 
       .icon {
         position: relative;

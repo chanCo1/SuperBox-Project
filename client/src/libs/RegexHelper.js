@@ -95,7 +95,7 @@ class RegexHelper {
 
   /** TODO: 영어, 한글, 특수문자 입력값 정규표현식 */
   inputCheck(field, msg) {
-    return this.field(field, msg, /^[0-9a-zA-Zㄱ-ㅎ가-힣 -_/,.!@#$%^&*()]{1,40}$/);
+    return this.field(field, msg, /^[0-9a-zA-Zㄱ-ㅎ가-힣 -_/,.!@#$%^&*()~'"]{1,40}$/);
   }
 
   /**

@@ -1,6 +1,19 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 
+const PageTitle = memo(({ title, subtitle }) => {
+  return (
+    <PageTitleContainer>
+      <h1>{title}</h1>
+      <p>{subtitle}</p>
+      {/* <hr /> */}
+    </PageTitleContainer>
+  );
+});
+
+export default PageTitle;
+
+/** 스타일 */
 const PageTitleContainer = styled.div`
   position: relative;
   width: 1200px;
@@ -18,15 +31,3 @@ const PageTitleContainer = styled.div`
     padding-bottom: 10px;
   }
 `;
-
-const PageTitle = memo(({ title, subtitle }) => {
-  return (
-    <PageTitleContainer>
-      <h1>{title}</h1>
-      <p>{subtitle}</p>
-      {/* <hr /> */}
-    </PageTitleContainer>
-  );
-});
-
-export default PageTitle;

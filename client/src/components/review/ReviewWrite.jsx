@@ -35,7 +35,6 @@ const ReviewWrite = memo(() => {
 
   /** 후기작성 상태값 관리 */
   const [review, setReview] = useState({});
-  // console.log(review);
 
   // 새로고침 했을 때 값이 안들어가는 현상 해결
   useEffect(() => {
@@ -103,7 +102,7 @@ const ReviewWrite = memo(() => {
       RegexHelper.value(current.title, '제목을 입력해주세요');
       RegexHelper.inputCheck(current.title, '제목은 40자 내로 입력해주세요');
 
-      if (review.content === '') {
+      if (review.content.trim().length === 0) {
         Swal.fire({
           icon: 'error',
           iconColor: '#f3b017',
@@ -111,18 +110,18 @@ const ReviewWrite = memo(() => {
           confirmButtonText: '확인',
           confirmButtonColor: '#f3b017',
         });
+      } else {
+        Swal.fire({
+          icon: 'success',
+          iconColor: '#f3b017',
+          text: '후기가 등록되었습니다.',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#f3b017',
+        }).then(() => {
+          dispatch(postReview(review));
+          navigate('/review');
+        });
       };
-
-      Swal.fire({
-        icon: 'success',
-        iconColor: '#f3b017',
-        text: '후기가 등록되었습니다.',
-        confirmButtonText: '확인',
-        confirmButtonColor: '#f3b017',
-      }).then(() => {
-        dispatch(postReview(review));
-        navigate('/review');
-      });
 
     } catch (err) {
       Swal.fire({
@@ -152,7 +151,7 @@ const ReviewWrite = memo(() => {
 
       <ReviewAddContainer>
         <div className="page-subtitle">
-          <p>새 글 쓰기</p>
+          <h3>새 글 쓰기</h3>
         </div>
 
         <form className="review-content" onSubmit={onSubmit}>
@@ -176,7 +175,7 @@ const ReviewWrite = memo(() => {
                   className2="review-input"
                   type={'text'}
                   name={'title'}
-                  placeholder={'최대 40자 이하로 입력해주세요'}
+                  placeholder={'제목을 입력해주세요'}
                   onChange={onChange}
                 />
               </div>
@@ -223,12 +222,20 @@ const ReviewAddContainer = styled.div`
   margin-bottom: 50px;
   box-shadow: 0px 0px 10px #00000027;
 
+  p {
+    font-size: 16px;
+  }
+
   .page-subtitle {
     padding: 10px 40px;
     background-color: #2a3768;
     color: #fff;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     border-radius: 10px 10px 0 0;
+
+    h3 {
+      font-weight: 400;
+    }
   }
 
   .review-content {

@@ -62,7 +62,6 @@ const ReviewListContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin: 10px 0;
-  /* border-radius: 15px; */
   color: #404040;
   padding: 20px 20px 30px;
   border-bottom: 1px solid #ddd;

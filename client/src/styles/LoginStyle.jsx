@@ -1,6 +1,10 @@
+/**
+ * 로그인 및 회원가입 페이지 스타일
+ */
+
 import styled from "styled-components";
 
-const LoginPageContainer = styled.div`
+export const LoginPageContainer = styled.div`
   position: fixed;
   width: 100%;
   height: 100vh;
@@ -110,5 +114,3 @@ const LoginPageContainer = styled.div`
     }
   }
 `;
-
-export default LoginPageContainer;

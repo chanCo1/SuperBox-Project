@@ -191,7 +191,7 @@ const Header = memo(({ loginPageState }) => {
       iconColor: '#f3b017',
       text:'로그아웃 되었습니다.',
       showConfirmButton: false,
-      timer: 1000,
+      timer: 1500,
       footer: '다음에 또 만나요! 👋'
     });
 

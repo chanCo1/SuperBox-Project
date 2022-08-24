@@ -20,7 +20,7 @@ const ReviewPage = memo(() => {
       <Meta title={'SuperBox :: 고객후기'} />
       <PageTitle
         title={'고객후기'}
-        subtitle={'고객님들의 후기를 공유해보세요!'}
+        subtitle={'고객님들의 후기를 공유해 보세요!'}
       />
 
       <div className="review-nav">
@@ -57,7 +57,7 @@ const ReviewPageContainer = styled.div`
       color: #f3b017;
       font-size: 1.1rem;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: 0.2s ease;
 
       &:hover {
         background-color: #f3b017;

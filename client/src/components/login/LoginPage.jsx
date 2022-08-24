@@ -1,26 +1,30 @@
 /** 패키지 참조 */
 import React, { memo, useState, useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from '../../config/axios';
 import swal from 'sweetalert2';
+
+// 리덕스
+import { useDispatch, useSelector } from 'react-redux';
+import { tokenVerify } from '../../slices/UserSlice';
 
 // 컴포넌트 참조
 import Meta from '../../Meta';
 import Logo from './Logo';
 import InputBox from './InputBox';
-import LoginPageContainer from '../../styles/LoginStyle';
-import RegexHelper from '../../libs/RegexHelper';
 import Spinner from '../Spinner';
+import { LoginPageContainer } from '../../styles/LoginStyle';
 
-// slice 참조
-import { tokenVerify } from '../../slices/UserSlice';
+import RegexHelper from '../../libs/RegexHelper';
 
 // 아이콘 참조
 import { FiUser } from 'react-icons/fi';
 import { CgCloseR } from 'react-icons/cg';
 import { BsKey } from 'react-icons/bs';
 
+/**
+ * 로그인 페이지
+ */
 const LoginPage = memo(({ loginPageState }) => {
   const dispatch = useDispatch();
 
@@ -102,7 +106,7 @@ const LoginPage = memo(({ loginPageState }) => {
           iconColor: '#f3b017',
           text:'로그인 되었습니다.',
           showConfirmButton: false,
-          timer: 1000,
+          timer: 1500,
           footer: '만나서 반가워요! 😆'
         }).then(() => {
           loginPageState(false);

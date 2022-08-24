@@ -14,6 +14,7 @@ import ReceptionPage from './pages/ReceptionPage';
 import ReviewPage from './pages/ReviewPage';
 import ReviewWrite from './components/review/ReviewWrite';
 import ReviewDetail from './components/review/ReviewDetail';
+import ReviewEdit from './components/review/ReviewEdit';
 
 import NoticePage from './pages/NoticePage';
 import FaqPage from './pages/FaqPage';
@@ -70,6 +71,7 @@ const App = memo(() => {
         <Route path="/review" element={<ReviewPage />} />
         <Route path="/review/review_write" element={<ReviewWrite />} />
         <Route path="/review/:review_no" element={<ReviewDetail />} />
+        <Route path="/review/edit/:review_no" element={<ReviewEdit />} />
 
         {/* 마이페이지 */}
         <Route path="/mypage/*" element={<MyPage />} />

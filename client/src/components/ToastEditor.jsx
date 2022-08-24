@@ -1,5 +1,5 @@
 /**
- * toast UI
+ * toast Editor
  */
 import React, { useRef, memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -19,13 +19,13 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import fontSize from 'tui-editor-plugin-font-size';
 import 'tui-editor-plugin-font-size/dist/tui-editor-plugin-font-size.css';
 
-import chart from '@toast-ui/editor-plugin-chart';
-import '@toast-ui/chart/dist/toastui-chart.css';
+// import chart from '@toast-ui/editor-plugin-chart';
+// import '@toast-ui/chart/dist/toastui-chart.css';
 
-import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
-import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css';
+// import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
+// import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css';
 
-import uml from '@toast-ui/editor-plugin-uml';
+// import uml from '@toast-ui/editor-plugin-uml';
 
 /** 스타일 */
 const EditorContainer = styled.div`
@@ -33,9 +33,7 @@ const EditorContainer = styled.div`
     background-color: #2A3768;
   } */
 
-  img {
-    width: 30%;
-  }
+  img { width: 40%; }
 `;
 
 const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
@@ -96,6 +94,7 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
         iconColor: '#f3b017',
         text: err.response.data.result,
         confirmButtonColor: '#f3b017',
+        confirmButtonText: '확인',
       });
       // console.log(err.response.data.result);
     }
@@ -109,7 +108,7 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
         height="600px" // 에디터 창 높이
         initialEditType="wysiwyg" // 초기 입력모드 설정(디폴트 markdown)
         initialValue=" " // 초기 값
-        plugins={[colorSyntax, chart, tableMergedCell, uml, fontSize]} // 플러그인 사용 -> color빼고 쓸모 없는듯 ..
+        plugins={[colorSyntax, fontSize]} // 플러그인 사용 -> color빼고 쓸모 없는듯 ..
         useCommandShortcut={true} // 단축키 설정
         language="ko-KR" // 언어 설정 -> 초기 값은 영어
         toolbarItems={[
@@ -130,77 +129,3 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
 });
 
 export default ToastEditor;
-
-
-
-
-
-
-
-
-/**
- * wysiwyg
- */
-
-// import React, { useState } from 'react';
-// import { Editor } from 'react-draft-wysiwyg';
-// import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-// import styled from 'styled-components';
-// import { EditorState } from 'draft-js';
-
-// const MyBlock = styled.div`
-//   .wrapper-class {
-//     width: 50%;
-//     margin: 0 auto;
-//     margin-bottom: 4rem;
-//   }
-//   .editor {
-//     height: 500px !important;
-//     border: 1px solid #f1f1f1 !important;
-//     padding: 5px !important;
-//     border-radius: 2px !important;
-//   }
-// `;
-
-// const Wysiwyg = () => {
-//   // useState로 상태관리하기 초기값은 EditorState.createEmpty()
-//   // EditorState의 비어있는 ContentState 기본 구성으로 새 개체를 반환 => 이렇게 안하면 상태 값을 나중에 변경할 수 없음.
-//   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
-//   const onEditorStateChange = (editorState) => {
-//     // editorState에 값 설정
-//     setEditorState(editorState);
-//   };
-
-//   return (
-//     <MyBlock>
-//       <Editor
-//         // 에디터와 툴바 모두에 적용되는 클래스
-//         wrapperClassName="wrapper-class"
-//         // 에디터 주변에 적용된 클래스
-//         editorClassName="editor"
-//         // 툴바 주위에 적용된 클래스
-//         toolbarClassName="toolbar-class"
-//         // 툴바 설정
-//         toolbar={{
-//           // inDropdown: 해당 항목과 관련된 항목을 드롭다운으로 나타낼것인지
-//           list: { inDropdown: true },
-//           textAlign: { inDropdown: true },
-//           link: { inDropdown: true },
-//           history: { inDropdown: false },
-//         }}
-//         placeholder="내용을 작성해주세요."
-//         // 한국어 설정
-//         localization={{
-//           locale: 'ko',
-//         }}
-//         // 초기값 설정
-//         editorState={editorState}
-//         // 에디터의 값이 변경될 때마다 onEditorStateChange 호출
-//         onEditorStateChange={onEditorStateChange}
-//       />
-//     </MyBlock>
-//   );
-// };
-
-// export default Wysiwyg;

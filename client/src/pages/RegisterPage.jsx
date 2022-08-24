@@ -1,21 +1,22 @@
 /** 패키지 참조 */
 import React, { memo, useState, useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+
+// 리덕스
+import { useDispatch, useSelector } from 'react-redux';
+import { postRegister } from '../slices/UserSlice';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
 import Logo from '../components/login/Logo';
 import InputBox from '../components/login/InputBox';
-import LoginPageContainer from '../styles/LoginStyle';
 import Spinner from '../components/Spinner';
 
-import RegexHelper from '../libs/RegexHelper';
+import { LoginPageContainer } from '../styles/LoginStyle';
 
-// slice 참조
-import { postRegister } from '../slices/UserSlice';
+import RegexHelper from '../libs/RegexHelper';
 
 // 아이콘 참조
 import { FiUser, FiSmile } from 'react-icons/fi';
@@ -23,6 +24,9 @@ import { BsKey } from 'react-icons/bs';
 import { AiOutlineMail, AiOutlineCheckCircle } from 'react-icons/ai';
 import { MdPhoneIphone } from 'react-icons/md';
 
+/**
+ * 회원가입
+ */
 const RegisterPage = memo(({ loginPageState }) => {
 
   const dispatch = useDispatch();

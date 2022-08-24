@@ -1,6 +1,6 @@
 /** 패키지 참조 */
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 
@@ -21,7 +21,6 @@ const MoreBtn = memo(({ reviewNo }) => {
 
   // 더보기 버튼 상태값
   const [button, setButton] = useState(false);
-  console.log(button);
 
   /** 더보기 버튼 on/off */
   const onBtnClick = useCallback((e) => {
@@ -70,9 +69,11 @@ const MoreBtn = memo(({ reviewNo }) => {
 
       {button && 
         <div className='more-btn-active' ref={toggle}>
-          <span className='more-btn-menu more-btn-edit'>
-            <HiOutlinePencilAlt className='icon' />수정하기
-          </span>
+          <Link to={`/review/edit/${reviewNo}`}>
+            <span className='more-btn-menu more-btn-edit'>
+              <HiOutlinePencilAlt className='icon' />수정하기
+            </span>
+          </Link>
           <span className='more-btn-menu more-btn-trash' onClick={onDeleteClick}>
             <HiOutlineTrash className='icon' />삭제하기
           </span>
@@ -107,6 +108,7 @@ const MoreBtnContainer = styled.div`
     border: 1px solid #f3b017;
     border-radius: 10px;
     color: #999;
+    background-color: #fff;
     
     .more-btn-menu {
       display: flex;
@@ -119,5 +121,6 @@ const MoreBtnContainer = styled.div`
     }
 
     .more-btn-edit { margin-bottom: 5px; }
+    a { color: #999; }
   }
 `;

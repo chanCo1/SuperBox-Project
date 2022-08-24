@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Spinner from '../Spinner';
 import PageTitle from '../PageTitle';
 import MoreBtn from '../MoreBtn';
+import Meta from '../../Meta';
 
 // 1회용 아이콘 -> 나중에 수정
 import { FaUserCircle, FaRegEye } from 'react-icons/fa';
@@ -77,9 +78,10 @@ const ReviewDetail = memo(() => {
   return (
     <>
       <Spinner visible={isLoading} />
+      <Meta title={'SuperBox :: 고객후기'} />
       <PageTitle
         title={'고객후기'}
-        subtitle={'고객님들의 후기를 공유해보세요!'}
+        subtitle={'고객님들의 후기를 공유해 보세요!'}
       />
       <ReviewDetailContainer>
         {reviewDetail &&
@@ -134,7 +136,7 @@ const ReviewDetailContainer = styled.div`
     padding-bottom: 50px;
     border-bottom: 1px solid #bcbcbc;
     
-    img { width: 50%; }
+    img { width: 40%; }
     p { font-size: 16px; }
 
     .review-detail-top {

@@ -3,8 +3,8 @@
  */
 
 /** 패키지 참조 */
-import React, { memo, useRef, useCallback, useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { memo, useCallback, useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 // 리덕스
@@ -29,7 +29,7 @@ const ReviewEdit = memo(() => {
   // 리덕스
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.review);
-  console.log(data);
+  console.log('edit에서 DATA 호출 >>> ',data);
 
   const navigate = useNavigate();
 
@@ -40,13 +40,23 @@ const ReviewEdit = memo(() => {
   const [reviewOrigin, setReviewOrigin] = useState({});
   console.log(reviewOrigin);
 
-  // /** 수정된 후기 상태값 관리 */
-  // const [reviewEdit, setReviewEdit] = useState({
-  //   head: '',
-  //   title: '',
-  //   content: '',
-  // });
-  // console.log(reviewEdit);
+  // // 백엔드에 보낼 이미지 상태값
+  // const [uploadImg, setUploadImg] = useState([]);
+
+  /** 페이지가 열림과 동시에 id값에 대한 데이터를 조회하여 상태값에 반영한다. */
+  useEffect(() => {
+    if(data) {
+      const index = data.item.findIndex((e) => e.review_no === parseInt(param.review_no));
+
+      setReviewOrigin({
+        review_no: data.item ? data.item[index]?.review_no : null,
+        head: data.item ? data.item[index]?.head : null,
+        title: data.item ? data.item[index]?.title : null,
+        content: data.item ? data.item[index]?.content : null,
+        regdate: data.item ? data.item[index]?.regdate : null,
+      });
+    }
+  }, [data, param]);
 
   /** input 입력값 저장 */
   const onChange = useCallback(
@@ -59,20 +69,12 @@ const ReviewEdit = memo(() => {
     [reviewOrigin]
   );
 
-  /** 페이지가 열림과 동시에 id값에 대한 데이터를 조회하여 상태값에 반영한다. */
-  useEffect(() => {
-    if (data) {
-      const index = data.item.findIndex((e) => e.review_no === parseInt(param.review_no));
-
-      setReviewOrigin({
-        review_no: data.item[index].review_no,
-        head: data.item[index].head,
-        title: data.item[index].title,
-        content: data.item[index].content,
-        img: data.item[index].img,
-      });
-    }
-  }, [data, param]);
+  // // 자식컴포넌트에서 받은 이미지 url 배열을 백엔드에 전달할 useState에 저장
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setReviewOrigin({ ...reviewOrigin, img: JSON.stringify(uploadImg) });
+  //   })
+  // }, [uploadImg, setReviewOrigin]);
 
   /** 글쓰기 버튼의 submit 이벤트 발생 시 */
   const onSubmit = useCallback(
@@ -103,8 +105,11 @@ const ReviewEdit = memo(() => {
             confirmButtonText: '확인',
             confirmButtonColor: '#f3b017',
           }).then(() => {
-            dispatch(putReview(reviewOrigin));
-            navigate(`/review/${reviewOrigin.review_no}`);
+            if(reviewOrigin) {
+              dispatch(putReview(reviewOrigin));
+              // navigate(`/review/${reviewOrigin.review_no}`);
+              navigate(-1);
+            }
           });
         }
       } catch (err) {
@@ -139,14 +144,16 @@ const ReviewEdit = memo(() => {
         confirmButtonText: '네!',
         confirmButtonColor: '#f3b017',
         cancelButtonText: '아니요',
-        footer: '작성하신 내용은 저장되지 않습니다.',
+        footer: '수정하신 내용은 저장되지 않습니다.',
+
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate(`/review/${reviewOrigin.review_no}`);
+          // navigate(`/review/${reviewOrigin.review_no}`);
+          navigate(-1);
         }
       });
     },
-    [navigate, reviewOrigin]
+    [navigate]
   );
 
   return (
@@ -199,7 +206,12 @@ const ReviewEdit = memo(() => {
                   내용<span>*</span>
                 </label>
 
-                <ToastEditor2 reviewOrigin={reviewOrigin.content} />
+                <ToastEditor2 
+                  reviewContent={reviewOrigin.content}
+                  reviewOrigin={reviewOrigin}
+                  setReviewOrigin={setReviewOrigin}
+                  // setUploadImg={setUploadImg}
+                />
 
               </div>
             </div>
@@ -209,7 +221,7 @@ const ReviewEdit = memo(() => {
             </div>
           </form>
         ) : (
-          <div>데이터를 불러오지 못했습니다.</div>
+          <div>요청 처리가 만료되었습니다.</div>
         )}
       </ReviewWriteContainer>
     </div>

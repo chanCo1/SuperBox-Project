@@ -11,9 +11,7 @@ export const ReviewWriteContainer = styled.div`
   margin-bottom: 50px;
   box-shadow: 0px 0px 10px #00000027;
 
-  p {
-    font-size: 16px;
-  }
+  p { font-size: 16px; }
 
   .page-subtitle {
     padding: 10px 40px;
@@ -22,9 +20,7 @@ export const ReviewWriteContainer = styled.div`
     font-size: 1.3rem;
     border-radius: 10px 10px 0 0;
 
-    h3 {
-      font-weight: 400;
-    }
+    h3 { font-weight: 400; }
   }
 
   .review-content {

@@ -22,7 +22,7 @@ import InquiryPage from './pages/InquiryPage';
 import MyPage from './pages/MyPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './components/login/LoginPage';
-import ErrorPage from './components/ErrorPage';
+import Error404Page from './components/Error404Page';
 
 import Footer from './components/Footer';
 
@@ -64,7 +64,7 @@ const App = memo(() => {
         {/* 배송접수 */}
         <Route 
           path="/reception" 
-          element={isLogin ? <ReceptionPage /> : <ErrorPage error={error} />} 
+          element={isLogin ? <ReceptionPage /> : <Error404Page error={error} />} 
         />
         
         {/* 고객후기 */}
@@ -96,7 +96,7 @@ const App = memo(() => {
         /> */}
 
         {/* 잘못 된 주소로 접속 시 */}
-        <Route path="/*" element={<ErrorPage />} />
+        <Route path="/*" element={<Error404Page />} />
       </Routes>
 
       <Footer />

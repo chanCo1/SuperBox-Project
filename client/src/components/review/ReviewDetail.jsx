@@ -34,7 +34,7 @@ const ReviewDetail = memo(() => {
   const params = useParams();
 
   const dispatch = useDispatch();
-  const { memberData } = useSelector(state => state.user);
+  const { memberData, isLogin } = useSelector(state => state.user);
 
   // 백엔드로 부터 받은 데이터 상태값 관리
   const [reviewDetail, setReviewDetail] = useState()
@@ -64,7 +64,7 @@ const ReviewDetail = memo(() => {
         });
 
         // state 저장
-        setReviewDetail(response.data.item);
+        setReviewDetail(response?.data?.item);
 
       } catch(err) {
         console.error(err);
@@ -74,6 +74,15 @@ const ReviewDetail = memo(() => {
     })();
 
   }, [params]);
+
+  /** 후기 수정 시간 업데이트 */
+  const setTime = (a, b) => {
+    if(a !== b) {
+      return new Date(b).toLocaleString() + ' 수정됨';
+    } else {
+      return new Date(a).toLocaleString();
+    }
+  };
 
   return (
     <>
@@ -103,13 +112,13 @@ const ReviewDetail = memo(() => {
 
               <div className='review-detail-title-wrap'>
                 <h2 className='review-detail-title'>{v.title}</h2>
-                {memberData.user_no === userNo && 
+                {memberData && isLogin && memberData.user_no === userNo && 
                   <MoreBtn reviewNo={v.review_no} /> 
                 }
               </div>
 
               <p className='review-date'>
-                {v.regdate && new Date(v.regdate).toLocaleString()}
+                {v.regdate && setTime(v.regdate, v.update_regdate)}
               </p>
 
               <Viewer initialValue={v.content} />
@@ -136,7 +145,7 @@ const ReviewDetailContainer = styled.div`
     padding-bottom: 50px;
     border-bottom: 1px solid #bcbcbc;
     
-    img { width: 40%; }
+    img { width: 30%; }
     p { font-size: 16px; }
 
     .review-detail-top {

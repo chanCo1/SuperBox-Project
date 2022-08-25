@@ -187,6 +187,7 @@ const ReviewSlice = createSlice({
     /** 데이터 삭제를 위한 액션 함수 */
     [deleteReview.pending]: pending,
     [deleteReview.fulfilled]: (state, { meta, payload }) => {
+      console.log('meta >>>', meta);
 
       // 기존의 상태값을 복사한다. (원본이 JSON이므로 깊은 복사를 수행해야 한다.)
       const data = cloneDeep(state.data);

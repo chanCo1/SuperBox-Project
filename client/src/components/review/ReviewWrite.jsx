@@ -31,8 +31,8 @@ const ReviewWrite = memo(() => {
   /** Store를 통해 user 상태값 호출 */
   const { memberData, loading, isLogin } = useSelector((state) => state.user);
 
-  // 백엔드에 보낼 이미지 상태값
-  const [uploadImg, setUploadImg] = useState([]);
+  // // 백엔드에 보낼 이미지 상태값
+  // const [uploadImg, setUploadImg] = useState([]);
 
   /** 후기작성 상태값 관리 */
   const [review, setReview] = useState({});
@@ -63,10 +63,10 @@ const ReviewWrite = memo(() => {
     [review]
   );
 
-  // 자식컴포넌트에서 받은 이미지 url 배열을 백엔드에 전달할 useState에 저장
-  useEffect(() => {
-    setReview({ ...review, img: JSON.stringify(uploadImg) });
-  }, [uploadImg, setReview]);
+  // // 자식컴포넌트에서 받은 이미지 url 배열을 백엔드에 전달할 useState에 저장
+  // useEffect(() => {
+  //   setReview({ ...review, img: JSON.stringify(uploadImg) });
+  // }, [uploadImg, setReview]);
 
   /** 뒤로가기 버튼 눌렀을 때 실행 */
   const onPrevClick = useCallback(
@@ -118,7 +118,7 @@ const ReviewWrite = memo(() => {
           text: '후기가 등록되었습니다.',
           showConfirmButton: false,
           timer: 1500,
-          footer: '소중한 후기 고마워요! 👍'
+          footer: '소중한 후기 고마워요! 👍',
         }).then(() => {
           dispatch(postReview(review));
           navigate('/review');
@@ -190,7 +190,7 @@ const ReviewWrite = memo(() => {
               <ToastEditor
                 review={review}
                 setReview={setReview}
-                setUploadImg={setUploadImg}
+                // setUploadImg={setUploadImg}
               />
         
             </div>

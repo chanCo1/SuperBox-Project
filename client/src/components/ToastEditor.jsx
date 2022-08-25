@@ -27,27 +27,19 @@ import 'tui-editor-plugin-font-size/dist/tui-editor-plugin-font-size.css';
 
 // import uml from '@toast-ui/editor-plugin-uml';
 
-/** 스타일 */
-const EditorContainer = styled.div`
-  /* .toastui-editor-defaultUI-toolbar {
-    background-color: #2A3768;
-  } */
-
-  img { width: 40%; }
-`;
-
+/** 후기 작성을 위한 ToastUi Editor */
 const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
 // export default function ToastEditor() {
 
   const editorRef = useRef();
   const formData = new FormData();
 
-  const [img, setImg] = useState([]);
+  // const [img, setImg] = useState([]);
   
-  // 부모컴포넌트로 이미지(배열) 전달
-  useEffect(() => {
-    setUploadImg(img);
-  }, [img, setUploadImg]);
+  // // 부모컴포넌트로 이미지(배열) 전달
+  // useEffect(() => {
+  //   setUploadImg(img);
+  // }, [img, setUploadImg]);
 
   // const editCurrent = editorRef.current.getInstance(); -> 왜 에러가..
 
@@ -63,7 +55,7 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
   }, [review, setReview]);
 
 
-  // 이미지 업로드
+  /** 이미지 업로드 */
   const onImageUpload = async (blob, callback) => {
 
     // 이미지 객체 추가
@@ -83,8 +75,8 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
       for(let i = filePath.length - 1; i <= filePath.length; i++) {
         callback(`http://localhost:3001/image/${filePath[i].filename}`, `review-image${i}`);
         
-        // 부모컴포넌트로 보낼 상태값에 배열로 저장
-        setImg(img => [...img, `http://localhost:3001/image/${filePath[i].filename}`]);
+        // // 부모컴포넌트로 보낼 상태값에 배열로 저장
+        // setImg(img => [...img, `http://localhost:3001/image/${filePath[i].filename}`]);
 
       };
     } catch(err) {
@@ -129,3 +121,12 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
 });
 
 export default ToastEditor;
+
+/** 스타일 */
+const EditorContainer = styled.div`
+  /* .toastui-editor-defaultUI-toolbar {
+    background-color: #2A3768;
+  } */
+
+  img { width: 30%; }
+`;

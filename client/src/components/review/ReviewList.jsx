@@ -10,8 +10,11 @@ import { getReviewList } from '../../slices/ReviewSlice';
 // 컴포넌트 참조
 import Spinner from '../Spinner';
 
-// 1회용 아이콘 -> 나중에 수정
+// FaUserCircle 1회용 아이콘 -> 나중에 수정
 import { FaUserCircle, FaRegEye } from 'react-icons/fa';
+import { BiLike } from 'react-icons/bi';
+import { MdOutlineComment } from 'react-icons/md';
+
 
 /** Review List */
 const ReviewList = memo(() => {
@@ -57,7 +60,12 @@ const ReviewList = memo(() => {
               </div>
               <div className='review-list-tail'>
                 <p><FaUserCircle className='user-icon' />{v.name && v.name.substring(0,1)}****</p>
-                <p><FaRegEye className='icon' />{v.view_count}</p>
+
+                <div className='review-list-tail-info'>
+                  <span><BiLike className='icon' />{v.like_count}</span>
+                  <span><MdOutlineComment className='icon' />{v.comment_count}</span>
+                  <span><FaRegEye className='icon' />{v.view_count}</span>
+                </div>
               </div>
             </ReviewListContainer>
           );
@@ -124,9 +132,9 @@ const ReviewListContainer = styled.div`
 
   .review-list-tail {
     display: flex;
-    width: 100px;
     flex-direction: column;
     justify-content: center;
+    width: 150px;
 
     &>p:nth-child(1) {
       display: flex;
@@ -142,11 +150,21 @@ const ReviewListContainer = styled.div`
         color: #bcbcbc;
       }
     }
-    &>p:nth-child(2) {
+
+    .review-list-tail-info {
       display: flex;
       align-items: center;
-      
-      .icon { margin-right: 5px; }
+      justify-content: space-between;
+
+      span {
+        display: flex;
+        align-items: center;
+        /* margin-right: 15px; */
+        font-size: 1.1rem;
+
+        /* &:last-child { margin-right: 5px; } */
+        .icon { margin-right: 5px; }
+      }
     }
   }
 `;

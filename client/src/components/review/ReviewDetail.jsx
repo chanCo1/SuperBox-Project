@@ -17,9 +17,12 @@ import Spinner from '../Spinner';
 import PageTitle from '../PageTitle';
 import MoreBtn from '../MoreBtn';
 import Meta from '../../Meta';
+import Like from '../Like';
 
 // 1회용 아이콘 -> 나중에 수정
 import { FaUserCircle, FaRegEye } from 'react-icons/fa';
+import { BiLike } from 'react-icons/bi';
+import { MdOutlineComment } from 'react-icons/md';
 
 // toast-ui
 import { Viewer } from '@toast-ui/react-editor';
@@ -48,6 +51,7 @@ const ReviewDetail = memo(() => {
     }
   }, [reviewDetail]);
 
+  // 로딩상태
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -90,7 +94,7 @@ const ReviewDetail = memo(() => {
       <Meta title={'SuperBox :: 고객후기'} />
       <PageTitle
         title={'고객후기'}
-        subtitle={'고객님들의 후기를 공유해 보세요!'}
+        subtitle={'고객님들의 후기를 만나보세요!'}
       />
       <ReviewDetailContainer>
         {reviewDetail &&
@@ -104,10 +108,13 @@ const ReviewDetail = memo(() => {
                     <p>{v.name && v.name.substring(0,1)}****</p>
                   </div>
                 </div>
-                <p className='review-detail-count'>
-                  <FaRegEye className='icon' />
-                  {v.view_count}
-                </p>
+                {/* <span><FaRegEye className='icon' />{v.view_count}</span> */}
+                <div className='review-detail-info'>
+                  <span><BiLike className='icon' />{v.like_count}</span>
+                  <span><MdOutlineComment className='icon' />{v.comment_count}</span>
+                  <span><FaRegEye className='icon' />{v.view_count}</span>
+                </div>
+                
               </div>
 
               <div className='review-detail-title-wrap'>
@@ -126,6 +133,8 @@ const ReviewDetail = memo(() => {
             </div>
           ))
         }
+        <Like reviewNo={params && params.review_no} userNo={memberData && memberData.user_no} />
+
       </ReviewDetailContainer>
     </>
   );
@@ -142,8 +151,8 @@ const ReviewDetailContainer = styled.div`
 
   
   .review-detail-wrap {
-    padding-bottom: 50px;
-    border-bottom: 1px solid #bcbcbc;
+    /* padding-bottom: 50px; */
+    /* border-bottom: 1px solid #bcbcbc; */
     
     img { width: 30%; }
     p { font-size: 16px; }
@@ -179,12 +188,19 @@ const ReviewDetailContainer = styled.div`
         }
       }
 
-      .review-detail-count {
+      .review-detail-info {
         display: flex;
         align-items: center;
-        padding: 0 5px;
 
-        .icon { margin-right: 5px; }
+        span {
+          display: flex;
+          align-items: center;
+          margin-right: 15px;
+          font-size: 1.1rem;
+
+          &:last-child { margin-right: 5px; }
+          .icon { margin-right: 5px; }
+        }
       }
     }
 

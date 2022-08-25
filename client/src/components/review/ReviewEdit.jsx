@@ -16,7 +16,7 @@ import Meta from '../../Meta';
 import PageTitle from '../PageTitle';
 import Spinner from '../Spinner';
 import { Input } from '../reception/TagBox';
-import ToastEditor2 from '../ToastEditor2';
+import EditToastEditor from '../EditToastEditor';
 
 import { ReviewWriteContainer } from '../../styles/ReviewStyle';
 
@@ -206,7 +206,7 @@ const ReviewEdit = memo(() => {
                   내용<span>*</span>
                 </label>
 
-                <ToastEditor2 
+                <EditToastEditor 
                   reviewContent={reviewOrigin.content}
                   reviewOrigin={reviewOrigin}
                   setReviewOrigin={setReviewOrigin}

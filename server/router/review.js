@@ -35,7 +35,7 @@ router.get('/detail', async (req, res) => {
 
   const { reviewNo } = req.query;
 
-  const sql = 'SELECT * FROM review WHERE review_no = ?';
+  let sql = 'SELECT * FROM review WHERE review_no = ?';
 
   let result = null;
 
@@ -55,6 +55,16 @@ router.get('/detail', async (req, res) => {
       message: '후기 데이터를 불러오지 못했습니다.',
       errMsg: err,
     });
+  };
+
+  // 조회수 업데이트 .. 이방법이 최선인지?
+  try {
+    sql = 'UPDATE review SET view_count = view_count + 1 WHERE review_no=?';
+
+    await mysqlPool(sql, reviewNo)
+
+  } catch(err) {
+    console.log('조회수 업데이트 실패', err);
   }
 });
 
@@ -111,10 +121,10 @@ router.post('/post', async (req, res) => {
 router.put('/put', async (req, res) => {
   console.log('수정된 들어온 값 >>>', req.body);
 
-  const { review_no, head, title, content, img } = req.body;
+  const { review_no, head, title, content } = req.body;
 
-  const sql = 'UPDATE review SET head=?, title=?, content=?, img=? WHERE review_no =?';
-  const param = [head, title, content, img, review_no];
+  const sql = 'UPDATE review SET head=?, title=?, content=?, update_regdate=now() WHERE review_no =?';
+  const param = [head, title, content, review_no];
 
   let result = null;
 

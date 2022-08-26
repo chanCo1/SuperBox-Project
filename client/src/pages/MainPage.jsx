@@ -316,6 +316,8 @@ const MainPage = memo(({ loginPageState }) => {
 
   // 로그인 상태가 false면 배송접수 버튼 차단
   const connectReceptionPage = useCallback(e => {
+    e.preventDefault();
+    
     if(!isLogin) {
       Swal.fire({
         icon: 'warning',
@@ -326,8 +328,6 @@ const MainPage = memo(({ loginPageState }) => {
       }).then(() => {
         loginPageState(true);
       });
-
-      e.preventDefault();
     }
   }, [isLogin, loginPageState])
 

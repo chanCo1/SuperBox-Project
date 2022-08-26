@@ -71,8 +71,8 @@ const ReviewList = memo(() => {
           );
         })
       ) : (
-        <div style={{ textAlign: 'center' }}>
-          아직 후기가 없습니다! 후기를 등록해주세요!
+        <div style={{ textAlign: 'center', padding: '30px' }}>
+          아직 후기가 없습니다! 후기를 공유해주세요! 🙂
         </div>
       )}
     </>

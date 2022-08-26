@@ -23,6 +23,7 @@ import users from './router/users.js';
 import reception from './router/reception.js';
 import inquiry from './router/inquiry.js';
 import review from './router/review.js';
+import like from './router/like.js';
 import fileUpload from './router/fileUpload.js';
 
 
@@ -88,6 +89,7 @@ app.use('/api/users', users);
 app.use('/api/reception', reception);
 app.use('/api/inquiry', inquiry);
 app.use('/api/review', review);
+app.use('/api/like', like);
 
 app.use('/api/image', fileUpload);
 

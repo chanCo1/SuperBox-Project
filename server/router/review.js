@@ -146,11 +146,18 @@ router.delete('/delete', async (req, res) => {
 
   const { review_no } = req.query;
 
-  const sql = 'DELETE FROM review WHERE review_no = ?';
-
+  let sql = null;
   try {
+    sql = 'DELETE FROM review_like WHERE review_no=?';
+    await mysqlPool(sql, review_no);
+    
+    sql = 'DELETE FROM review_hate WHERE review_no=?';
+    await mysqlPool(sql, review_no);
+
+    sql = 'DELETE FROM review WHERE review_no = ?';
     const result = await mysqlPool(sql, review_no);
-    res.status(200).json({ success: true, message: '데이터를 삭제했습니다.' })
+    
+    res.status(200).json({ success: true, message: '데이터를 삭제했습니다.' });
 
   } catch(err) {
     res.status(400).json({ success: false, message: '데이터 삭제 실패', errMsg: err })

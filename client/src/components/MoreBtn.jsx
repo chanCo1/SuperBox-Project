@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteReview } from '../slices/ReviewSlice';
 
+import useOnClickOutSide from '../hooks/useOnClickOutSide';
+
 // 아이콘 참조
 import { MdMoreVert } from 'react-icons/md';
 import { HiOutlinePencilAlt, HiOutlineTrash } from 'react-icons/hi';
@@ -17,17 +19,18 @@ const MoreBtn = memo(({ reviewNo }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const toggle = useRef();
-
+  
   // 더보기 버튼 상태값
   const [button, setButton] = useState(false);
+  
+  // 모달 밖 클릭 시 창 사라지게한다
+  const toggle = useRef();
+  useOnClickOutSide(toggle, () => setButton(false));
 
-  /** 더보기 버튼 on/off */
-  const onBtnClick = useCallback((e) => {
-    e.preventDefault();
-
-    setButton(!button);
-  }, [button]);
+  /** 더보기 버튼 on */
+  const onBtnClick = useCallback(() => {
+    setButton(true);
+  }, []);
 
   /** 삭제버튼 클릭 */
   const onDeleteClick = useCallback(e => {
@@ -49,19 +52,6 @@ const MoreBtn = memo(({ reviewNo }) => {
     });
   
   }, [dispatch, reviewNo, navigate]);
-
-  // /** 모달 영역 밖 클릭시 닫기 */
-  // const onCloseModal = useCallback(e => {
-  //   if(button || (!toggle.current || !toggle.contains(e.target))) setButton(false);
-  // }, [button]);
-
-  // useEffect(() => {
-  //   window.addEventListener('click', onCloseModal);
-
-  //   return () => {
-  //     window.removeEventListener('click', onCloseModal);
-  //   }
-  // }, []);
 
   return (
     <MoreBtnContainer>

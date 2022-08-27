@@ -64,7 +64,7 @@ const InquiryPage = memo(() => {
   useEffect(() => {
     setInquiry({ ...inquiry, img: uploadImg });
 
-  }, [uploadImg, setInquiry]);
+  }, [uploadImg, setInquiry]);  // inquiry 넣으면 무한로딩..
 
   // 문의 입력 값 갱신
   const onChange = useCallback(
@@ -110,7 +110,10 @@ const InquiryPage = memo(() => {
       }).then(() => {
         dispatch(postInquiry(inquiry));
         
-        if(isLogin) navigate('/mypage');
+        if(isLogin) {
+          navigate('/mypage');
+          return;
+        }
 
         navigate('/main');
       });
@@ -325,7 +328,6 @@ const InquiryContainer = styled.div`
 
       textarea {
         min-height: 350px;
-        resize: none;
         padding: 30px !important;
       }
     }

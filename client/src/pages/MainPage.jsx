@@ -1,11 +1,11 @@
 /**
- * 메인 페이지
+ * 메인 페이지 컴포넌트
  */
 
 /** 패키지 참조 */
 import React, { memo, useEffect, useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 
@@ -18,13 +18,148 @@ import logo from '../assets/image/superbox-logo.png';
 import reception from '../assets/image/reception.png';
 import customerCenter from '../assets/image/customer2.png';
 import review from '../assets/image/review.png';
-import delivery from '../assets/image/delivery.png';
+// import delivery from '../assets/image/delivery.png';
 import receptionIcon from '../assets/image/reception-icon2.png';
 import reviewIcon from '../assets/image/review-icon.png';
 import inquirynIcon from '../assets/image/inquiry-icon.png';
 
 // 아이콘 참조
 import { MdDoubleArrow } from 'react-icons/md';
+
+/** 
+ * 메인페이지
+ */
+const MainPage = memo(({ loginPageState }) => {
+
+  const navigate = useNavigate();
+
+  /** Store를 통해 상태값 호출 */
+  const { loading, isLogin } = useSelector(state => state.user);
+
+  /** 사용할 useRef 호출 */
+  const logoRef = useRef();
+  const receptionTextRef = useRef();
+  const receptionImgRef = useRef();
+  const reviewImgRef = useRef();
+  const reviewTextRef = useRef();
+  const customerTextRef = useRef();
+  const customerImgRef = useRef();
+  const useStartTextRef = useRef();
+  const useStartBtnRef = useRef();
+
+  /** 스크롤 이벤트 함수 호출 */
+  useEffect(() => {
+    ScrollEvent(logoRef, receptionTextRef, receptionImgRef, reviewImgRef, reviewTextRef, customerTextRef, customerImgRef, useStartTextRef, useStartBtnRef);
+  }, []);
+
+  // 로그인 상태가 false면 배송접수 버튼 차단
+  const connectReceptionPage = useCallback(e => {
+    e.preventDefault();
+    
+    if(!isLogin) {
+      Swal.fire({
+        icon: 'warning',
+        iconColor: '#f3b017',
+        text:'로그인 후 이용해주세요.',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#f3b017',
+      }).then(() => {
+        loginPageState(true);
+      });
+    } else {
+      navigate('/reception');
+    }
+  }, [isLogin, loginPageState, navigate])
+
+  return (
+    <div>
+      <Meta title={'SuperBox :: 메인페이지'} />
+
+      <MainLogoContainer>
+        <div className='main-logo-wrap' ref={logoRef}>
+          <img className='logo' src={logo} alt="superbox-logo" />
+          <h2>SuperBox</h2>
+          <p>누구나 한번 쯤은 택배 상자를 받고 설레는 기분을 느꼈을거예요.</p>
+          <p>그 기분, <span>SuperBox</span>를 통해 더 오래, 더 많이 느껴보세요.</p>
+          {/* <div className='delivery-character'>
+            <img src={delivery} alt="delivery 이미지" />
+          </div> */}
+        </div>
+      </MainLogoContainer>
+
+      <MainReceptionContainer>
+        <div className='main-reception-wrap'>
+          <div className='reception-text' ref={receptionTextRef}>
+            <p>언제 어디서든<br />쉽고, 간편하게</p>
+            <p>저희에게 설렘을 접수하세요.</p>
+            <p>전국 어디든 원하시는 분에게 전달해 드립니다.</p>
+          </div>
+          <div className='reception-img' ref={receptionImgRef}>
+            <img src={reception} alt="reception-img" />
+          </div>
+        </div>
+      </MainReceptionContainer>
+
+      <MainReviewContainer>
+        <div className='main-review-wrap'>
+          <div className='review-icon-wrap' ref={reviewImgRef}>
+            <img src={review} alt="고객후기 이미지" />
+          </div>
+          <div className='review-text' ref={reviewTextRef}>
+            <h3>고객후기</h3>
+            <p>저희 서비스를 이용하시고 생생한 후기를 공유 해주세요!</p>
+            <p>후기를 통해 여러분들에게 한 발자국 더 다가서겠습니다.</p>
+          </div>
+        </div>
+      </MainReviewContainer>
+
+      <MainCustomerContainer>
+        <div className='main-customer-wrap'>
+          <div className='customer-text' ref={customerTextRef}>
+            <h3>고객센터</h3>
+            <p>궁금한게 있으면 언제든지 물어보세요.</p>
+            <p>자주 찾는 질문과 1:1 문의는<br />여러분들을 위해 항상 열려있습니다.</p>
+          </div>
+          <div className='customer-icon' ref={customerImgRef}>
+            <img src={customerCenter} alt="고객센터 이미지" />
+          </div>
+        </div>
+      </MainCustomerContainer>
+
+      <MainUseStartContainer>
+        <div className='main-useStart-wrap'>
+          <p ref={useStartTextRef}>그럼 <span>Superbox</span> 한 번 사용해 볼까요?</p>
+          <div className='useStart-btn-wrap' ref={useStartBtnRef}>
+            <Link to={'/reception'} className='useStart-btn' onClick={connectReceptionPage}>
+              <button className='start-btn'>
+                {/* <RiUserReceivedFill className='btn-icon' /> */}
+                <img className='btn-icon' src={receptionIcon} alt="" />
+              </button>
+              <span>배송접수<MdDoubleArrow /></span>
+            </Link>
+            <Link to={'/review'} className='useStart-btn'>
+              <button className='start-btn'>
+                {/* <BsPencilSquare className='btn-icon'/> */}
+                <img className='btn-icon' src={reviewIcon} alt="" />
+              </button>
+              <span>고객후기<MdDoubleArrow /></span>
+            </Link>
+            <Link to={'/customer/inquiry'} className='useStart-btn'>
+              <button className='start-btn'>
+                {/* <HiOutlineChatAlt2 className='btn-icon' /> */}
+                <img className='btn-icon' src={inquirynIcon} alt="" />
+              </button>
+              <span>1:1 문의<MdDoubleArrow /></span>
+            </Link>
+          </div>
+        </div>
+      </MainUseStartContainer>
+    </div>
+  );
+});
+
+export default MainPage;
+
 
 /** 메인페이지 로고 섹션 스타일 */
 const MainLogoContainer = styled.div`
@@ -292,130 +427,3 @@ const MainUseStartContainer = styled.div`
     }
   }
 `;
-
-const MainPage = memo(({ loginPageState }) => {
-
-  /** Store를 통해 상태값 호출 */
-  const { loading, isLogin } = useSelector(state => state.user);
-
-  /** 사용할 useRef 호출 */
-  const logoRef = useRef();
-  const receptionTextRef = useRef();
-  const receptionImgRef = useRef();
-  const reviewImgRef = useRef();
-  const reviewTextRef = useRef();
-  const customerTextRef = useRef();
-  const customerImgRef = useRef();
-  const useStartTextRef = useRef();
-  const useStartBtnRef = useRef();
-
-  /** 스크롤 이벤트 함수 호출 */
-  useEffect(() => {
-    ScrollEvent(logoRef, receptionTextRef, receptionImgRef, reviewImgRef, reviewTextRef, customerTextRef, customerImgRef, useStartTextRef, useStartBtnRef);
-  }, []);
-
-  // 로그인 상태가 false면 배송접수 버튼 차단
-  const connectReceptionPage = useCallback(e => {
-    e.preventDefault();
-    
-    if(!isLogin) {
-      Swal.fire({
-        icon: 'warning',
-        iconColor: '#f3b017',
-        text:'로그인 후 이용해주세요.',
-        confirmButtonText: '확인',
-        confirmButtonColor: '#f3b017',
-      }).then(() => {
-        loginPageState(true);
-      });
-    }
-  }, [isLogin, loginPageState])
-
-  return (
-    <div>
-      <Meta title={'SuperBox :: 메인페이지'} />
-
-      <MainLogoContainer>
-        <div className='main-logo-wrap' ref={logoRef}>
-          <img className='logo' src={logo} alt="superbox-logo" />
-          <h2>SuperBox</h2>
-          <p>누구나 한번 쯤은 택배 상자를 받고 설레는 기분을 느꼈을거예요.</p>
-          <p>그 기분, <span>SuperBox</span>를 통해 더 오래, 더 많이 느껴보세요.</p>
-          {/* <div className='delivery-character'>
-            <img src={delivery} alt="delivery 이미지" />
-          </div> */}
-        </div>
-      </MainLogoContainer>
-
-      <MainReceptionContainer>
-        <div className='main-reception-wrap'>
-          <div className='reception-text' ref={receptionTextRef}>
-            <p>언제 어디서든<br />쉽고, 간편하게</p>
-            <p>저희에게 설렘을 접수하세요.</p>
-            <p>전국 어디든 원하시는 분에게 전달해 드립니다.</p>
-          </div>
-          <div className='reception-img' ref={receptionImgRef}>
-            <img src={reception} alt="reception-img" />
-          </div>
-        </div>
-      </MainReceptionContainer>
-
-      <MainReviewContainer>
-        <div className='main-review-wrap'>
-          <div className='review-icon-wrap' ref={reviewImgRef}>
-            <img src={review} alt="고객후기 이미지" />
-          </div>
-          <div className='review-text' ref={reviewTextRef}>
-            <h3>고객후기</h3>
-            <p>저희 서비스를 이용하시고 생생한 후기를 공유 해주세요!</p>
-            <p>후기를 통해 여러분들에게 한 발자국 더 다가서겠습니다.</p>
-          </div>
-        </div>
-      </MainReviewContainer>
-
-      <MainCustomerContainer>
-        <div className='main-customer-wrap'>
-          <div className='customer-text' ref={customerTextRef}>
-            <h3>고객센터</h3>
-            <p>궁금한게 있으면 언제든지 물어보세요.</p>
-            <p>자주 찾는 질문과 1:1 문의는<br />여러분들을 위해 항상 열려있습니다.</p>
-          </div>
-          <div className='customer-icon' ref={customerImgRef}>
-            <img src={customerCenter} alt="고객센터 이미지" />
-          </div>
-        </div>
-      </MainCustomerContainer>
-
-      <MainUseStartContainer>
-        <div className='main-useStart-wrap'>
-          <p ref={useStartTextRef}>그럼 <span>Superbox</span> 한 번 사용해 볼까요?</p>
-          <div className='useStart-btn-wrap' ref={useStartBtnRef}>
-            <Link to={'/reception'} className='useStart-btn' onClick={connectReceptionPage}>
-              <button className='start-btn'>
-                {/* <RiUserReceivedFill className='btn-icon' /> */}
-                <img className='btn-icon' src={receptionIcon} alt="" />
-              </button>
-              <span>배송접수<MdDoubleArrow /></span>
-            </Link>
-            <Link to={'/review'} className='useStart-btn'>
-              <button className='start-btn'>
-                {/* <BsPencilSquare className='btn-icon'/> */}
-                <img className='btn-icon' src={reviewIcon} alt="" />
-              </button>
-              <span>고객후기<MdDoubleArrow /></span>
-            </Link>
-            <Link to={'/customer/inquiry'} className='useStart-btn'>
-              <button className='start-btn'>
-                {/* <HiOutlineChatAlt2 className='btn-icon' /> */}
-                <img className='btn-icon' src={inquirynIcon} alt="" />
-              </button>
-              <span>1:1 문의<MdDoubleArrow /></span>
-            </Link>
-          </div>
-        </div>
-      </MainUseStartContainer>
-    </div>
-  );
-});
-
-export default MainPage;

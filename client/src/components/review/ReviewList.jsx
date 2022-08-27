@@ -10,13 +10,17 @@ import { getReviewList } from '../../slices/ReviewSlice';
 // 컴포넌트 참조
 import Spinner from '../Spinner';
 
+import { setTime, nameMasking } from '../../utils/Utils';
+
 // FaUserCircle 1회용 아이콘 -> 나중에 수정
 import { FaUserCircle, FaRegEye } from 'react-icons/fa';
 import { BiLike } from 'react-icons/bi';
 import { MdOutlineComment } from 'react-icons/md';
 
 
-/** Review List */
+/** 
+ * 후기 List 
+ */
 const ReviewList = memo(() => {
 
   /** 페이지 강제 이동을처리하기 위한 naviagte함수 생성 */
@@ -29,15 +33,6 @@ const ReviewList = memo(() => {
   useEffect(() => {
     dispatch(getReviewList());
   }, [dispatch]);
-
-  /** 후기 수정 시간 업데이트 */
-  const setTime = (a, b) => {
-    if(a !== b) {
-      return new Date(b).toLocaleString() + ' 수정됨';
-    } else {
-      return new Date(a).toLocaleString();
-    }
-  };
 
   return (
     <>
@@ -59,7 +54,10 @@ const ReviewList = memo(() => {
                 </p>
               </div>
               <div className='review-list-tail'>
-                <p><FaUserCircle className='user-icon' />{v.name && v.name.substring(0,1)}****</p>
+                <p><FaUserCircle className='user-icon' />
+                  {/* {v.name && v.name.substr(0,1)}*{v.name && v.name.substring(2,4)} */}
+                  {v.name && nameMasking(v.name)}
+                </p>
 
                 <div className='review-list-tail-info'>
                   <span><BiLike className='icon' />{v.like_count}</span>

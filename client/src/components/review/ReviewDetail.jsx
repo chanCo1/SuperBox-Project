@@ -18,6 +18,9 @@ import PageTitle from '../PageTitle';
 import MoreBtn from '../MoreBtn';
 import Meta from '../../Meta';
 import Like from '../Like';
+import CommentWrite from '../comment/CommentWrite';
+
+import { setTime, nameMasking } from '../../utils/Utils';
 
 // 1회용 아이콘 -> 나중에 수정
 import { FaUserCircle, FaRegEye } from 'react-icons/fa';
@@ -28,6 +31,9 @@ import { MdOutlineComment } from 'react-icons/md';
 import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
+/** 
+ * 후기 상세보기 
+ */
 const ReviewDetail = memo(() => {
 
   /** 페이지 강제 이동을처리하기 위한 naviagte함수 생성 */
@@ -36,6 +42,7 @@ const ReviewDetail = memo(() => {
   /** 파라미터 값을 가져오기 위한 params 함수 생성 */
   const params = useParams();
 
+  /** 리덕스 값 가져오기 */
   const dispatch = useDispatch();
   const { memberData, isLogin } = useSelector(state => state.user);
 
@@ -79,15 +86,6 @@ const ReviewDetail = memo(() => {
 
   }, [params]);
 
-  /** 후기 수정 시간 업데이트 */
-  const setTime = (a, b) => {
-    if(a !== b) {
-      return new Date(b).toLocaleString() + ' 수정됨';
-    } else {
-      return new Date(a).toLocaleString();
-    }
-  };
-
   return (
     <>
       <Spinner visible={isLoading} />
@@ -105,7 +103,10 @@ const ReviewDetail = memo(() => {
                   <FaUserCircle className='user-icon' />
                   <div className='review-detail-head'>
                     <p>{v.head}</p>
-                    <p>{v.name && v.name.substring(0,1)}****</p>
+                    <p>
+                      {/* {v.name && v.name.substr(0,1)}**{v.name && v.name.substr(-1)} */}
+                      {v.name && nameMasking(v.name)}
+                    </p>
                   </div>
                 </div>
                 {/* <span><FaRegEye className='icon' />{v.view_count}</span> */}
@@ -134,6 +135,8 @@ const ReviewDetail = memo(() => {
           ))
         }
         <Like reviewNo={params && params.review_no} userNo={memberData && memberData.user_no} />
+
+        <CommentWrite reviewNo={params.review_no} />
 
       </ReviewDetailContainer>
     </>

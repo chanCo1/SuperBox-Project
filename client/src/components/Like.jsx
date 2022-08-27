@@ -22,10 +22,8 @@ const Like = memo(({ userNo, reviewNo }) => {
   const [userInfo, setUserInfo] = useState({});
   //좋아요 상태값
   const [likeState, setLikeState] = useState(null);
-  console.log('like >>>', likeState)
   //싫어요 상태값
   const [hateState, setHateState] = useState(null);
-  console.log('hate >>>', hateState)
 
   
   // 화면 마운트시 ReviewDetail.jsx로 부터 받은 정보 저장
@@ -42,7 +40,6 @@ const Like = memo(({ userNo, reviewNo }) => {
         const likeResponse = await axios.get('/api/like/getlike', {
           params: { user_no: userNo, review_no: reviewNo }
         });
-        console.log(likeResponse);
 
         // 백엔드로부터 받은 값을 map 함수를 사용하여 비교
         // -> 같다면 'like'
@@ -54,7 +51,6 @@ const Like = memo(({ userNo, reviewNo }) => {
         const hateResponse = await axios.get('/api/like/gethate', {
           params: { user_no: userNo, review_no: reviewNo }
         });
-        console.log(hateResponse);
 
         // 백엔드로부터 받은 값을 map 함수를 사용하여 비교
         // -> 같다면 'hate'

@@ -20,6 +20,8 @@ const GlobalStyles = createGlobalStyle`
 
   input, select, textarea { outline: none; }
 
+  textarea { resize: none; }
+
   li, ul, li { list-style: none; }
 `;
 

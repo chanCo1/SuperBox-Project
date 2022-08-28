@@ -21,9 +21,11 @@ import { MdMoreVert } from 'react-icons/md';
 import { HiOutlinePencilAlt, HiOutlineTrash } from 'react-icons/hi';
 
 /** 
- * 후기 더보기 버튼
+ * @description 후기글 더보기 버튼
+ * @param reviewNo 머물러 있는 후기 페이지 번호 / ReviewDetail.jsx
+ * @param commentCount 머물러 있는 후기 페이지의 댓글 수 / ReviewDetail.jsx
  */
-const ReviewMoreBtn = memo(({ reviewNo }) => {
+const ReviewMoreBtn = memo(({ reviewNo, commentCount }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,22 +46,32 @@ const ReviewMoreBtn = memo(({ reviewNo }) => {
   const onDeleteClick = useCallback(e => {
     e.preventDefault();
 
-    Swal.fire({
-      icon: 'question',
-      iconColor: '#f3b017',
-      text: '정말 삭제할까요?',
-      showCancelButton: true,
-      confirmButtonText: '네!',
-      confirmButtonColor: '#f3b017',
-      cancelButtonText: '아니요',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deleteReview(reviewNo));
-        navigate('/review');
-      }
-    });
+    commentCount > 0 ? (
+      Swal.fire({
+        icon: 'error',
+        iconColor: '#f3b017',
+        text: '댓글이 있으면 삭제할 수 없습니다.',
+        confirmButtonText: '확인',
+        confirmButtonColor: '#f3b017',
+      })
+    ) : (
+      Swal.fire({
+        icon: 'question',
+        iconColor: '#f3b017',
+        text: '후기를 삭제할까요?',
+        showCancelButton: true,
+        confirmButtonText: '네!',
+        confirmButtonColor: '#f3b017',
+        cancelButtonText: '아니요',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          dispatch(deleteReview(reviewNo));
+          navigate('/review');
+        }
+      })
+    );
   
-  }, [dispatch, reviewNo, navigate]);
+  }, [dispatch, reviewNo, navigate, commentCount]);
 
   return (
     <MoreBtnContainer>

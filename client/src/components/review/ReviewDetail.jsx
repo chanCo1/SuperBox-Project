@@ -45,6 +45,7 @@ const ReviewDetail = memo(() => {
 
   // 백엔드로 부터 받은 데이터 상태값 관리
   const [reviewDetail, setReviewDetail] = useState()
+  console.log(reviewDetail);
 
   // 글 작성한 유저 번호 저장
   const [userNo, setUserNo] = useState();
@@ -117,7 +118,7 @@ const ReviewDetail = memo(() => {
                 {memberData &&
                   isLogin &&
                   memberData.user_no === userNo &&
-                  <ReviewMoreBtn reviewNo={v.review_no} /> 
+                  <ReviewMoreBtn reviewNo={v.review_no} commentCount={v.comment_count} /> 
                 }
               </div>
 

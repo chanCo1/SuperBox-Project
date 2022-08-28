@@ -12,6 +12,9 @@ import { BiPencil } from 'react-icons/bi';
 // 리덕스
 import { useDispatch, useSelector } from 'react-redux';
 
+/**
+ * 후기 페이지
+ */
 const ReviewPage = memo(() => {
   const { isLogin } = useSelector((state) => state.user);
 
@@ -46,14 +49,17 @@ const ReviewPage = memo(() => {
 
 export default ReviewPage;
 
+/** 후기 페이지 스타일 */
 const ReviewPageContainer = styled.div`
   width: 1200px;
   margin: 0 auto 80px;
 
   .review-nav {
     display: flex;
+    width: 1100px;
     justify-content: space-between;
     align-items: center;
+    margin: 0 auto;
 
     .review-sort {
       display: flex;

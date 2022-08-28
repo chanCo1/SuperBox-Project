@@ -88,6 +88,9 @@ const CommentWrite = memo(({ reviewNo }) => {
 
   return (
     <>
+      <div style={{marginTop: '40px', fontSize: '1.2rem'}}>
+        <p>댓글쓰기</p>
+      </div>
       <CommentWriteContainer>
         {isLogin ? (
           <form className='comment-wrap' onSubmit={onSubmit}>
@@ -133,7 +136,7 @@ export default CommentWrite;
 const CommentWriteContainer = styled.div`
   position: relative;
   width: 100%;
-  margin: 40px 0;
+  margin: 20px 0 40px;
   padding: 30px;
   border: 1px solid #bcbcbc;
   border-radius: 10px;

@@ -19,11 +19,11 @@ import { FaUserCircle } from 'react-icons/fa';
 
 /** 
  * @description 댓글 수정 
- * @param setEditState 수정 취소 버튼 클릭 시 false 값을 부모 컴포넌트에 보낸다 / commentList.jsx
+ * @param setEditState 모달 상태값, 수정 취소 또는 댓글 수정 버튼 클릭 시 false 값을 부모 컴포넌트에 보낸다 / commentList.jsx
  * @param comment 댓글 기본 값 /commentList.jsx
  * @param commentNo 부모 컴포넌트로 부터 받은 댓글 번호 / commentList.jsx
- * @param setCommentList 댓글 수정값을 부모 컴포넌트로 보낸다.  / commentList.jsx
- * @param reviewNo 댓글을 조회하기 위한 페이지 번호
+ * @param setCommentList 댓글 수정값을 부모 컴포넌트로 보낸다. / commentList.jsx
+ * @param reviewNo 댓글을 조회하기 위한 페이지 번호 / commentList.jsx
  */
 const CommentEdit = memo(({ setEditState, comment, commentNo, setCommentList, reviewNo }) => {
 
@@ -54,10 +54,13 @@ const CommentEdit = memo(({ setEditState, comment, commentNo, setCommentList, re
 
       (async () => {
         try {
-          const response = await axios.put('/api/comment/put', editComment);
+          const response = await axios.put('/api/comment/putComment', editComment);
 
+          // 댓글 수정 창 닫기
           setEditState(false);
+          // 부모 컴포넌트에게 수정된 댓글 리스트 전달
           setCommentList(response.data.item);
+
         } catch(err) {
           console.log(err);
         }
@@ -80,7 +83,7 @@ const CommentEdit = memo(({ setEditState, comment, commentNo, setCommentList, re
     } finally {
       setIsloading(false);
     }
-  }, [editComment, setCommentList]);
+  }, [editComment, setCommentList, setEditState]);
 
   /** 수정된 댓글 입력 */
   const onEditCommentChange = useCallback(e => {

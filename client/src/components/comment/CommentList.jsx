@@ -81,6 +81,8 @@ const CommentList = memo(({ getComment, reviewNo }) => {
                     setEditState={setEditState} 
                     setEditCommentNo={setEditCommentNo}
                     commentNo={v.comment_no}
+                    reviewNo={reviewNo}
+                    setCommentList={setCommentList}
                   /> 
                 }
               </div>

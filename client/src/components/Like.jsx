@@ -10,8 +10,9 @@ import { RiThumbUpFill, RiThumbDownFill, RiThumbUpLine, RiThumbDownLine } from '
 
 /** 
  * 좋아요 구현
- * @props userNo 유저번호/ReviewDetail.jsx
- * @props reviewNo 게시물번호/ReviewDetail.jsx
+ * @param userNo 유저번호/ReviewDetail.jsx
+ * @param reviewNo 게시물번호/ReviewDetail.jsx
+ * @param children <Like> 태그 사이 텍스트
  */
 const Like = memo(({ userNo, reviewNo, children }) => {
 

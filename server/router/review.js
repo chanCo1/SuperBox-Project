@@ -119,18 +119,34 @@ router.post('/post', async (req, res) => {
  * 후기 수정 (put)
  */
 router.put('/put', async (req, res) => {
-  console.log('수정된 들어온 값 >>>', req.body);
+  console.log('수정된 후기 들어온 값 >>>', req.body);
 
   const { review_no, head, title, content } = req.body;
 
-  const sql = 'UPDATE review SET head=?, title=?, content=?, update_regdate=now() WHERE review_no =?';
+  let sql = 'UPDATE review SET head=?, title=?, content=?, update_regdate=now() WHERE review_no =?';
   const param = [head, title, content, review_no];
 
   let result = null;
 
   try {
-    result = await mysqlPool(sql, param);
-    res.status(200).json({ success: true, item: result });
+    const { insertId, affectedRows } = await mysqlPool(sql, param);
+
+    if (affectedRows === 0) {
+      throw new RuntimeException('데이터 수정에 실패하였습니다.');
+    }
+
+    // 저장된 데이터를 다시 조회한다.
+    sql = 'SELECT * FROM review WHERE review_no = ?';
+    [result] = await mysqlPool(sql, review_no);
+    console.log('저장된 데이터 반환 >>> ', result);
+
+    // 저장된 데이터 반환
+    res.status(200).json({
+      success: true,
+      message: '후기 저장 성공',
+      item: result
+    });
+
   } catch(err) {
     res.status(400).json({ success: false });
   };

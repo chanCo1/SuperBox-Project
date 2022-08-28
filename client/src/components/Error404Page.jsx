@@ -14,13 +14,8 @@ const ErrorContainer = styled.div`
   height: 100vh;
   z-index: 9;
 
-  h1 {
-    font-size: 60px;
-  }
-
-  p {
-    font-size: 20px;
-  }
+  h1 { font-size: 60px; }
+  p { font-size: 20px;}
 `;
 
 const ErrorPage = memo((error) => {

@@ -7,6 +7,16 @@ import React, { memo, useEffect, useState } from 'react';
 import axios from '../../config/axios';
 import styled from 'styled-components';
 
+// 컴포넌트 참조
+import Like from '../Like';
+import ReviewMoreBtn from '../review/ReviewMoreBtn';
+
+import { setTime, nameMasking } from '../../utils/Utils';
+
+// FaUserCircle 1회용 아이콘 -> 나중에 수정
+import { FaUserCircle } from 'react-icons/fa';
+
+
 /**
  * 댓글 호출
  */
@@ -38,13 +48,25 @@ const CommentList = memo(({ getComment, reviewNo }) => {
     <>
       {commentList ? (
         commentList.map((v,i) => (
-          <div key={v.comment_no}>
-
-            <div>{v.name}</div>
-            <div>{v.comment}</div>
-            <div>{v.regdate}</div>
-
-          </div>
+          <CommentListContainer key={v.comment_no}>
+            <div className='comment-wrap'>
+              <div className='comment-user-wrap'>
+                <div className='user-info-wrap'>
+                  <FaUserCircle className='user-icon' />
+                  <div className='user-info'>
+                    <p className='comment-name'>
+                      {v.name && nameMasking(v.name)}
+                    </p>
+                    <p className='comment-date'>
+                      {v.regdate && setTime(v.regdate, v.update_regdate)}
+                    </p>
+                  </div>
+                </div>
+                <ReviewMoreBtn reviewNo={v.review_no} /> 
+              </div>
+              <p className='comment-content'>{v.comment}</p>
+            </div>
+          </CommentListContainer>
         ))
       ) : (
         <div style={{ textAlign: 'center', padding: '20px' }}>
@@ -56,3 +78,43 @@ const CommentList = memo(({ getComment, reviewNo }) => {
 });
 
 export default CommentList;
+
+const CommentListContainer = styled.div`
+  position: relative;
+  margin: 30px 0;
+  border-bottom: 1px solid #bcbcbc;
+
+  .comment-wrap {
+    
+    .comment-user-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .user-info-wrap {
+        display: flex;
+
+        .user-icon {
+          font-size: 2.5rem;
+          color: #bcbcbc;
+          margin-right: 10px;
+        }
+  
+        .user-info {
+          .comment-date {
+            font-size: .8rem;
+            color: #bcbcbc;
+          }
+        }
+      }
+    }
+
+    .comment-content {
+      font-size: 1rem;
+      padding: 20px 0 30px;
+      /* 새로 알게된 부분 pre-wrap */
+      word-break: break-all;
+      white-space: pre-wrap;
+    }
+  }
+`;

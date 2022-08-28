@@ -6,20 +6,19 @@ import Swal from 'sweetalert2';
 
 // 리덕스 참조
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteReview } from '../slices/ReviewSlice';
+import { deleteReview } from '../../slices/ReviewSlice';
 
-import useOnClickOutSide from '../hooks/useOnClickOutSide';
+import useOnClickOutSide from '../../hooks/useOnClickOutSide';
 
 // 아이콘 참조
 import { MdMoreVert } from 'react-icons/md';
 import { HiOutlinePencilAlt, HiOutlineTrash } from 'react-icons/hi';
 
-const MoreBtn = memo(({ reviewNo }) => {
+const ReviewMoreBtn = memo(({ reviewNo }) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  
   // 더보기 버튼 상태값
   const [button, setButton] = useState(false);
   
@@ -73,7 +72,7 @@ const MoreBtn = memo(({ reviewNo }) => {
   );
 });
 
-export default MoreBtn;
+export default ReviewMoreBtn;
 
 const MoreBtnContainer = styled.div`
   position: relative;

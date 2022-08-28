@@ -89,20 +89,38 @@ const CommentWrite = memo(({ reviewNo }) => {
   return (
     <>
       <CommentWriteContainer>
-        <form className='comment-wrap' onSubmit={onSubmit}>
-          <div className='comment-input'>
-            <FaUserCircle className='icon' />
-            <textarea 
-              type="text" 
-              name="comment" 
-              placeholder="댓글을 입력해주세요"
-              value={comment.comment}
-              onChange={onChange} />
+        {isLogin ? (
+          <form className='comment-wrap' onSubmit={onSubmit}>
+            <div className='comment-input'>
+              <FaUserCircle className='icon' />
+              <textarea 
+                type="text" 
+                name="comment" 
+                placeholder="댓글을 입력해주세요"
+                value={comment.comment}
+                onChange={onChange}
+              />
+            </div>
+            <div className='comment-btn'>
+              <button className='comment-btn-active' type='submit'>댓글쓰기</button>
+            </div>
+          </form>
+        ) : (
+          <div className='comment-wrap'>
+            <div className='comment-input'>
+              <FaUserCircle className='icon' />
+              <textarea
+                type="text" 
+                placeholder="로그인 하시면 댓글을 쓸 수 있어요!"
+                disabled
+              />
+            </div>
+            <div className='comment-btn'>
+              <button className='comment-btn-disabled' type='submit' disabled>댓글쓰기</button>
+            </div>
           </div>
-          <div className='comment-btn'>
-            <button type='submit'>댓글쓰기</button>
-          </div>
-        </form>
+        )}
+        
       </CommentWriteContainer>
 
       <CommentList getComment={getComment} reviewNo={reviewNo} />
@@ -137,11 +155,12 @@ const CommentWriteContainer = styled.div`
       
       textarea {
         width: 100%;
-        min-height: 80px;
+        min-height: 100px;
         border-radius: 10px;
         border: 1px solid #bcbcbc;
         padding: 10px;
         color: #404040;
+        background-color: #fff;
 
         &::-webkit-input-placeholder { color: #bcbcbc; }
         &:focus { box-shadow: 0 0 5px #2a376888; }
@@ -151,7 +170,7 @@ const CommentWriteContainer = styled.div`
     .comment-btn {
       text-align: end;
 
-      button {
+      .comment-btn-active {
         border: 1px solid #f3b017;
         background-color: #fff;
         color: #f3b017;
@@ -165,6 +184,15 @@ const CommentWriteContainer = styled.div`
           background-color: #f3b017;
           color: #fff;
         }
+      }
+
+      .comment-btn-disabled {
+        border: 1px solid #bcbcbc;
+        background-color: #fff;
+        color: #bcbcbc;
+        padding: 5px 20px;
+        font-size: 1rem;
+        border-radius: 10px;
       }
     }
   }

@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // 컴포넌트 참조
 import Spinner from '../Spinner';
 import PageTitle from '../PageTitle';
-import MoreBtn from '../MoreBtn';
+import ReviewMoreBtn from './ReviewMoreBtn';
 import Meta from '../../Meta';
 import Like from '../Like';
 import CommentWrite from '../comment/CommentWrite';
@@ -36,9 +36,6 @@ import '@toast-ui/editor/dist/toastui-editor-viewer.css';
  */
 const ReviewDetail = memo(() => {
 
-  /** 페이지 강제 이동을처리하기 위한 naviagte함수 생성 */
-  const navigate = useNavigate();
-
   /** 파라미터 값을 가져오기 위한 params 함수 생성 */
   const params = useParams();
 
@@ -49,9 +46,10 @@ const ReviewDetail = memo(() => {
   // 백엔드로 부터 받은 데이터 상태값 관리
   const [reviewDetail, setReviewDetail] = useState()
 
-  // 글 작성 user_no 추출
+  // 글 작성한 유저 번호 저장
   const [userNo, setUserNo] = useState();
-
+  
+  // 글 작성 user_no 추출
   useEffect(() => {
     for(const i in reviewDetail) {
       setUserNo(reviewDetail[i].user_no);
@@ -92,7 +90,7 @@ const ReviewDetail = memo(() => {
       <Meta title={'SuperBox :: 고객후기'} />
       <PageTitle
         title={'고객후기'}
-        subtitle={'고객님들의 후기를 만나보세요!'}
+        subtitle={'고객님의 후기를 만나보세요!'}
       />
       <ReviewDetailContainer>
         {reviewDetail &&
@@ -103,25 +101,23 @@ const ReviewDetail = memo(() => {
                   <FaUserCircle className='user-icon' />
                   <div className='review-detail-head'>
                     <p>{v.head}</p>
-                    <p>
-                      {/* {v.name && v.name.substr(0,1)}**{v.name && v.name.substr(-1)} */}
-                      {v.name && nameMasking(v.name)}
-                    </p>
+                    <p>{v.name && nameMasking(v.name)}</p>
                   </div>
                 </div>
-                {/* <span><FaRegEye className='icon' />{v.view_count}</span> */}
+
                 <div className='review-detail-info'>
                   <span><BiLike className='icon' />{v.like_count}</span>
                   <span><MdOutlineComment className='icon' />{v.comment_count}</span>
                   <span><FaRegEye className='icon' />{v.view_count}</span>
                 </div>
-                
               </div>
 
               <div className='review-detail-title-wrap'>
                 <h2 className='review-detail-title'>{v.title}</h2>
-                {memberData && isLogin && memberData.user_no === userNo && 
-                  <MoreBtn reviewNo={v.review_no} /> 
+                {memberData &&
+                  isLogin &&
+                  memberData.user_no === userNo &&
+                  <ReviewMoreBtn reviewNo={v.review_no} /> 
                 }
               </div>
 
@@ -130,11 +126,15 @@ const ReviewDetail = memo(() => {
               </p>
 
               <Viewer initialValue={v.content} />
-
             </div>
           ))
         }
-        <Like reviewNo={params && params.review_no} userNo={memberData && memberData.user_no} />
+        <Like 
+          reviewNo={params && params.review_no} 
+          userNo={memberData && memberData.user_no}
+        >
+          괜찮은 후기인가요?
+        </Like>
 
         <CommentWrite reviewNo={params.review_no} />
 
@@ -145,7 +145,7 @@ const ReviewDetail = memo(() => {
 
 export default ReviewDetail;
 
-/** 스타일 */
+/** 후기 상세페이지 스타일 */
 const ReviewDetailContainer = styled.div`
   width: 1000px;
   margin: 0 auto;

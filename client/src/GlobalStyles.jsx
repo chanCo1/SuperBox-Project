@@ -16,7 +16,10 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
   }
 
-  a { text-decoration: none; }
+  a { 
+    text-decoration: none; 
+    color: #404040;
+  }
 
   input, select, textarea { outline: none; }
 

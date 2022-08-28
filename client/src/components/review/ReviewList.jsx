@@ -23,9 +23,6 @@ import { MdOutlineComment } from 'react-icons/md';
  */
 const ReviewList = memo(() => {
 
-  /** 페이지 강제 이동을처리하기 위한 naviagte함수 생성 */
-  const navigate = useNavigate();
-
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector(state => state.review);
 
@@ -108,18 +105,14 @@ const ReviewListContainer = styled.div`
       }
     }
 
-    a {
-      color: #404040;
-
-      .review-title {
-        font-size: 1.5rem;
-        font-weight: 500;
-        margin: 10px 0;
-        transition: .2s ease;
-        cursor: pointer;
+    .review-title {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin: 10px 0;
+      transition: .2s ease;
+      cursor: pointer;
   
-        &:hover { color: #999; }
-      }
+      &:hover { color: #999; }
     }
 
     .review-date {

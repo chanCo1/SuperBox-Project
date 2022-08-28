@@ -22,7 +22,7 @@ const PageTitleContainer = styled.div`
   color: #404040;
 
   h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 500;
   }
   

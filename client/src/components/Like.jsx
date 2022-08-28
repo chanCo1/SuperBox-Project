@@ -13,7 +13,7 @@ import { RiThumbUpFill, RiThumbDownFill, RiThumbUpLine, RiThumbDownLine } from '
  * @props userNo 유저번호/ReviewDetail.jsx
  * @props reviewNo 게시물번호/ReviewDetail.jsx
  */
-const Like = memo(({ userNo, reviewNo }) => {
+const Like = memo(({ userNo, reviewNo, children }) => {
 
   // 로그인 상태
   const { isLogin } = useSelector(state => state.user);
@@ -162,7 +162,7 @@ const Like = memo(({ userNo, reviewNo }) => {
 
   return (
     <LikeContainer>
-      <p>괜찮은 후기인가요?</p>
+      <p>{children}</p>
       <div className='like-area'>
         <div className='like' onClick={onLikeClick}>
           {likeState && likeState === 'like' ? <RiThumbUpFill /> : <RiThumbUpLine />}

@@ -1,9 +1,9 @@
-/**
- * 후기 작성 및 수정 페이지 스타일
- */
 
 import styled from "styled-components";
 
+/**
+ * 후기 작성 및 수정 페이지 스타일
+ */
 export const ReviewWriteContainer = styled.div`
   width: 1200px;
   margin: 0 auto;

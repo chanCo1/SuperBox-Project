@@ -18,7 +18,8 @@ import RegexHelper from '../../libs/RegexHelper';
 import { FaUserCircle } from 'react-icons/fa';
 
 /**
- * 댓글 쓰기
+ * @description 댓글 쓰기
+ * @param reviewNo 현재 머물러 있는 후기글 번호 / ReviewDetail.jsx
  */
 const CommentWrite = memo(({ reviewNo }) => {
 
@@ -28,9 +29,8 @@ const CommentWrite = memo(({ reviewNo }) => {
   // 댓글 입력 상태값
   const [comment, setComment] = useState({});
 
-  // 불러온 댓글
+  // CommentList.jsx 로 보낼 리스트 갱신값
   const [getComment, setGetComment] = useState([]);
-  console.log('리스트로 보낼 댓글 >>>', getComment);
 
   useEffect(() => {
     memberData && setTimeout(() => {

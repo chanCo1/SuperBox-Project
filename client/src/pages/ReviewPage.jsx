@@ -24,6 +24,12 @@ const ReviewPage = memo(() => {
       />
 
       <div className="review-nav">
+        <div className='review-sort'>
+          <p>최신순</p>
+          <p>인기순</p>
+          <p>댓글순</p>
+        </div>
+
         {isLogin && (
           <Link to={'/review/review_write'}>
             <button className="write-btn">
@@ -45,7 +51,17 @@ const ReviewPageContainer = styled.div`
   margin: 0 auto 80px;
 
   .review-nav {
-    text-align: end;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .review-sort {
+      display: flex;
+      
+      p {
+        margin-right: 20px;
+      }
+    }
 
     .write-btn {
       text-align: end;

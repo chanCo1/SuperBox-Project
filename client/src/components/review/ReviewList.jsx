@@ -25,6 +25,7 @@ const ReviewList = memo(() => {
 
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector(state => state.review);
+  console.log('후기list >>>', data);
 
   // 게시판 들어가면 리스트 호출
   useEffect(() => {

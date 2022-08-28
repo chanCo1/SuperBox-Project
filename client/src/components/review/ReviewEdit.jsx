@@ -29,7 +29,7 @@ const ReviewEdit = memo(() => {
   // 리덕스
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.review);
-  console.log('edit에서 DATA 호출 >>> ',data);
+  console.log('edit에서 data 호출 >>> ',data);
 
   const navigate = useNavigate();
 
@@ -76,7 +76,7 @@ const ReviewEdit = memo(() => {
   //   })
   // }, [uploadImg, setReviewOrigin]);
 
-  /** 글쓰기 버튼의 submit 이벤트 발생 시 */
+  /** 수정하기 버튼의 submit 이벤트 발생 시 */
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();

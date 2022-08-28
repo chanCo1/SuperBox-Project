@@ -1,9 +1,9 @@
-/**
- * 로그인 및 회원가입 페이지 스타일
- */
 
 import styled from "styled-components";
 
+/**
+ * 로그인 및 회원가입 페이지 스타일
+ */
 export const LoginPageContainer = styled.div`
   position: fixed;
   width: 100%;

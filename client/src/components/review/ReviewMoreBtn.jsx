@@ -1,19 +1,28 @@
+/**
+ * 후기 더보기 버튼
+ */
+
 /** 패키지 참조 */
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
+import useOnClickOutSide from '../../hooks/useOnClickOutSide';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import Swal from 'sweetalert2';
 
 // 리덕스 참조
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteReview } from '../../slices/ReviewSlice';
 
-import useOnClickOutSide from '../../hooks/useOnClickOutSide';
+
+// 컴포넌트 참조
+import { MoreBtnContainer } from '../../styles/MoreBtnStyle';
 
 // 아이콘 참조
 import { MdMoreVert } from 'react-icons/md';
 import { HiOutlinePencilAlt, HiOutlineTrash } from 'react-icons/hi';
 
+/** 
+ * 후기 더보기 버튼
+ */
 const ReviewMoreBtn = memo(({ reviewNo }) => {
 
   const dispatch = useDispatch();
@@ -73,43 +82,3 @@ const ReviewMoreBtn = memo(({ reviewNo }) => {
 });
 
 export default ReviewMoreBtn;
-
-const MoreBtnContainer = styled.div`
-  position: relative;
-  z-index: 9;
-
-  .more-btn {
-    font-size: 25px;
-    cursor: pointer;
-    transition: .2s ease;
-
-    &:active { transform: scale(.8, .8); }
-  }
-
-  .more-btn-active {
-    position: absolute;
-    display: flex;
-    width: 110px;
-    flex-direction: column;
-    top: 10%;
-    right: 100%;
-    padding: 15px;
-    border: 1px solid #f3b017;
-    border-radius: 10px;
-    color: #999;
-    background-color: #fff;
-    
-    .more-btn-menu {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      transition: .2s ease;
-
-      .icon { margin-right: 2px; }
-      &:hover { color: #404040; }
-    }
-
-    .more-btn-edit { margin-bottom: 5px; }
-    a { color: #999; }
-  }
-`;

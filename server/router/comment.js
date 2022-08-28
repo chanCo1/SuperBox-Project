@@ -82,7 +82,7 @@ router.post('/postComment', async (req, res) => {
 /**
  * 댓글 수정 (put)
  */
- router.put('/put', async (req, res) => {
+ router.put('/putComment', async (req, res) => {
   console.log('수정된 댓글 들어온 값 >>>', req.body);
 
   const { comment_no, comment, review_no } = req.body;
@@ -99,7 +99,7 @@ router.post('/postComment', async (req, res) => {
       throw new RuntimeException('데이터 수정에 실패하였습니다.');
     }
 
-    // 수정된 댓글을 다시 조회한다.
+    // 수정된 댓글을 조회한다.
     sql = 'SELECT * FROM comment WHERE review_no = ?';
     result = await mysqlPool(sql, review_no);
     console.log('수정된 댓글 반환 >>> ', result);
@@ -107,13 +107,57 @@ router.post('/postComment', async (req, res) => {
     // 수정된 데이터 반환
     res.status(200).json({
       success: true,
-      message: '후기 저장 성공',
-      item: result
+      message: '댓글 수정 성공',
+      item: result,
     });
 
   } catch(err) {
     res.status(400).json({ success: false });
   };
+});
+
+
+/**
+ * 댓글 삭제
+ */
+router.delete('/deleteComment', async (req, res) => {
+  console.log('삭제할 댓글 >>>', req.query);
+
+  const { comment_no, review_no } = req.query;
+
+  let sql = 'DELETE FROM comment WHERE comment_no = ?';
+
+  try {
+    const { insertId, affectedRows } = await mysqlPool(sql, comment_no);
+
+    if (affectedRows === 0) {
+      throw new RuntimeException('데이터 수정에 실패하였습니다.');
+    };
+
+    // 삭제 후 댓글 리스트를 조회한다.
+    sql = 'SELECT * FROM comment WHERE review_no = ?';
+    const result = await mysqlPool(sql, review_no);
+    console.log('삭제 후 댓글 리스트 반환 >>> ', result);
+
+    // 삭제 후 데이터 반환
+    res.status(200).json({
+      success: true,
+      message: '댓글 삭제 성공',
+      item: result,
+    });
+
+  } catch(err) {
+    res.status(400).json({ success: false, message: '데이터 삭제 실패', errMsg: err })
+  }
+
+  try {
+    sql = 'UPDATE review SET comment_count = comment_count - 1 WHERE review_no =?';
+
+    await mysqlPool(sql, review_no);
+    
+  } catch(err) {
+    res.status(400).json({ success: false, message: '데이터 업데이트 실패', errMsg: err })
+  }
 });
 
 export default router;

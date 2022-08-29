@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from 'react-redux';
 import { deleteReview } from '../../slices/ReviewSlice';
 
-
 // 컴포넌트 참조
 import { MoreBtnContainer } from '../../styles/MoreBtnStyle';
 
@@ -50,7 +49,7 @@ const ReviewMoreBtn = memo(({ reviewNo, commentCount }) => {
       Swal.fire({
         icon: 'error',
         iconColor: '#f3b017',
-        text: '댓글이 있으면 삭제할 수 없습니다.',
+        text: '댓글이 있는 글은 삭제할 수 없어요',
         confirmButtonText: '확인',
         confirmButtonColor: '#f3b017',
       })

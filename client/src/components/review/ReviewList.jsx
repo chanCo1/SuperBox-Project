@@ -19,9 +19,10 @@ import { MdOutlineComment } from 'react-icons/md';
 
 
 /** 
- * 후기 List 
+ * @description 후기 List
+ * @param sort 정렬을 위한 문자열 / ReviewPage.jsx
  */
-const ReviewList = memo(() => {
+const ReviewList = memo(({ sort }) => {
 
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector(state => state.review);
@@ -29,13 +30,15 @@ const ReviewList = memo(() => {
 
   // 게시판 들어가면 리스트 호출
   useEffect(() => {
-    dispatch(getReviewList());
-  }, [dispatch]);
+    dispatch(getReviewList({
+      sort: sort ? sort : 'review_no',
+    }));
+  }, [dispatch, sort]);
 
   return (
     <>
       <Spinner visible={loading} />
-      {data?.item.length > 0 ? (
+      {data && data?.item.length > 0 ? (
         data.item.map((v,i) => {
           return (
             <ReviewListContainer key={i}>

@@ -164,7 +164,8 @@ const MyPage = styled.div`
 `;
 
 /** 
- * 나타낼 값 시작
+ * @description 헤더 영역 정의
+ * @param loginPageState 현재 로그인 상태값 / app.jsx
  */
 const Header = memo(({ loginPageState }) => {
 

@@ -14,12 +14,13 @@ const useQueryString = (props) => {
   // 추출한 배열을 반복문으로 처리하여 JSON 객체로 변환함
   for(const [key, value] of entries) {
     result[key] = value;
+    console.log(key, value);
   }
 
   // 추출된 결과에서 props에 설정된 key가 없다면 props의 값으로 대체함
-  for(const p in props) {
-    if(!result.hasOwnProperty(p)) {
-      result[p] = props[p];
+  for(const i in props) {
+    if(!result.hasOwnProperty(i)) {
+      result[i] = props[i];
     }
   }
   

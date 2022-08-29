@@ -1,23 +1,24 @@
 /** 패키지 참조 */
 import React, { memo, useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 // 컴포넌트 참조
 import Meta from '../Meta';
 import PageTitle from '../components/PageTitle';
 import ReviewList from '../components/review/ReviewList';
+import Search from '../components/Search';
 import { BiPencil } from 'react-icons/bi';
 
 // 리덕스
 import { useDispatch, useSelector } from 'react-redux';
 
-import { AiOutlineSearch } from 'react-icons/ai';
-
 /**
  * 후기 페이지
  */
 const ReviewPage = memo(() => {
+
+  const navigate = useNavigate();
 
   /** 리덕스 로그인 상태 */
   const { isLogin } = useSelector((state) => state.user);
@@ -25,12 +26,17 @@ const ReviewPage = memo(() => {
   // 정렬 상태값 저장
   const [sort, setSort] = useState('review_no');
 
+  // 검색 키워드
+  const [keyword, setKeyword] = useState('');
+
   /** 정렬 클릭 */
   const onSortClick = useCallback(e => {
     e.preventDefault();
 
     setSort(e.target.dataset.sort);
-  }, []);
+
+    navigate(`/review?query=${keyword}&rows=10&page=1&sort=${e.target.dataset.sort}`);
+  }, [navigate, keyword]);
 
   return (
     <ReviewPageContainer>
@@ -61,22 +67,23 @@ const ReviewPage = memo(() => {
         </div>
 
         <div className='review-search-wrap'>
-          <div className='review-search'>
-            <input className='input-area' type="text" name='search' placeholder='후기 검색' />
-            <AiOutlineSearch />
-          </div>
+          <Search listSort={sort} setKeyword={setKeyword} />
 
-          {isLogin && (
+          {isLogin ? (
             <Link to={'/review/review_write'}>
               <button className="write-btn">
                 <BiPencil className="icon" />새 글 쓰기
               </button>
             </Link>
+          ) : (
+            <button className="write-btn-disabled" disabled>
+              <BiPencil className="icon" />새 글 쓰기
+            </button>
           )}
         </div>
       </div>
       
-      <ReviewList sort={sort} />
+      <ReviewList listSort={sort} />
 
     </ReviewPageContainer>
   );
@@ -119,27 +126,8 @@ const ReviewPageContainer = styled.div`
 
     .review-search-wrap {
       display: flex;
-      
-      .review-search {
-        border: 1px solid #bcbcbc;
-        border-radius: 10px;
-
-        &:focus-within { box-shadow: 0 0 5px #2a376888; }
-        
-        .input-area {
-          border: none;
-          border-radius: 10px;
-          padding: 8px 20px;
-          font-size: 1rem;
-          color: #404040;
-
-          &::-webkit-input-placeholder { color: #bcbcbc; }
-        }
-      }
   
       .write-btn {
-        text-align: end;
-        /* position: relative; */
         background-color: #fff;
         padding: 5px 20px;
         border: 1px solid #f3b017;
@@ -163,7 +151,23 @@ const ReviewPageContainer = styled.div`
           font-size: 1.2rem;
         }
       }
-    }
 
+      .write-btn-disabled {
+        background-color: #fff;
+        padding: 5px 20px;
+        border: 1px solid #bcbcbc;
+        border-radius: 5px;
+        color: #bcbcbc;
+        font-size: 1.1rem;
+        margin-left: 20px;
+
+        .icon {
+          position: relative;
+          margin-right: 5px;
+          top: 3px;
+          font-size: 1.2rem;
+        }
+      }
+    }
   }
 `;

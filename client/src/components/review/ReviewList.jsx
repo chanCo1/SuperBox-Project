@@ -2,6 +2,7 @@
 import React, { memo, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useQueryString } from '../../hooks/useQueryString';
 
 // 리덕스
 import { useSelector, useDispatch } from 'react-redux';
@@ -17,23 +18,33 @@ import { FaUserCircle, FaRegEye } from 'react-icons/fa';
 import { BiLike } from 'react-icons/bi';
 import { MdOutlineComment } from 'react-icons/md';
 
-
 /** 
  * @description 후기 List
  * @param sort 정렬을 위한 문자열 / ReviewPage.jsx
  */
-const ReviewList = memo(({ sort }) => {
+const ReviewList = memo(({ listSort }) => {
 
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector(state => state.review);
   console.log('후기list >>>', data);
 
+   /** QueryString 문자열 얻기 */
+   const { sort, query, rows, page } = useQueryString({
+    sort: listSort,
+    query: '',
+    rows: 10,
+    page: 1,
+  });
+
   // 게시판 들어가면 리스트 호출
   useEffect(() => {
     dispatch(getReviewList({
-      sort: sort ? sort : 'review_no',
+      query: query,
+      rows: rows,
+      page: page,
+      sort: sort,
     }));
-  }, [dispatch, sort]);
+  }, [dispatch, sort, page, query, rows]);
 
   return (
     <>
@@ -70,7 +81,7 @@ const ReviewList = memo(({ sort }) => {
           );
         })
       ) : (
-        <div style={{ textAlign: 'center', padding: '30px' }}>
+        <div style={{ textAlign: 'center', padding: '60px 0' }}>
           아직 후기가 없습니다! 후기를 공유해주세요! 🙂
         </div>
       )}

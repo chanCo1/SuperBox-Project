@@ -9,8 +9,13 @@ const router = express.Router();
 /**
  * 후기 전체 조회 (get)
  */
-router.get('/', async (req, res) => {
-  const sql = 'SELECT * FROM review ORDER BY review_no DESC';
+router.get('/getReview', async (req, res) => {
+  console.log('정렬 들어온값 ... >>', req.query)
+
+  const { sort } = req.query;
+
+  const param = [sort];
+  const sql = `SELECT * FROM review ORDER BY ${param} DESC, review_no DESC`;
 
   try {
     const result = await mysqlPool(sql);

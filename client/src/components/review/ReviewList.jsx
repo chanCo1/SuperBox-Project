@@ -107,7 +107,7 @@ const ReviewList = memo(({ listSort }) => {
           );
         })
       ) : (
-        <div style={{ textAlign: 'center', padding: '60px 0' }}>
+        <div style={{ textAlign: 'center', padding: '100px 0 60px' }}>
           아직 후기가 없습니다! 후기를 공유해주세요! 🙂
         </div>
       )}

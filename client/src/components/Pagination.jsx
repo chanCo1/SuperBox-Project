@@ -14,7 +14,6 @@ const Pagination = memo(({ rows, totalList, currentPage, setCurrentPage }) => {
   // const [pageNumber, setPageNumber] = useState([1]);
 
   const pageNumber = [];
-  console.log(pageNumber);
 
   // 전체길이를 한 페이지에 보여질 리스트 수로 나눈 값을 강제 반올림한다.
   for (let i = 1; i <= Math.ceil(totalList / rows); i++) {
@@ -30,7 +29,7 @@ const Pagination = memo(({ rows, totalList, currentPage, setCurrentPage }) => {
         &lt;
       </button>
 
-      <ul className="pagination-wrap">
+      <ul className="pagination-wrap"> 
         {pageNumber.map((number) => (
           <li
             key={number}
@@ -84,7 +83,7 @@ const PaginantionConrainer = styled.div`
       color: #404040;
       margin: 0 5px;
       padding: 5px 10px;
-      transition: 0.2s ease;
+      transition: 0.1s ease;
       cursor: pointer;
 
       &:hover {

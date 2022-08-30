@@ -1,5 +1,5 @@
 /** 패키지 참조 */
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -36,7 +36,7 @@ const ReviewPage = memo(() => {
     setSort(e.target.dataset.sort);
 
     navigate(`/review?query=${keyword}&rows=10&page=1&sort=${e.target.dataset.sort}`);
-  }, [navigate, keyword]);
+  }, [keyword, navigate]);
 
   return (
     <ReviewPageContainer>
@@ -47,22 +47,26 @@ const ReviewPage = memo(() => {
       />
 
       <div className="review-nav">
-        <div className='review-sort' onClick={onSortClick}>
+        <div className='review-sort'>
           <span
             className={sort === 'review_no' ? 'active' : ''}
-            data-sort={'review_no'}>최신순
+            data-sort={'review_no'}
+            onClick={onSortClick}>최신순
           </span>
           <span
             className={sort === 'like_count' ? 'active' : ''}
-            data-sort={'like_count'}>인기순
+            data-sort={'like_count'}
+            onClick={onSortClick}>인기순
           </span>
           <span
             className={sort === 'comment_count' ? 'active' : ''}
-            data-sort={'comment_count'}>댓글순
+            data-sort={'comment_count'}
+            onClick={onSortClick}>댓글순
           </span>
           <span
             className={sort === 'view_count' ? 'active' : ''}
-            data-sort={'view_count'}>조회순
+            data-sort={'view_count'}
+            onClick={onSortClick}>조회순
           </span>
         </div>
 

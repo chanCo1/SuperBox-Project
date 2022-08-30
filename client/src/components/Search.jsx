@@ -7,15 +7,15 @@ import { AiOutlineSearch } from 'react-icons/ai';
 
 /**
  * @description 후기 글 검색
- * @param listSort
- * @param setKeyword
+ * @param listSort 정렬 상태값 ex)review_no / ReviewPage.jsx
+ * @param setKeyword 부모컴포넌트에 보내기 위한 state / ReviewPage.jsx
  */
 const Search = memo(({ listSort, setKeyword }) => {
   // 페이지 강제 이동을처리하기 위한 naviagte함수 생성
   const navigate = useNavigate();
 
   // 검색어 상태값 저장
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   console.log(search);
 
   // 부모컴포넌트에 검색값을 보낸다.
@@ -27,9 +27,7 @@ const Search = memo(({ listSort, setKeyword }) => {
   const onSearchSubmit = useCallback(e => {
     e.preventDefault();
 
-    if(search !== "") {
-      navigate(`/review?query=${search}&rows=10&page=1&sort=${listSort}`);
-    }
+    navigate(`/review?query=${search}&rows=10&page=1&sort=${listSort}`);
 
   }, [search, navigate, listSort]);
 

@@ -17,9 +17,9 @@ const API_URL = 'http://localhost:3001/api/review/';
     result = await axios.get(`${API_URL}getReview`, {
       params: {
         query: payload?.query || '',
-        rows: payload?.rows || 10,
-        page: payload?.page || 1,
-        sort: payload?.sort !== undefined ? payload?.sort : 'review_no',
+        // rows: payload?.rows || 10,
+        // page: payload?.page || 1,
+        sort: payload?.sort || 'review_no',
       }
     });
     console.log(result);

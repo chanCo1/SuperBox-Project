@@ -19,7 +19,13 @@ import ReviewEdit from './components/review/ReviewEdit';
 import NoticePage from './pages/NoticePage';
 import FaqPage from './pages/FaqPage';
 import InquiryPage from './pages/InquiryPage';
+
 import MyPage from './pages/MyPage';
+import MypageReception from './components/mypage/MypageReception';
+import MypageReview from './components/mypage/MypageReview';
+import MypageInquiry from './components/mypage/MypageInquiry';
+import MypageInfomation from './components/mypage/MypageInfomation';
+
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './components/login/LoginPage';
 import Error404Page from './components/Error404Page';
@@ -74,7 +80,11 @@ const App = memo(() => {
         <Route path="/review/edit/:review_no" element={<ReviewEdit />} />
 
         {/* 마이페이지 */}
-        <Route path="/mypage/*" element={<MyPage />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage/reception" element={<MypageReception />} />
+        <Route path="/mypage/review" element={<MypageReview />} />
+        <Route path="/mypage/inquiry" element={<MypageInquiry />} />
+        <Route path="/mypage/information" element={<MypageInfomation />} />
 
         {/* 회원가입 */}
         <Route

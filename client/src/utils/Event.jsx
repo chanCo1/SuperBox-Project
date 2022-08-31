@@ -79,8 +79,10 @@ const ScrollEvent = (
   return scrollEvent;
 };
 
-/** 화살표 클릭시 위/아래 슬라이드 이벤트 */
-// 보이는거 숨기기 -> css 클래스 활용
+/** 
+ * 화살표 클릭시 위/아래 슬라이드 이벤트,
+ * 보이는거 숨기기 -> css 클래스 활용
+ */
 const SlideUpDown = (e, ref, arrow, setArrow) => {
   const refStyle = ref.current.style;
   const refArea = ref.current
@@ -100,9 +102,15 @@ const SlideUpDown = (e, ref, arrow, setArrow) => {
     // sendArea.opacity = 1;
   }
 };
-// 숨어있는거 보이기 (with arrow icon)
+
+/** 
+ * 화살표 클릭시 위/아래 슬라이드 이벤트,
+ * 숨어있는거 보이기 (with arrow icon)
+ */
 const ReverseSlideUpDown = (ref, arrow, setArrow, icon) => {
+  console.log(icon)
   const refStyle = ref.current.style;
+  console.log(refStyle);
   const refArea = ref.current
   const iconStyle = icon.current.style;
 

@@ -18,13 +18,13 @@ const setTime = (a, b) => {
 
   if(a !== b) {
     return new Date(b).toLocaleString().substring(0, 12) + 
-    (updateHour > 10 ? updateHour : `0${updateHour}`) + ':' +
-    (updateMinutes > 10 ? updateMinutes : `0${updateMinutes}`) + ' 수정됨';
+    (updateHour > 9 ? ` ${updateHour}` : ` 0${updateHour}`) + ':' +
+    (updateMinutes > 9 ? updateMinutes : `0${updateMinutes}`) + ' 수정됨';
 
   } else {
     return new Date(a).toLocaleString().substring(0, 12) + 
-    (originHour > 10 ? originHour : `0${originHour}`) + ':' +
-    (originMinutes > 10 ? originMinutes : `0${originMinutes}`);
+    (originHour > 9 ? ` ${originHour}` : ` 0${originHour}`) + ':' +
+    (originMinutes > 9 ? originMinutes : `0${originMinutes}`);
   }
 };
 

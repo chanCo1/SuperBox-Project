@@ -20,7 +20,7 @@ import { BiLike } from 'react-icons/bi';
 import { MdOutlineComment } from 'react-icons/md';
 
 /** 
- * @description 후기 List
+ * @description 고객후기 List
  * @param listSort 정렬을 위한 문자열 ex)review_no / ReviewPage.jsx
  */
 const ReviewList = memo(({ listSort }) => {
@@ -28,14 +28,12 @@ const ReviewList = memo(({ listSort }) => {
   // 리덕스
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector(state => state.review);
-  console.log('후기list >>>', data);
 
   /** 
    * pagination 
    */
   // 전체 리스트
   const [list, setList] = useState([]);
-  console.log('list >>>', list)
   // 현재 페이지
   const [currentPage, setCurrentPage] = useState(1);
   // 한 페이지에 보여질 리스트 수
@@ -50,7 +48,7 @@ const ReviewList = memo(({ listSort }) => {
 
   // 리덕스의 data 값이 바뀔 때 마다 list 상태값 변경
   useEffect(() => {
-    setList(data && data.item)
+    setList(data && data.item);
   }, [data]);
 
    /** QueryString 문자열 얻기 */

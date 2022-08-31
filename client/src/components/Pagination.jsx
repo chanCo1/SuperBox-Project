@@ -30,7 +30,7 @@ const Pagination = memo(({ rows, totalList, currentPage, setCurrentPage }) => {
       </button>
 
       <ul className="pagination-wrap"> 
-        {pageNumber.map((number) => (
+        {pageNumber?.map((number) => (
           <li
             key={number}
             onClick={() => setCurrentPage(number)}

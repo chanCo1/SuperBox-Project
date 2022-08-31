@@ -60,7 +60,7 @@ const CommentList = memo(({ getComment, reviewNo }) => {
   return (
     <>
       {commentList && commentList.length > 0 ? (
-        commentList.map((v,i) => (
+        commentList?.map((v,i) => (
           <CommentListContainer key={v.comment_no}>
             <div className='comment-wrap'>
               <div className='comment-user-wrap'>

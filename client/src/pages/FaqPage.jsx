@@ -42,6 +42,7 @@ const FaqPage = memo(() => {
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?
           </div>
         </div>
+        
         <div className='faq-wrap'>
           <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, arrowIconRef)}>
             <TbZoomQuestion className='question-icon' />
@@ -52,6 +53,7 @@ const FaqPage = memo(() => {
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus facere sequi rem, esse nulla exercitationem iure expedita quidem blanditiis qui molestiae excepturi ratione corporis deleniti dolores nisi saepe nostrum tenetur?
           </div>
         </div>
+
         <div className='faq-wrap'>
           <div className='faq-question' onClick={(e) => ReverseSlideUpDown(priceRef, priceArrow, setPriceArrow, priceIconRef)}>
             <TbZoomQuestion className='question-icon' />
@@ -108,9 +110,7 @@ const FaqPageContainer = styled.div`
       cursor: pointer;
       border-radius: 15px;
 
-      &:hover {
-        background-color: #f7f8fb;
-      }
+      &:hover { background-color: #f7f8fb; }
 
       .question-icon {
         color: #f3b017;
@@ -129,7 +129,6 @@ const FaqPageContainer = styled.div`
         opacity: .4;
         cursor: pointer;
         transition: .5s ease;
-
       }
       /* .arrow-active { transform: rotate(180deg); } */
     }

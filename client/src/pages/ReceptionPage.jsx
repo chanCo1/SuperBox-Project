@@ -28,6 +28,7 @@ import { SlideUpDown, ShowItem, HideItem } from '../utils/Event';
 
 import arrow_btn from '../assets/image/arrow_up.png';
 import { BsQuestionCircle } from 'react-icons/bs';
+import { get } from 'lodash';
 
 const ReceptionPage = memo(() => {
   /** 주소 검색 라이브러리 사용 */
@@ -64,7 +65,6 @@ const ReceptionPage = memo(() => {
     deliveryMessage: null,
     user_no: memberData?.user_no,
   });
-  console.log(reception);
 
   // 화살표 버튼 상태값
   const [sendArrow, setSendArrow] = useState(true);
@@ -245,10 +245,19 @@ const ReceptionPage = memo(() => {
   const tomorrow = () => {
     const date = new Date();
     const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const tomorrow = date.getDate() + 1;
+    let month = date.getMonth() + 1;
+    let tomorrow = date.getDate() + 1;
 
-    return `${year}-0${month}-${tomorrow}`;
+    // 해당 월의 마지막 날이면?
+    // -> month를 다음달로 변경, tomorrow는 다음달 1일로 변경
+    if(date.getDate(0) === date.getDate()) {
+      month = + date.getMonth() + 2;
+      tomorrow = date.getDate(0) - (date.getDate() -1);
+    }
+
+    // console.log(`${year}-` + (month > 10 ? month : `0${month}`) + (tomorrow > 10 ? tomorrow : `-0${tomorrow}`))
+
+    return `${year}-` + (month > 10 ? month : `0${month}`) + (tomorrow > 10 ? tomorrow : `-0${tomorrow}`);
   };
 
   return (
@@ -495,7 +504,8 @@ const ReceptionPage = memo(() => {
                   className="search-input search-input-middle"
                   type="date"
                   name="visitDate"
-                  min={tomorrow()}
+                  min={tomorrow() || ''}
+                  // min={'2022-08-31'}
                   onChange={onChange}
                 />
               </div>

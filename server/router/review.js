@@ -14,8 +14,14 @@ router.get('/getReview', async (req, res) => {
 
   const { query, sort } = req.query;
 
-  // const param = [sort];
-  const sql = `SELECT * FROM review WHERE title LIKE '%${query}%' ORDER BY ${sort} DESC, review_no DESC`;
+  const sql = `
+    SELECT * 
+    FROM review 
+    WHERE title 
+    LIKE '%${query}%' 
+    ORDER BY ${sort} DESC, review_no DESC
+  `;
+    // LIMIT 0, ${rows}
 
   try {
     const result = await mysqlPool(sql);

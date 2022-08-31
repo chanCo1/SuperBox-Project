@@ -25,11 +25,14 @@ import BoxSize from '../components/reception/BoxSize';
 
 import RegexHelper from '../libs/RegexHelper';
 import { SlideUpDown, ShowItem, HideItem } from '../utils/Event';
+import { tomorrow } from '../utils/Utils';
 
 import arrow_btn from '../assets/image/arrow_up.png';
 import { BsQuestionCircle } from 'react-icons/bs';
-import { get } from 'lodash';
 
+/**
+ * @description 배송접수 페이지
+ */
 const ReceptionPage = memo(() => {
   /** 주소 검색 라이브러리 사용 */
   const postcode = useDaumPostcodePopup();
@@ -240,25 +243,6 @@ const ReceptionPage = memo(() => {
     },
     [dispatch, reception, navigate]
   );
-
-  // 내일 날짜 구하는 함수 -> yyyy-mm-dd
-  const tomorrow = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let tomorrow = date.getDate() + 1;
-
-    // 해당 월의 마지막 날이면?
-    // -> month를 다음달로 변경, tomorrow는 다음달 1일로 변경
-    if(date.getDate(0) === date.getDate()) {
-      month = + date.getMonth() + 2;
-      tomorrow = date.getDate(0) - (date.getDate() -1);
-    }
-
-    // console.log(`${year}-` + (month > 10 ? month : `0${month}`) + (tomorrow > 10 ? tomorrow : `-0${tomorrow}`))
-
-    return `${year}-` + (month > 10 ? month : `0${month}`) + (tomorrow > 10 ? tomorrow : `-0${tomorrow}`);
-  };
 
   return (
     <div>

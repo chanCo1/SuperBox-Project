@@ -38,4 +38,25 @@ const nameMasking = (name) => {
   else if(name.length < 5) return name.replace(/(?<=.{3})./gi, "*");
 };
 
-export { setTime, nameMasking };
+
+/** 
+ * @discription 내일 날짜 구하는 함수 -> yyyy-mm-dd 
+ */
+const tomorrow = () => {
+  const date = new Date();
+  const year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  const today = date.getDate();
+  let tomorrow = date.getDate() + 1;
+  
+  // 해당 월의 마지막 날이면?
+  // -> month를 다음달로 변경, tomorrow는 다음달 1일로 변경
+  if(new Date(year, month, 0).getDate() === today) {
+    month = + date.getMonth() + 2;
+    tomorrow = date.getDate(0) - (date.getDate() -1);
+  }
+
+  return `${year}-` + (month > 9 ? month : `0${month}`) + (tomorrow > 9 ? tomorrow : `-0${tomorrow}`);
+};
+
+export { setTime, nameMasking, tomorrow };

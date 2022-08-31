@@ -1,5 +1,5 @@
 /** 패키지 참조 */
-import React, { memo, useEffect, useState, useRef, useCallback } from 'react';
+import React, { memo, useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 
@@ -13,26 +13,22 @@ import PageTitle from '../PageTitle';
 import Spinner from '../Spinner';
 import Pagination from '../Pagination';
 
-import { setTime } from '../../utils/Utils';
-
 import arrow_down from '../../assets/image/arrow_down.png';
 
 /**
- * @description 내 배송접수 확인
+ * @description 내 배송접수 현황 확인
  */
 const MypageReception = memo(() => {
   // 리덕스
   const dispatch = useDispatch();
   const { memberData, isLogin } = useSelector((state) => state.user);
   const { data, loading, error } = useSelector((state) => state.reception);
-  console.log(data)
 
   /**
    * pagination
    */
   // 전체 리스트
   const [list, setList] = useState([]);
-  console.log('list >>> ',list)
   // 현재 페이지
   const [currentPage, setCurrentPage] = useState(1);
   // 한 페이지에 보여질 리스트 수
@@ -157,12 +153,12 @@ const MypageReception = memo(() => {
                         <span>{v.payment}</span>
                       </div>
                       {v.progress === '취소' ? (
-                        <button className='btn btn-disabled' disabled>취소</button>
+                        <button className='btn btn-disabled' disabled>취소됨</button>
                       ) : (
                         <button
                          className='btn btn-active' 
                          data-no={v.reception_no} 
-                         onClick={onCancelClick}>취소
+                         onClick={onCancelClick}>접수취소
                         </button>
                       )}
                     </div>
@@ -172,7 +168,7 @@ const MypageReception = memo(() => {
             </div>
           ))
         ) : (
-          <div>배송접수 내역이 없습니다</div>
+          <div style={{ textAlign: 'center', padding: '20px' }}>배송접수 내역이 없습니다</div>
         )}
 
         {/* pagination */}

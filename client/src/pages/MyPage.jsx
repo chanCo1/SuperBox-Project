@@ -29,7 +29,6 @@ const MyPage = memo(() => {
             <p>진행중인 접수현황과 배송내역을 확인할 수 있어요</p>
           </Link>
           <Link to={'/mypage/review'} className='mypage-item'>
-            <div className='not-yet'>준비중입니다.</div>
             <HiOutlinePencilAlt className='icon' />
             <h3>사용후기</h3>
             <p>내가 쓴 사용 후기 확인하기</p>

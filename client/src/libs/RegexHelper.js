@@ -80,7 +80,7 @@ class RegexHelper {
 
   /** TODO: 이름 입력값에 대한 정규표현식 - 영문, 한글, 2~10자리 */
   nameCheck(field, msg) {
-    return this.field(field, msg, /^[a-z가-힣]{2,10}$/);
+    return this.field(field, msg, /^[a-zA-Z가-힣]{2,10}$/);
   };
 
   /** TODO: 이메일 입력값에 대한 정규표현식  */

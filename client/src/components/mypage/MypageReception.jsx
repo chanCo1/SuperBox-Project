@@ -1,10 +1,11 @@
 /** 패키지 참조 */
 import React, { memo, useEffect, useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
 
 // 리덕스
 import { useSelector, useDispatch } from 'react-redux';
-import { getReception } from '../../slices/ReceptionSlice';
+import { getReception, putReception } from '../../slices/ReceptionSlice';
 
 // 컴포넌트 참조
 import Meta from '../../Meta';
@@ -13,7 +14,6 @@ import Spinner from '../Spinner';
 import Pagination from '../Pagination';
 
 import { setTime } from '../../utils/Utils';
-import { ReverseSlideUpDown2 } from '../../utils/Event';
 
 import arrow_down from '../../assets/image/arrow_down.png';
 
@@ -25,16 +25,18 @@ const MypageReception = memo(() => {
   const dispatch = useDispatch();
   const { memberData, isLogin } = useSelector((state) => state.user);
   const { data, loading, error } = useSelector((state) => state.reception);
+  console.log(data)
 
   /**
    * pagination
    */
   // 전체 리스트
   const [list, setList] = useState([]);
+  console.log('list >>> ',list)
   // 현재 페이지
   const [currentPage, setCurrentPage] = useState(1);
   // 한 페이지에 보여질 리스트 수
-  const [rows, setRows] = useState(5);
+  const [rows, setRows] = useState(10);
 
   // 첫번째 인덱스
   const lastIndex = currentPage * rows;
@@ -45,8 +47,8 @@ const MypageReception = memo(() => {
 
   /** 보여질 리스트 상태값 */
   const [showItem, setShowItem] = useState({});
-  console.log(showItem);
 
+  /** map을 활용한 리스트에서 토글기능 구현 */
   const toggleItem = id => {
     setShowItem(prevShowItem => ({
       ...prevShowItem,
@@ -68,6 +70,30 @@ const MypageReception = memo(() => {
     );
   }, [dispatch, memberData]);
 
+  /** 접수 취소 버튼 */
+  const onCancelClick = useCallback(e => {
+    e.preventDefault();
+
+    Swal.fire({
+      icon: 'question',
+      iconColor: '#f3b017',
+      text: '배송 접수를 취소할까요?',
+      showCancelButton: true,
+      confirmButtonText: '네!',
+      confirmButtonColor: '#f3b017',
+      cancelButtonText: '아니요',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // 수정할 타겟번호 전송
+        dispatch(putReception({
+          reception_no: parseInt(e.target.dataset.no)
+        }));
+        // 리스트 새로 호출
+        dispatch(getReception({user_no: memberData?.user_no,}))
+      }
+    });
+  }, [dispatch, memberData]);
+
   return (
     <>
       <Spinner visible={loading} />
@@ -87,7 +113,11 @@ const MypageReception = memo(() => {
 
         {data?.item && list && list.length > 0 ? (
           currentList.map((v, i) => (
-            <div key={v.reception_no} className="content-wrap" onClick={() => toggleItem(v.reception_no)}>
+            <div 
+              key={v.reception_no} 
+              className="content-wrap" 
+              onClick={() => toggleItem(v.reception_no)}
+            >
               <div className='cotent-list'>
                 <p>
                   # 1{v.reception_date.substring(0, 10).replaceAll('-', '')}-
@@ -96,18 +126,48 @@ const MypageReception = memo(() => {
                 <p>{new Date(v.reception_date).toLocaleString()}</p>
                 <p>-</p>
                 <p>{v.progress}</p>
-                <img src={arrow_down} alt="arrow_button" className={showItem[v.reception_no] ? 'deg-arrow' : ''} />
+                <img 
+                  src={arrow_down}
+                  alt="arrow_button"
+                  className={showItem[v.reception_no] ? 'deg-arrow' : null}
+                />
               </div>
               <div className={showItem[v.reception_no] ? 'show-item' : 'hide-item'}>
                 {showItem[v.reception_no] ? (
                   <>
-                    <p>{v.send_name}</p>
-                    <p>{v.send_address1}</p>
-                    <p>{v.send_address2}</p>
+                    <div className='content-item-wrap'>
+                      <div className='content-item'>
+                        <h4>보내는 분 정보</h4>
+                        <span>{v.send_name}</span>
+                        <span className='gray-item'>{v.send_contact}</span>
+                        <span className='gray-item'>{v.send_address1} {v.send_address2}</span>
+                        <span className='gray-item'>{v.send_postcode}</span>
+                      </div>
+                      <div className='content-item'>
+                        <h4>받는 분 정보</h4>
+                        <span>{v.arrive_name}</span>
+                        <span className='gray-item'>{v.arrive_contact}</span>
+                        <span className='gray-item'>{v.arrive_address1} {v.arrive_address2}</span>
+                        <span className='gray-item'>{v.arrive_postcode}</span>
+                      </div>
+                      <div className='content-item'>
+                        <h4>상품 정보</h4>
+                        <span>{v.product_name}</span>
+                        <span>{v.product_size} / {v.product_qty}box</span>
+                        <span>{v.payment}</span>
+                      </div>
+                      {v.progress === '취소' ? (
+                        <button className='btn btn-disabled' disabled>취소</button>
+                      ) : (
+                        <button
+                         className='btn btn-active' 
+                         data-no={v.reception_no} 
+                         onClick={onCancelClick}>취소
+                        </button>
+                      )}
+                    </div>
                   </>
                     ) : null}
-                {/* <p>{v.product_name}</p> */}
-
               </div>
             </div>
           ))
@@ -131,6 +191,7 @@ const MypageReception = memo(() => {
 
 export default MypageReception;
 
+/** 마이페이지-접수현황 스타일 */
 const MypageReceptionContainer = styled.div`
   position: relative;
   width: 1200px;
@@ -138,11 +199,23 @@ const MypageReceptionContainer = styled.div`
   color: #404040;
 
   .title-wrap {
+    position: sticky;
+    /* display: flex; */
+    /* justify-content: space-evenly; */
+    top: 90px;
+    background-color: #fff;
     display: flex;
     color: #999;
     font-size: 18px;
     font-weight: 400;
-    margin-bottom: 30px;
+    padding: 30px 20px;
+    z-index: 9;
+
+    p {
+      text-decoration: underline #bcbcbc;
+      text-underline-position: under;
+      text-decoration-thickness: 3px;
+    }
   }
 
   .content-wrap {
@@ -150,7 +223,7 @@ const MypageReceptionContainer = styled.div`
       display: flex;
       align-items: center;
       line-height: 1.5;
-      padding: 20px 0;
+      padding: 20px;
       border-radius: 10px;
       cursor: pointer;
   
@@ -163,14 +236,65 @@ const MypageReceptionContainer = styled.div`
         height: 15px;
         opacity: 0.3;
         transition: 0.5s ease;
-
       }
       .deg-arrow { transform: rotate(180deg); }
     }
 
     .show-item {
       max-height: 100vh;
-      transition: 1.5s ease;
+      transition: 1s ease;
+
+      .content-item-wrap {
+        display: flex;
+        margin: 20px 0 50px;
+        padding: 0 90px;
+        justify-content: space-between;
+        border-bottom: 1px solid #bcbcbc;
+
+        .content-item {
+          display: flex;
+          flex-direction: column;
+          width: 30%;
+          margin-bottom: 20px;
+
+          h4 {
+            margin-bottom: 20px;
+            font-size: 18px;
+          }
+
+          span { margin-bottom: 10px; }
+          .gray-item { color: #999; }
+          &:nth-child(3) { width: 20%; }
+        }
+
+        .btn {
+          position: relative;
+          padding: 10px;
+          top: 60px;
+          width: 10%;
+          height: 10%;
+          border-radius: 10px;
+          color: #404040;
+          
+        }
+
+        .btn-active {
+          background-color: #fff;
+          border: 1px solid #f3b017;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #f3b017;
+            color: #fff;
+          }
+        }
+
+        .btn-disabled {
+          background-color: #fff;
+          border: 1px solid #bcbcbc;
+          color: #999;
+        }
+      }
     }
     
     .hide-item {

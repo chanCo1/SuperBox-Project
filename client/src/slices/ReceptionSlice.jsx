@@ -6,7 +6,8 @@ import { pending, fulfilled, rejected } from '../utils/ExtraReducers';
 const API_URL = 'http://localhost:3001/api/reception/';
 
 /** 
- * 배송 조회
+ * @description 배송 접수 조회
+ * @param payload
  */
  export const getReception = createAsyncThunk('ReceptionSlice/getReception', async (payload, { rejectWithValue }) => {
   let result = null;
@@ -34,14 +35,42 @@ const API_URL = 'http://localhost:3001/api/reception/';
   return result;
 });
 
+
 /** 
- * 배송 접수
+ * @discription 배송 접수
+ * @param payload
  */
 export const postReception = createAsyncThunk('ReceptionSlice/postReception', async (payload, { rejectWithValue }) => {
   let result = null;
 
   try {
     result = await axios.post(`${API_URL}`, payload);
+    console.log(result)
+
+    // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
+    if(result.data.faultInfo !== undefined) {
+      const err = new Error();
+      err.reponse = { status: 500, statusText: result.data.faultInfo.message };
+      throw err;
+    }
+
+  } catch(err) {
+    // console.error(err.response.data);
+    result = rejectWithValue(err);
+  }
+  return result;
+});
+
+/**
+ * @description 배송 접수 수정
+ * @param payload
+ */
+export const putReception = createAsyncThunk('ReceptionSlice/putReception', async (payload, { rejectWithValue }) => {
+  let result = null;
+  console.log(payload)
+
+  try {
+    result = await axios.put(`${API_URL}putReception`, payload);
     console.log(result)
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다

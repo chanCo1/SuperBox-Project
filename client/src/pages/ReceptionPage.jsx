@@ -167,7 +167,7 @@ const ReceptionPage = memo(() => {
 
       try {
         RegexHelper.value(current.sendName, '보내는 분의 이름을 입력해주세요.');
-        RegexHelper.nameCheck(current.sendName, '이름은 2~10자리의 영문(소문자), 한글만 가능합니다.');
+        RegexHelper.nameCheck(current.sendName, '이름은 2~10자리의 영문, 한글만 가능합니다.');
 
         RegexHelper.value(current.sendContact, '보내는 분의 연락처를 입력해주세요.');
         RegexHelper.phone(current.sendContact, "전화번호 형식이 아닙니다. ' - '이 있다면 빼고 입력해주세요.");

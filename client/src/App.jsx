@@ -80,11 +80,26 @@ const App = memo(() => {
         <Route path="/review/edit/:review_no" element={<ReviewEdit />} />
 
         {/* 마이페이지 */}
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/mypage/reception" element={<MypageReception />} />
-        <Route path="/mypage/review" element={<MypageReview />} />
-        <Route path="/mypage/inquiry" element={<MypageInquiry />} />
-        <Route path="/mypage/information" element={<MypageInfomation />} />
+        <Route 
+          path="/mypage" 
+          element={isLogin ? <MyPage /> : <Error404Page error={error}/>} 
+        />
+        <Route 
+          path="/mypage/reception" 
+          element={isLogin ? <MypageReception /> : <Error404Page error={error}/>} 
+        />
+        <Route 
+          path="/mypage/review" 
+          element={isLogin ? <MypageReview /> : <Error404Page error={error}/>} 
+        />
+        <Route 
+          path="/mypage/inquiry" 
+          element={isLogin ? <MypageInquiry /> : <Error404Page error={error}/>} 
+        />
+        <Route 
+          path="/mypage/information" 
+          element={isLogin ? <MypageInfomation /> : <Error404Page error={error}/>} 
+        />
 
         {/* 회원가입 */}
         <Route

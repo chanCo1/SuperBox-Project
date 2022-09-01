@@ -104,10 +104,15 @@ const ReceptionSlice = createSlice({
     [postReception.fulfilled]: fulfilled,
     [postReception.rejected]: rejected,
 
-    // 배송 접수
+    // 배송 조회
     [getReception.pending]: pending,
     [getReception.fulfilled]: fulfilled,
     [getReception.rejected]: rejected,
+
+    // 배송 접수 취소
+    [putReception.pending]: pending,
+    [putReception.fulfilled]: fulfilled,
+    [putReception.rejected]: rejected,
   }
 });
 

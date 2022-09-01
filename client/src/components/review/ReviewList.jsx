@@ -157,7 +157,7 @@ const ReviewListContainer = styled.div`
     .review-title {
       display: flex;
       align-items: center;
-      font-size: 1.5rem;
+      font-size: 22px;
       font-weight: 500;
       margin: 10px 0;
       height: 35px;

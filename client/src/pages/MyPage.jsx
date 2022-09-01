@@ -3,25 +3,41 @@ import React, { memo } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+// 컴포넌트 참조
 import Meta from '../Meta';
 import PageTitle from '../components/PageTitle';
 
-import { TbReportSearch } from 'react-icons/tb'
-import { HiOutlinePencilAlt } from 'react-icons/hi'
-import { RiWechatLine } from 'react-icons/ri'
-import { FiUserPlus } from 'react-icons/fi'
-import { AiOutlineStop } from 'react-icons/ai'
+// 리덕스
+import { useSelector } from 'react-redux';
+
+// 아이콘 참조
+import { TbReportSearch } from 'react-icons/tb';
+import { HiOutlinePencilAlt } from 'react-icons/hi';
+import { RiWechatLine } from 'react-icons/ri';
+import { FiUserPlus } from 'react-icons/fi';
+import { AiOutlineStop } from 'react-icons/ai';
+
+import { BsMegaphone } from 'react-icons/bs';
 
 /**
  * @description 마이페이지
  */
 const MyPage = memo(() => {
+
+  const { memberData } = useSelector(state => state.user);
+
   return (
     <>
       <Meta title={'SuperBox :: 마이페이지'} />
       <PageTitle title={'마이페이지'} subtitle={'고객님의 정보를 한 눈에 확인해보세요.'} />
 
+
+
       <MyPageContainer>
+        <div className='welcome-user'>
+          <BsMegaphone style={{marginRight: '10px'}} />
+          <span>{memberData && memberData.user_name}</span>님 반가워요!
+        </div>
         <div className='mypage-wrap'>
           <Link to={'/mypage/reception'} className='mypage-item'>
             <TbReportSearch className='icon' />
@@ -31,13 +47,12 @@ const MyPage = memo(() => {
           <Link to={'/mypage/review'} className='mypage-item'>
             <HiOutlinePencilAlt className='icon' />
             <h3>사용후기</h3>
-            <p>내가 쓴 사용 후기 확인하기</p>
+            <p>내가 쓴 사용 후기를 확인해 보세요</p>
           </Link>
           <Link to={'/mypage/inquiry'} className='mypage-item'>
-            <div className='not-yet'>준비중입니다.</div>
             <RiWechatLine className='icon' />
             <h3>1:1 문의</h3>
-            <p>내가 남긴 1:1문의 내용 확인하기</p>
+            <p>내가 남긴 1:1문의를 확인해 보세요</p>
           </Link>
           <Link to={'/mypage/information'} className='mypage-item'>
             <div className='not-yet'>준비중입니다.</div>
@@ -65,9 +80,18 @@ const MyPageContainer = styled.div`
   position: relative;
   width: 1200px;
   margin: 0 auto;
-
+  
   @media (max-width: 1200px) { width: 80%; }
   @media (max-width: 925px) { width: 90%; }
+  color: #404040;
+
+  .welcome-user {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-bottom: 30px;
+    font-size: 18px;;
+  }
   
   .mypage-wrap {
     display: flex;
@@ -83,7 +107,7 @@ const MyPageContainer = styled.div`
       margin-bottom: 40px;
       box-shadow: 5px 5px 10px #bcbcbc;
       cursor: pointer;
-      transition: .5s ease;
+      transition: .2s ease;
       
       /* @media (max-width: 1200px) { width: 50%; } */
       @media (max-width: 925px) { width: 50%; }

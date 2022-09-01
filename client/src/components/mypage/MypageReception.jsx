@@ -41,7 +41,7 @@ const MypageReception = memo(() => {
   // 현재 페이지에 보여질 배열
   const currentList = data?.item && list && list.slice(firstIndex, lastIndex);
 
-  /** 보여질 리스트 상태값 */
+  /** 토글에 사용할 리스트 상태값 */
   const [showItem, setShowItem] = useState({});
 
   /** map을 활용한 리스트에서 토글기능 구현 */
@@ -57,13 +57,11 @@ const MypageReception = memo(() => {
     setList(data && data?.item);
   }, [data]);
 
-  // 게시판 들어가면 리스트 호출
+  // 페이지 들어가면 리스트 호출
   useEffect(() => {
-    dispatch(
-      getReception({
-        user_no: memberData?.user_no,
-      })
-    );
+    dispatch(getReception({
+      user_no: memberData?.user_no,
+    }));
   }, [dispatch, memberData]);
 
   /** 접수 취소 버튼 */
@@ -114,7 +112,8 @@ const MypageReception = memo(() => {
               className="content-wrap" 
               onClick={() => toggleItem(v.reception_no)}
             >
-              <div className='cotent-list'>
+              <div 
+                className={showItem[v.reception_no] ? 'cotent-list cotent-list-background' : 'cotent-list'}>
                 <p>
                   # 1{v.reception_date.substring(0, 10).replaceAll('-', '')}-
                   {v.reception_no > 9 ? v.reception_no : `0${v.reception_no}`}
@@ -152,6 +151,7 @@ const MypageReception = memo(() => {
                         <span>{v.product_size} / {v.product_qty}box</span>
                         <span>{v.payment}</span>
                       </div>
+
                       {v.progress === '취소' ? (
                         <button className='btn btn-disabled' disabled>취소됨</button>
                       ) : (
@@ -168,7 +168,9 @@ const MypageReception = memo(() => {
             </div>
           ))
         ) : (
-          <div style={{ textAlign: 'center', padding: '20px' }}>배송접수 내역이 없습니다</div>
+          <div style={{ textAlign: 'center', padding: '80px' }}>
+            배송접수 내역이 없어요 🤗
+          </div>
         )}
 
         {/* pagination */}
@@ -194,24 +196,28 @@ const MypageReceptionContainer = styled.div`
   margin: 0 auto 50px;
   color: #404040;
 
+  p {
+    width: 20%;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:nth-child(4) { width: 35%; }
+  }
+
   .title-wrap {
     position: sticky;
-    /* display: flex; */
-    /* justify-content: space-evenly; */
-    top: 90px;
-    background-color: #fff;
     display: flex;
-    color: #999;
+    top: 90px;
+    background-color: #2a3768;
+    border-radius: 20px;
+    color: #fff;
     font-size: 18px;
     font-weight: 400;
-    padding: 30px 20px;
+    padding: 20px;
+    margin-bottom: 20px;
     z-index: 9;
-
-    p {
-      text-decoration: underline #bcbcbc;
-      text-underline-position: under;
-      text-decoration-thickness: 3px;
-    }
   }
 
   .content-wrap {
@@ -223,9 +229,7 @@ const MypageReceptionContainer = styled.div`
       border-radius: 10px;
       cursor: pointer;
   
-      &:hover {
-        background-color: #f7f8fb;
-      }
+      &:hover { background-color: #f7f8fb; }
   
       img {
         width: 15px;
@@ -235,6 +239,8 @@ const MypageReceptionContainer = styled.div`
       }
       .deg-arrow { transform: rotate(180deg); }
     }
+
+    .cotent-list-background { background-color: #f7f8fb; }
 
     .show-item {
       max-height: 100vh;
@@ -256,6 +262,7 @@ const MypageReceptionContainer = styled.div`
           h4 {
             margin-bottom: 20px;
             font-size: 18px;
+            font-weight: 500;
           }
 
           span { margin-bottom: 10px; }
@@ -298,12 +305,5 @@ const MypageReceptionContainer = styled.div`
       max-height: 0;
       overflow: hidden;
     }
-  }
-
-  p {
-    width: 20%;
-    text-align: center;
-
-    &:nth-child(4) { width: 35%; }
   }
 `;

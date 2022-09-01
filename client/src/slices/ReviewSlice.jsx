@@ -39,6 +39,36 @@ const API_URL = 'http://localhost:3001/api/review/';
   return result;
 });
 
+/**
+ * 사용자 후기 조회
+ */
+ export const getUserReview = createAsyncThunk('ReviewSlice/getUserReview', async (payload, { rejectWithValue }) => {
+  let result = null;
+  console.log(payload);
+
+  try {
+    result = await axios.get(`${API_URL}getUserReview`, {
+      params: {
+        user_no: payload?.user_no || '', 
+      }
+    });
+    console.log(result);
+
+    // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
+    if(result.data.faultInfo !== undefined) {
+      const err = new Error();
+      err.reponse = { status: 500, statusText: result.data.faultInfo.message };
+      throw err;
+    };
+
+  } catch(err) {
+    console.error(err.response.data);
+    result = rejectWithValue(err);
+  }
+
+  return result;
+});
+
 
 /**
  * 후기 등록
@@ -140,6 +170,11 @@ const ReviewSlice = createSlice({
     [getReviewList.pending]: pending,
     [getReviewList.fulfilled]: fulfilled,
     [getReviewList.rejected]: rejected,
+
+    /** 사용자 후기 조회 */
+    [getUserReview.pending]: pending,
+    [getUserReview.fulfilled]: fulfilled,
+    [getUserReview.rejected]: rejected,
 
     /** 데이터 저장을 위한 액션 함수 */
     [postReview.pending]: pending,

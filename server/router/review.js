@@ -37,6 +37,34 @@ router.get('/getReview', async (req, res) => {
   };
 });
 
+/**
+ * 사용자 후기 조회 (get)
+ */
+router.get('/getUserReview', async (req, res) => {
+  console.log('사용자 후기조회 >>> ', req.query);
+
+  const { user_no } = req.query;
+
+  const sql = 'SELECT * FROM review WHERE user_no = ? ORDER BY review_no DESC';
+
+  try {
+    const result = await mysqlPool(sql, user_no);
+
+    res.status(200).json({
+      success: true,
+      message: '후기 데이터를 불러왔습니다.',
+      item: result,
+    });
+
+  } catch(err) {
+    res.status(400).json({
+      success: false,
+      message: '후기 데이터를 불러오지 못했습니다.',
+      errMsg: err,
+    });
+  }
+});
+
 
 /**
  * 단일(detail) 데이터 조회 (get)

@@ -194,7 +194,7 @@ const ReceptionPage = memo(() => {
         RegexHelper.value(current.productName, '배송할 상품명을 입력해주세요.');
         RegexHelper.inputCheck(current.productName, '상품명은 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
 
-        if (current.productPrice.value.length >= 1) {
+        if (current.productPrice.value.length >= 0) {
           RegexHelper.num(current.productPrice,'상품가격은 4~10자 내로 숫자만 입력해주세요.');
         }
 
@@ -202,13 +202,13 @@ const ReceptionPage = memo(() => {
 
         RegexHelper.value(current.productQty, '배송할 상품의 수량을 선택해주세요.');
 
-        if (current.productNote.value.length >= 1) {
+        if (current.productNote.value.length >= 0) {
           RegexHelper.inputCheck(current.productNote, '특이사항은 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
         }
 
         RegexHelper.value(current.payment, '결제방식을 선택해주세요.');
 
-        if (current.deliveryMessage.value.length >= 1) {
+        if (current.deliveryMessage.value.length >= 0) {
           RegexHelper.inputCheck(current.deliveryMessage, '배송메세지는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
         }
 

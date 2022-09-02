@@ -58,6 +58,33 @@ export const postInquiry = createAsyncThunk('inquirySlice/postInquiry', async (p
   return result;
 });
 
+
+/**
+ * @description 1:1문의 취소
+ * @param payload
+ */
+ export const putCancelInquiry = createAsyncThunk('ReceptionSlice/putCancelInquiry', async (payload, { rejectWithValue }) => {
+  let result = null;
+  console.log(payload)
+
+  try {
+    result = await axios.put(`${API_URL}putCancelInquiry`, payload);
+    console.log(result)
+
+    // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
+    if(result.data.faultInfo !== undefined) {
+      const err = new Error();
+      err.reponse = { status: 500, statusText: result.data.faultInfo.message };
+      throw err;
+    }
+
+  } catch(err) {
+    // console.error(err.response.data);
+    result = rejectWithValue(err);
+  }
+  return result;
+});
+
 /** 
  * reducer 정의 
  */
@@ -70,14 +97,6 @@ const InquirySlice = createSlice({
     inquiryImg: null,
   },
 
-  // // 이미지 파일 첨부 관리
-  // reducers: {
-  //   setInquiryImg: (state, { payload }) => {
-  //     console.log(payload);
-  //     return { ...state, inquiryImg: payload }
-  //   }
-  // },
-
   extraReducers: {
     // 1:1문의 사용자 조회
     [getUserInquiry.pending]: pending,
@@ -88,6 +107,11 @@ const InquirySlice = createSlice({
     [postInquiry.pending]: pending,
     [postInquiry.fulfilled]: fulfilled,
     [postInquiry.rejected]: rejected,
+
+    // 1:1문의 취소
+    [putCancelInquiry.pending]: pending,
+    [putCancelInquiry.fulfilled]: fulfilled,
+    [putCancelInquiry.rejected]: rejected,
   }
 });
 

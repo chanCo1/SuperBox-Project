@@ -24,7 +24,7 @@ import MyPage from './pages/MyPage';
 import MypageReception from './components/mypage/MypageReception';
 import MypageReview from './components/mypage/MypageReview';
 import MypageInquiry from './components/mypage/MypageInquiry';
-import MypageInfomation from './components/mypage/MypageInfomation';
+import MypageProfile from './components/mypage/MypageProfile';
 
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './components/login/LoginPage';
@@ -98,7 +98,7 @@ const App = memo(() => {
         />
         <Route 
           path="/mypage/information" 
-          element={isLogin ? <MypageInfomation /> : <Error404Page error={error}/>} 
+          element={isLogin ? <MypageProfile /> : <Error404Page error={error}/>} 
         />
 
         {/* 회원가입 */}
@@ -108,7 +108,7 @@ const App = memo(() => {
         />
 
         {/* 공지사항 */}
-        <Route path="/customer/notice" element={<NoticePage />} />
+        {/* <Route path="/customer/notice" element={<NoticePage />} /> */}
 
         {/* 자주찾는질문 */}
         <Route path="/customer/faq" element={<FaqPage />} />

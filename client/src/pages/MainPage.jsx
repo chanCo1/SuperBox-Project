@@ -404,9 +404,9 @@ const MainUseStartContainer = styled.div`
           &:hover {
             transform: scale(1.1, 1.1);
           }
-          &:active {
+          /* &:active {
             transform: scale(.9, .9);
-          }
+          } */
 
           .btn-icon {
             width: 200px;

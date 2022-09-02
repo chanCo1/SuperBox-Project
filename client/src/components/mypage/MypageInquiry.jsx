@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 // 리덕스
 import { useSelector, useDispatch } from 'react-redux';
-import { getUserInquiry } from '../../slices/InquirySlice';
+import { getUserInquiry, putCancelInquiry } from '../../slices/InquirySlice';
 
 import Meta from '../../Meta';
 import PageTitle from '../PageTitle';
@@ -70,7 +70,7 @@ const MypageInquiry = memo(() => {
     Swal.fire({
       icon: 'question',
       iconColor: '#f3b017',
-      text: '배송 접수를 취소할까요?',
+      text: '1:1문의를 취소할까요?',
       showCancelButton: true,
       confirmButtonText: '네!',
       confirmButtonColor: '#f3b017',
@@ -78,9 +78,9 @@ const MypageInquiry = memo(() => {
     }).then((result) => {
       if (result.isConfirmed) {
         // 수정할 타겟번호 전송
-        // dispatch(putReception({
-        //   reception_no: parseInt(e.target.dataset.no)
-        // }));
+        dispatch(putCancelInquiry({
+          inquiry_no: parseInt(e.target.dataset.no)
+        }));
         // 리스트 새로 호출
         dispatch(getUserInquiry({user_no: memberData?.user_no,}))
       }
@@ -131,11 +131,11 @@ const MypageInquiry = memo(() => {
                     <div className='content-item'>
                       <textarea defaultValue={v.content} disabled />
                       {v.progress === '취소' ? (
-                        <button className='btn btn-disabled' disabled>취소됨</button>
+                        <button className='btn btn-disabled' disabled>취소되었습니다</button>
                       ) : (
                         <button
                           className='btn btn-active' 
-                          data-no={v.reception_no} 
+                          data-no={v.inquiry_no} 
                           onClick={onCancelClick}>문의취소
                         </button>
                       )}
@@ -268,6 +268,7 @@ const MypageInquiryContainer = styled.div`
           height: 10%;
           border-radius: 10px;
           color: #404040;
+          font-size: 16px;
         }
 
         .btn-active {

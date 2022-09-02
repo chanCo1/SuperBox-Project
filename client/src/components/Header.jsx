@@ -87,7 +87,7 @@ const HeaderContainer = styled.div`
       .customer-Subnav {
         position: absolute;
         background-color: #fff;
-        padding: 0 20px;
+        padding: 10px 20px;
         margin-top: 10px;
         border: 1px solid #f3b017;
         border-radius: 15px;
@@ -240,7 +240,7 @@ const Header = memo(({ loginPageState }) => {
             >
               고객센터
               <ul className='customer-Subnav' ref={subMenuRef}>
-                <Link to={'/customer/notice'}><li>공지사항</li></Link>
+                {/* <Link to={'/customer/notice'}><li>공지사항</li></Link> */}
                 <Link to={'/customer/faq'}><li>자주 찾는 질문</li></Link>
                 <Link to={'/customer/inquiry'}><li>1:1 문의</li></Link>
               </ul>

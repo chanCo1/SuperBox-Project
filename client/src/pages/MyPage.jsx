@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 // 컴포넌트 참조
 import Meta from '../Meta';
 import PageTitle from '../components/PageTitle';
+import MypageProfile from '../components/mypage/MypageProfile';
 
 // 리덕스
 import { useSelector } from 'react-redux';
@@ -14,10 +15,10 @@ import { useSelector } from 'react-redux';
 import { TbReportSearch } from 'react-icons/tb';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 import { RiWechatLine } from 'react-icons/ri';
-import { FiUserPlus } from 'react-icons/fi';
-import { AiOutlineStop } from 'react-icons/ai';
+// import { FiUserPlus } from 'react-icons/fi';
+// import { AiOutlineStop } from 'react-icons/ai';
 
-import { BsMegaphone } from 'react-icons/bs';
+// import { BsMegaphone } from 'react-icons/bs';
 
 /**
  * @description 마이페이지
@@ -31,13 +32,9 @@ const MyPage = memo(() => {
       <Meta title={'SuperBox :: 마이페이지'} />
       <PageTitle title={'마이페이지'} subtitle={'고객님의 정보를 한 눈에 확인해보세요.'} />
 
-
+      <MypageProfile />
 
       <MyPageContainer>
-        <div className='welcome-user'>
-          <BsMegaphone style={{marginRight: '10px'}} />
-          <span>{memberData && memberData.user_name}</span>님 반가워요!
-        </div>
         <div className='mypage-wrap'>
           <Link to={'/mypage/reception'} className='mypage-item'>
             <TbReportSearch className='icon' />
@@ -54,21 +51,8 @@ const MyPage = memo(() => {
             <h3>1:1 문의</h3>
             <p>내가 남긴 1:1문의를 확인해 보세요</p>
           </Link>
-          <Link to={'/mypage/information'} className='mypage-item'>
-            <div className='not-yet'>준비중입니다.</div>
-            <FiUserPlus className='icon' />
-            <h3>개인정보관리</h3>
-            <p>개인정보를 수정할 수 있어요</p>
-          </Link>
-          <div className='mypage-item'>
-            <div className='not-yet'>준비중입니다.</div>
-            <AiOutlineStop className='icon' />
-            <h3>회원탈퇴</h3>
-          </div>
-          <div className='mypage-item'>
-            <AiOutlineStop className='icon' />
-          </div>
         </div>
+        <button>회원탈퇴</button>
       </MyPageContainer>
     </>
   );
@@ -114,7 +98,7 @@ const MyPageContainer = styled.div`
       @media (max-width: 750px) { width: 100%; }
 
       &:hover { box-shadow: 10px 10px 15px #999; }
-      &:active { transform: scale(.9, .9); }
+      &:active { transform: scale(.95, .95); }
 
       .icon {
         font-size: 5rem;
@@ -130,13 +114,6 @@ const MyPageContainer = styled.div`
       p {
         font-size: .9rem;
         color: #999;
-      }
-
-      &:last-child {
-        opacity: 0;
-        cursor: revert;
-
-        @media (max-width: 1200px) { display: none; }
       }
     }
 

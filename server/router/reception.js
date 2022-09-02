@@ -104,7 +104,7 @@ router.post('/', async (req, res) => {
 });
 
 /**
- * 배송 접수 수정 (취소)
+ * 배송 접수 수정 (put-취소요청)
  */
 router.put('/putReception', async (req, res) => {
   console.log('\t배송취소번호 >>>', req.body);

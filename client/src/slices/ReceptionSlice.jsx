@@ -9,7 +9,7 @@ const API_URL = 'http://localhost:3001/api/reception/';
  * @description 배송 접수 조회
  * @param payload
  */
- export const getReception = createAsyncThunk('ReceptionSlice/getReception', async (payload, { rejectWithValue }) => {
+export const getReception = createAsyncThunk('ReceptionSlice/getReception', async (payload, { rejectWithValue }) => {
   let result = null;
   console.log(payload);
 

@@ -59,7 +59,7 @@ const MypageProfile = memo(() => {
             <div className="user-info-wrap">
               <div className="user-info">
                 <label>이름</label>
-                <p>{memberData.user_name}</p>
+                <p>{memberData?.user_name}</p>
               </div>
               <div className="user-info">
                 <label>비밀번호</label>
@@ -67,26 +67,26 @@ const MypageProfile = memo(() => {
               </div>
               <div className="user-info">
                 <label>전화번호</label>
-                <p>{memberData.user_phone}</p>
+                <p>{memberData?.user_phone}</p>
               </div>
             </div>
             <div className="user-info-wrap">
               <div className="user-info">
                 <label>우편번호</label>
-                <p className="address">{memberData.postcode || ''}</p>
+                <p className="address">{memberData?.postcode || ''}</p>
               </div>
               <div className="user-info">
                 <label>주소</label>
-                <p className="address">{memberData.addr1 || ''}</p>
+                <p className="address">{memberData?.addr1 || ''}</p>
               </div>
               <div className="user-info">
                 <label>상세주소</label>
-                <p className="address">{memberData.addr2 || ''}</p>
+                <p className="address">{memberData?.addr2 || ''}</p>
               </div>
             </div>
           </div>
         ) : (
-          <EditProfile />
+          <EditProfile setEditProfileState={setEditProfileState} />
         )}
       </div>
     </MypageProfileContaier>
@@ -176,6 +176,8 @@ const MypageProfileContaier = styled.div`
           }
           p {
             display: flex;
+            font-size: 14px;
+            /* flex-wrap: wrap; */
             width: 250px;
             align-items: center;
             color: #bcbcbc;

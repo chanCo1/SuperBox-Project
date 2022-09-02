@@ -50,9 +50,9 @@ const ReceptionPage = memo(() => {
   const [reception, setReception] = useState({
     sendName:  memberData?.user_name,
     sendContact: memberData?.user_phone,
-    sendPostCode: '',
-    sendAddress1: '',
-    sendAddress2: '',
+    sendPostCode: memberData?.postcode || '',
+    sendAddress1: memberData?.addr1 || '',
+    sendAddress2: memberData?.addr2 || '',
     arriveName: '',
     arriveContact: '',
     arrivePostCode: '',
@@ -81,9 +81,7 @@ const ReceptionPage = memo(() => {
   const conditionRef = useRef();
   const boxSizeRef = useRef();
 
-  /**
-   * input 입력값을 state에 저장
-   */
+  /** input 입력값을 state에 저장 */
   const onChange = useCallback(
     (e) => {
       e.preventDefault();
@@ -178,7 +176,7 @@ const ReceptionPage = memo(() => {
         RegexHelper.value(current.sendAddress1, '보내는 분의 주소를 입력해주세요.');
 
         RegexHelper.value(current.sendAddress2, '보내는 분의 상세주소를 입력해주세요.');
-        RegexHelper.inputCheck(current.sendAddress2, '상세주소는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
+        RegexHelper.inputCheck(current.sendAddress2, '상세주소는 2~20자 내로 입력해주세요.');
 
         RegexHelper.value(current.arriveName, '받는 분의 이름을 입력해주세요.');
         RegexHelper.nameCheck(current.arriveName, '이름은 2~10자리의 영문(소문자), 한글만 가능합니다.');
@@ -189,12 +187,12 @@ const ReceptionPage = memo(() => {
         RegexHelper.value(current.arriveAddress1, '받는 분의 주소를 입력해주세요.');
 
         RegexHelper.value(current.arriveAddress2, '받는 분의 상세주소를 입력해주세요.');
-        RegexHelper.inputCheck(current.arriveAddress2, '상세주소는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
+        RegexHelper.inputCheck(current.arriveAddress2, '상세주소는 2~20자 내로 입력해주세요.');
 
         RegexHelper.value(current.productName, '배송할 상품명을 입력해주세요.');
-        RegexHelper.inputCheck(current.productName, '상품명은 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
+        RegexHelper.inputCheck(current.productName, '상품명은 2~20자 내로 입력해주세요.');
 
-        if (current.productPrice.value.length >= 0) {
+        if (current.productPrice.value.length >= 1) {
           RegexHelper.num(current.productPrice,'상품가격은 4~10자 내로 숫자만 입력해주세요.');
         }
 
@@ -202,14 +200,14 @@ const ReceptionPage = memo(() => {
 
         RegexHelper.value(current.productQty, '배송할 상품의 수량을 선택해주세요.');
 
-        if (current.productNote.value.length >= 0) {
-          RegexHelper.inputCheck(current.productNote, '특이사항은 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
+        if (current.productNote.value.length >= 1) {
+          RegexHelper.inputCheck(current.productNote, '특이사항은 2~20자 내로 입력해주세요.');
         }
 
         RegexHelper.value(current.payment, '결제방식을 선택해주세요.');
 
-        if (current.deliveryMessage.value.length >= 0) {
-          RegexHelper.inputCheck(current.deliveryMessage, '배송메세지는 2~20자 내로 입력해주세요. 한글 초성은 입력할 수 없습니다.');
+        if (current.deliveryMessage.value.length >= 1) {
+          RegexHelper.inputCheck(current.deliveryMessage, '배송메세지는 2~20자 내로 입력해주세요.');
         }
 
         Swal.fire({
@@ -292,7 +290,8 @@ const ReceptionPage = memo(() => {
                 className2={'search-input search-input-long'}
                 type={'text'}
                 name={'sendAddress1'}
-                value={reception.sendAddress1 || ''}
+                value={reception?.sendAddress1 || memberData?.addr1 || ''}
+                // defaultValue={memberData?.addr1 }
                 placeholder={'주소검색을 통해 입력해주세요.'}
               />
               <button type="button" onClick={startHandleClick}>
@@ -306,7 +305,7 @@ const ReceptionPage = memo(() => {
                 className2={'search-input search-input-short'}
                 type={'text'}
                 name={'sendPostCode'}
-                value={reception.sendPostCode || ''}
+                value={reception.sendPostCode || memberData?.postcode || ''}
                 placeholder={'우편번호'}
               />
               <Input
@@ -316,6 +315,7 @@ const ReceptionPage = memo(() => {
                 className2={'search-input search-input-long'}
                 type={'text'}
                 name={'sendAddress2'}
+                defaultValue={memberData?.addr2}
                 placeholder={'2~30글자 내로 입력해주세요.'}
                 onChange={onChange}
               />

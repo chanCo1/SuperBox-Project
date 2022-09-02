@@ -29,7 +29,7 @@ const Input = ({ label, require, className1, className2, type, name, placeholder
   );
 };
 
-const ReadOnlyInput = ({ label, require, className1, className2, type, name, placeholder, value, defaultValue }) => {
+const ReadOnlyInput = ({ label, require, className1, className2, type, name, placeholder, value }) => {
   return (
     <div className={className1}>
       <label htmlFor="">
@@ -41,7 +41,6 @@ const ReadOnlyInput = ({ label, require, className1, className2, type, name, pla
         type={type}
         name={name}
         value={value}
-        defaultValue={defaultValue}
         placeholder={placeholder}
         readOnly
       />

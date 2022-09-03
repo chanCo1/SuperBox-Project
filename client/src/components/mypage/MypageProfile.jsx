@@ -1,6 +1,7 @@
 /** 패키지 참조 */
 import React, { memo, useState, useCallback } from 'react';
 import styled from 'styled-components';
+import axios from '../../config/axios';
 
 // 리덕스
 import { useSelector } from 'react-redux';
@@ -21,15 +22,100 @@ const MypageProfile = memo(() => {
 
   // 프로필 수정 상태값
   const [editProfileState, setEditProfileState] = useState(false);
+  // 보여줄 이미지 상태값 관리
+  const [showImgFiles, setShowImgFiles] = useState('');
+  // 이미지 사용 여부 확인을 보여주기 위한 상태값
+  const [imgConfirm, setImgConfirm] = useState(false);
+  // 업로드할 이미지 주소 상태값
+  const [formDataImg, setFormDataImg] = useState('');
+  // 백엔드 통신 로딩 상태
+  const [isLoading, setIsLoading] = useState(false);
 
+  // formData 사용
+  const formData = new FormData();
+
+  /** 개인정보수정 toggle */
   const onEditProfile = useCallback((e) => {
+    e.preventDefault();
+
     setEditProfileState(!editProfileState);
   }, [editProfileState]);
 
+  /** 프로필 이미지 선택 */
+  const fileSelect = useCallback((e) => {
+    e.preventDefault();
+
+    const file = e.target.files[0];
+    setShowImgFiles(URL.createObjectURL(file));
+
+    setFormDataImg(file);
+    setImgConfirm(true);
+  }, []);
+
+  /** 이미지 선택 취소(삭제) */
+  const cancelFile = useCallback(e => {
+    e.preventDefault();
+
+    URL.revokeObjectURL(showImgFiles);
+    setShowImgFiles('');
+    setImgConfirm(false);
+  }, [showImgFiles]);
+
+  /** 이미지 업로드 */
+  const uploadFile = useCallback( async e => {
+    e.preventDefault();
+
+    formData.append('imgFile', formDataImg);
+
+    try {
+      setIsLoading(true)
+
+      const response = await axios.post('api/image/upload/single', formData);
+      console.log(response)
+
+      setImgConfirm(false);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [formDataImg, formData]);
+
   return (
     <MypageProfileContaier>
-      <div className="user-img-wrap">
-        <FaUserCircle className="user-img" />
+      <div className="profile-img-wrap">
+        {imgConfirm ? (
+          <>
+          {/* FIXME: 이미지 저장한걸 사용해야함 */}
+            <img src={showImgFiles} alt="프로필 이미지" className="profile-img" />
+            <div className='file-confirm'>
+              <p>이 이미지를 사용할까요?</p>
+              <button 
+                className='edit-profile'
+                onClick={uploadFile}
+                // style={{ marginRight: '10px' }}
+              >네</button>
+              <button className='edit-profile edit-profile-cancel' onClick={cancelFile}>아니요</button>
+            </div>
+          </>
+        ) : (
+          <>
+            <FaUserCircle className="profile-img-default" />
+            <label
+              htmlFor="imageUpload" 
+              className='edit-profile-btn' 
+              onChange={fileSelect}>프로필 변경
+
+              <input 
+                type="file" 
+                id='imageUpload' 
+                name="imageUpload" 
+                accept="image/*"
+                style={{ display: 'none' }}
+              />
+            </label>
+          </>
+        )}
       </div>
       <div className="user-info-container">
         <div className="user-info-top">
@@ -59,15 +145,16 @@ const MypageProfile = memo(() => {
             <div className="user-info-wrap">
               <div className="user-info">
                 <label>이름</label>
-                <p>{memberData?.user_name}</p>
+                <p>{memberData?.user_name || ''}</p>
               </div>
               <div className="user-info">
                 <label>비밀번호</label>
-                <p>************</p>
+                {/* <p>************</p> */}
+                <p>{memberData?.user_pw.substring(0,20) || ''}</p>
               </div>
               <div className="user-info">
                 <label>전화번호</label>
-                <p>{memberData?.user_phone}</p>
+                <p>{memberData?.user_phone || ''}</p>
               </div>
             </div>
             <div className="user-info-wrap">
@@ -106,15 +193,57 @@ const MypageProfileContaier = styled.div`
   margin-bottom: 70px;
   color: #404040;
 
-  .user-img-wrap {
+  .profile-img-wrap {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     width: 25%;
 
-    .user-img {
+    .profile-img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+
+    .profile-img-default {
       font-size: 200px;
       color: #bcbcbc;
+      margin-bottom: 10px;
     }
+
+    .file-confirm {
+      text-align: center;
+
+      & > p { margin-bottom: 10px; }
+      & > button:nth-child(2) { margin-right: 10px; }
+    }
+
+    .edit-profile-btn {
+      text-decoration: underline;
+      transition: .2s ease;
+      cursor: pointer;
+
+      &:hover { color: #5050fd; }
+    }
+  }
+
+  .edit-profile {
+    font-size: 14px;
+    border: 1px solid #f3b017;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 5px 10px;
+    color: #f3b017;
+    cursor: pointer;
+    transition: .2s ease;
+
+    &:active { transform: scale(.9, .9); }
+  }
+
+  .edit-profile-cancel {
+    border: 1px solid #999;
+    color: #999;
   }
 
   .user-info-container {
@@ -136,25 +265,6 @@ const MypageProfileContaier = styled.div`
           font-weight: 400;
         }
       }
-
-      .edit-profile {
-        font-size: 14px;
-        border: 1px solid #f3b017;
-        background-color: #fff;
-        border-radius: 10px;
-        padding: 5px 10px;
-        color: #f3b017;
-        cursor: pointer;
-        transition: .2s ease;
-
-        &:active { transform: scale(.9, .9); }
-        
-      }
-
-      .edit-profile-cancel {
-        border: 1px solid #999;
-        color: #999;
-      }
     }
 
     .user-info-box {
@@ -171,9 +281,7 @@ const MypageProfileContaier = styled.div`
           padding-bottom: 10px;
           margin-bottom: 20px;
 
-          label {
-            width: 100px;
-          }
+          label { width: 100px; }
           p {
             display: flex;
             font-size: 14px;
@@ -186,9 +294,7 @@ const MypageProfileContaier = styled.div`
             white-space: nowrap;
           }
 
-          .address {
-            width: 350px;
-          }
+          .address { width: 350px; }
         }
       }
     }

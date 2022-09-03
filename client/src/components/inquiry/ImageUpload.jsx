@@ -13,6 +13,11 @@ import Spinner from '../Spinner';
 import { MdOutlineDriveFolderUpload } from 'react-icons/md';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
+/**
+ * @description 이미지 업로드 컴포넌트
+ * @parma setUploadImg 백엔드에 보낼 이미지 상태값을 부모컴포넌트에 보낸다 /InquiryPage.jsx
+ * @parma setConfirm 이미지 첨부 확인 여부 상태값을 부모컴포넌트에 보낸다 /InquiryPage.jsx
+ */
 const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
   // formData 사용
   const formData = new FormData();
@@ -21,8 +26,9 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
   const [showImgFiles, setShowImgFiles] = useState('');
   // 백엔드에 보낼 이미지 상태값
   const [formDataImg, setFormDataImg] = useState('');
-
+  // 이미지 업로드 카운트
   const [count, setCount] = useState('0/1');
+  // 이미지사용여부 확인
   const [imgConfirm, setImgConfirm] = useState(false);
 
   const imgRef = useRef();
@@ -36,7 +42,7 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
   // 백엔드 통신 로딩 상태
   const [isLoading, setIsLoading] = useState(false);
 
-  // 이미지 선택
+  /** 이미지 선택 */
   const fileSelect = useCallback((e) => {
     e.preventDefault();
 
@@ -54,7 +60,7 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
   //   for (const i of formData) console.log('!!!formData >>> ', i);
   // }, [formDataImg]);
 
-  // 이미지 업로드
+  /** 이미지 업로드 */
   const uploadFile = useCallback(
     async (e) => {
       e.preventDefault();
@@ -83,7 +89,7 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
     [formDataImg, setUploadImg]
   );
 
-  // 삭제
+  /** 이미지 선택 취소(삭제) */
   const deleteFile = useCallback(
     (e) => {
       e.preventDefault();
@@ -128,7 +134,7 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
               {showImgFiles && (
                 <>
                   <div className="upload-img-wrap">
-                    <img src={showImgFiles} alt={showImgFiles} ref={imgRef} />
+                    <img src={showImgFiles} alt="1:1문의 이미지" ref={imgRef} />
                     {imgConfirm && (
                       <AiOutlineCloseCircle className="close-btn" onClick={deleteFile} />
                     )}
@@ -177,11 +183,11 @@ const ImageUploadContainer = styled.div`
       align-items: center;
       margin: 0 20px 10px;
       font-size: 0.9rem;
+      transition: .2s ease;
       cursor: pointer;
-      /* display: none; */
 
       .upload-icon { font-size: 3.5rem; }
-      &:hover { color: blue; }
+      &:hover { color: #5050fd; }
     }
 
     .img-preview-wrap {

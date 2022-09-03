@@ -64,10 +64,10 @@ const MyPageContainer = styled.div`
   position: relative;
   width: 1200px;
   margin: 0 auto;
+  color: #404040;
   
   @media (max-width: 1200px) { width: 80%; }
   @media (max-width: 925px) { width: 90%; }
-  color: #404040;
 
   .welcome-user {
     display: flex;
@@ -115,21 +115,6 @@ const MyPageContainer = styled.div`
         font-size: .9rem;
         color: #999;
       }
-    }
-
-    .not-yet {
-      position: absolute;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #00000031;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      cursor: not-allowed;
-      font-size: 30px;
-      z-index: 99;
     }
   }
 `;

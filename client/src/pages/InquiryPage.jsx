@@ -64,7 +64,7 @@ const InquiryPage = memo(() => {
   useEffect(() => {
     setInquiry({ ...inquiry, img: uploadImg });
 
-  }, [uploadImg, setInquiry]);  // inquiry 넣으면 무한로딩..
+  }, [uploadImg, setInquiry]);  // inquiry 넣으면 무한호출..
 
   // 문의 입력 값 갱신
   const onChange = useCallback(

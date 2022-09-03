@@ -13,6 +13,8 @@ import Spinner from '../Spinner';
 import { MdOutlineDriveFolderUpload } from 'react-icons/md';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
+const IMG_URL = process.env.REACT_APP_IMG_URL;
+
 /**
  * @description 이미지 업로드 컴포넌트
  * @parma setUploadImg 백엔드에 보낼 이미지 상태값을 부모컴포넌트에 보낸다 /InquiryPage.jsx
@@ -73,7 +75,7 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
 
         const response = await axios.post('api/image/upload/single', formData);
 
-        setUploadImg(`http://localhost:3001/image/${response.data.filePath.filename}`);
+        setUploadImg(`${IMG_URL}${response.data.filePath.filename}`);
         setImgConfirm(false);
       } catch (err) {
         console.error(err);

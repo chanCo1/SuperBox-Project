@@ -4,26 +4,35 @@ import styled from 'styled-components';
 import axios from '../../config/axios';
 
 // 리덕스
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { putProfileImg } from '../../slices/ProfileSlice';
+import { tokenVerify } from '../../slices/UserSlice';
+// import { setProfileImg } from '../../slices/UserSlice';
 
 // 컴포넌트 참조
 import EditProfile from '../profile/EditProfile';
+import Spinner from '../Spinner';
 
 // 아이콘 참조
 import { BsMegaphone } from 'react-icons/bs';
 import { FaUserCircle } from 'react-icons/fa';
 
+const IMG_URL = process.env.REACT_APP_IMG_URL;
+
 /**
  * @description 개인정보수정
  */
 const MypageProfile = memo(() => {
+
+  const dispatch = useDispatch();
   /** Store를 통해 user 상태값 호출 */
   const { memberData } = useSelector((state) => state.user);
+  console.log(memberData);
 
   // 프로필 수정 상태값
   const [editProfileState, setEditProfileState] = useState(false);
   // 보여줄 이미지 상태값 관리
-  const [showImgFiles, setShowImgFiles] = useState('');
+  const [showImgFile, setShowImgFile] = useState('');
   // 이미지 사용 여부 확인을 보여주기 위한 상태값
   const [imgConfirm, setImgConfirm] = useState(false);
   // 업로드할 이미지 주소 상태값
@@ -46,7 +55,7 @@ const MypageProfile = memo(() => {
     e.preventDefault();
 
     const file = e.target.files[0];
-    setShowImgFiles(URL.createObjectURL(file));
+    setShowImgFile(URL.createObjectURL(file));
 
     setFormDataImg(file);
     setImgConfirm(true);
@@ -56,10 +65,10 @@ const MypageProfile = memo(() => {
   const cancelFile = useCallback(e => {
     e.preventDefault();
 
-    URL.revokeObjectURL(showImgFiles);
-    setShowImgFiles('');
+    URL.revokeObjectURL(showImgFile);
+    setShowImgFile('');
     setImgConfirm(false);
-  }, [showImgFiles]);
+  }, [showImgFile]);
 
   /** 이미지 업로드 */
   const uploadFile = useCallback( async e => {
@@ -71,117 +80,119 @@ const MypageProfile = memo(() => {
       setIsLoading(true)
 
       const response = await axios.post('api/image/upload/single', formData);
-      console.log(response)
 
+      dispatch(putProfileImg({
+        profile_img: `${IMG_URL}${response.data.filePath.filename}`,
+        user_no: memberData?.user_no,
+      }));
+
+      // dispatch(tokenVerify());
       setImgConfirm(false);
+
     } catch (err) {
       console.error(err);
     } finally {
       setIsLoading(false);
     }
-  }, [formDataImg, formData]);
+  }, [formDataImg, dispatch, memberData]);
 
   return (
-    <MypageProfileContaier>
-      <div className="profile-img-wrap">
-        {imgConfirm ? (
-          <>
-          {/* FIXME: 이미지 저장한걸 사용해야함 */}
-            <img src={showImgFiles} alt="프로필 이미지" className="profile-img" />
-            <div className='file-confirm'>
-              <p>이 이미지를 사용할까요?</p>
-              <button 
-                className='edit-profile'
-                onClick={uploadFile}
-                // style={{ marginRight: '10px' }}
-              >네</button>
-              <button className='edit-profile edit-profile-cancel' onClick={cancelFile}>아니요</button>
-            </div>
-          </>
-        ) : (
-          <>
-            <FaUserCircle className="profile-img-default" />
-            <label
-              htmlFor="imageUpload" 
-              className='edit-profile-btn' 
-              onChange={fileSelect}>프로필 변경
-
-              <input 
-                type="file" 
-                id='imageUpload' 
-                name="imageUpload" 
-                accept="image/*"
-                style={{ display: 'none' }}
-              />
-            </label>
-          </>
-        )}
-      </div>
-      <div className="user-info-container">
-        <div className="user-info-top">
-          <div className="welcome-user">
-            <BsMegaphone style={{ marginRight: '10px' }} />
-            <span>{memberData && memberData.user_name}</span>&nbsp;님 반가워요!
-          </div>
-
-          {editProfileState ? (
-            <div className="edit-wrap">
-              <button
-                className="edit-profile edit-profile-cancel"
-                onClick={onEditProfile}
-              >
-                취소
-              </button>
-            </div>
+    <>
+      <Spinner visible={isLoading} />
+      <MypageProfileContaier>
+        <div className="profile-img-wrap">
+          {imgConfirm ? (
+            <>
+              <img src={showImgFile} alt="프로필 이미지" className="profile-img" />
+              <div className='file-confirm'>
+                <p>이 이미지를 사용할까요?</p>
+                <button className='edit-profile'onClick={uploadFile}>네</button>
+                <button className='edit-profile edit-profile-cancel' onClick={cancelFile}>아니요</button>
+              </div>
+            </>
           ) : (
-            <button className="edit-profile" onClick={onEditProfile}>
-              개인정보수정
-            </button>
+            <>
+              <FaUserCircle className="profile-img-default" />
+              <label
+                htmlFor="imageUpload" 
+                className='edit-profile-btn' 
+                onChange={fileSelect}>프로필 변경
+
+                <input 
+                  type="file" 
+                  id='imageUpload' 
+                  name="imageUpload" 
+                  accept="image/*"
+                  style={{ display: 'none' }}
+                />
+              </label>
+            </>
           )}
         </div>
+        <div className="user-info-container">
+          <div className="user-info-top">
+            <div className="welcome-user">
+              <BsMegaphone style={{ marginRight: '10px' }} />
+              <span>{memberData && memberData.user_name}</span>&nbsp;님 반가워요!
+            </div>
 
-        {!editProfileState ? (
-          <div className="user-info-box">
-            <div className="user-info-wrap">
-              <div className="user-info">
-                <label>이름</label>
-                <p>{memberData?.user_name || ''}</p>
+            {editProfileState ? (
+              <div className="edit-wrap">
+                <button className="edit-profile edit-profile-cancel" onClick={onEditProfile}>
+                  취소
+                </button>
               </div>
-              <div className="user-info">
-                <label>비밀번호</label>
-                {/* <p>************</p> */}
-                <p>{memberData?.user_pw.substring(0,20) || ''}</p>
-              </div>
-              <div className="user-info">
-                <label>전화번호</label>
-                <p>{memberData?.user_phone || ''}</p>
-              </div>
-            </div>
-            <div className="user-info-wrap">
-              <div className="user-info">
-                <label>우편번호</label>
-                <p className="address">{memberData?.postcode || ''}</p>
-              </div>
-              <div className="user-info">
-                <label>주소</label>
-                <p className="address">{memberData?.addr1 || ''}</p>
-              </div>
-              <div className="user-info">
-                <label>상세주소</label>
-                <p className="address">{memberData?.addr2 || ''}</p>
-              </div>
-            </div>
+            ) : (
+              <button className="edit-profile" onClick={onEditProfile}>
+                개인정보수정
+              </button>
+            )}
           </div>
-        ) : (
-          <EditProfile setEditProfileState={setEditProfileState} />
-        )}
-      </div>
-    </MypageProfileContaier>
+
+          {!editProfileState ? (
+            <div className="user-info-box">
+              <div className="user-info-wrap">
+                <div className="user-info">
+                  <label>이름</label>
+                  <p>{memberData?.user_name || ''}</p>
+                </div>
+                <div className="user-info">
+                  <label>비밀번호</label>
+                  {/* <p>************</p> */}
+                  <p>{memberData?.user_pw.substring(0,20) || ''}</p>
+                </div>
+                <div className="user-info">
+                  <label>전화번호</label>
+                  <p>{memberData?.user_phone || ''}</p>
+                </div>
+              </div>
+              <div className="user-info-wrap">
+                <div className="user-info">
+                  <label>우편번호</label>
+                  <p className="address">{memberData?.postcode || ''}</p>
+                </div>
+                <div className="user-info">
+                  <label>주소</label>
+                  <p className="address">{memberData?.addr1 || ''}</p>
+                </div>
+                <div className="user-info">
+                  <label>상세주소</label>
+                  <p className="address">{memberData?.addr2 || ''}</p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <EditProfile setEditProfileState={setEditProfileState} />
+          )}
+        </div>
+      </MypageProfileContaier>
+    </>
   );
 });
 
 export default MypageProfile;
 
+/** 마이페이지-개인정보 컴포넌트 스타일 */
 const MypageProfileContaier = styled.div`
   position: relative;
   display: flex;

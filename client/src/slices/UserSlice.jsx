@@ -75,7 +75,12 @@ const UserSlice = createSlice({
       if(!payload) {
         return { ...state, isLogin: payload };
       }
-    }
+    },
+
+    // setProfileImg: (state, { payload }) => {
+    //   console.log(payload)
+    //   return { ...state, memberData: { ...state.memberData, profile_img: payload } }
+    // }
   },
 
   extraReducers: {
@@ -103,4 +108,4 @@ const UserSlice = createSlice({
 });
 
 export default UserSlice.reducer;
-export const { setIsLogin } = UserSlice.actions;
+export const { setIsLogin, setProfileImg } = UserSlice.actions;

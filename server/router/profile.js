@@ -6,7 +6,9 @@ import encrypt from '../libs/encrypt.js';
 /** 라우터 생성 */
 const router = express.Router();
 
-/** 프로필 수정 */
+/** 
+ * 프로필 수정 
+ */
 router.put('/putProfile', async (req,res) => {
   console.log('프로필 수정 >>>',req.body);
 
@@ -38,6 +40,7 @@ router.put('/putProfile', async (req,res) => {
         res.status(200).json({ success: true, message: '비밀번호를 제외한 회원정보를 수정했습니다' })
       } catch(err) {
         console.log(err);
+        res.status(400).json({ success: false, message: '회원정보 수정 실패' });
       };
 
     } else {
@@ -50,10 +53,33 @@ router.put('/putProfile', async (req,res) => {
         res.status(200).json({ success: true, message: '회원정보를 수정했습니다' })
       } catch(err) {
         console.log(err);
+        res.status(400).json({ success: false, message: '회원정보 수정 실패' });
       };
     }
   } catch(err) {
     res.status(400).json({ success: false, message: '회원정보 수정 실패' });
+  }
+});
+
+/**
+ * 프로필 이미지 수정
+ */
+router.put('/putProfileImg', async (req,res) => {
+  console.log('프로필이미지주소 >>> ',req.body);
+
+  const { profile_img, user_no } = req.body;
+
+  const sql = 'UPDATE member SET profile_img=? WHERE user_no=?';
+
+  const param = [profile_img, user_no];
+
+  try {
+    await mysqlPool(sql, param);
+    res.status(200).json({ success: true });
+
+  } catch(err) {
+    console.log(err);
+    res.status(400).json({ success: false, message: '프로필 이미지 수정 실패' });
   }
 });
 

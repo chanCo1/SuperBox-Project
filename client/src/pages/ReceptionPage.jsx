@@ -489,7 +489,6 @@ const ReceptionPage = memo(() => {
                   type="date"
                   name="visitDate"
                   min={tomorrow() || ''}
-                  // min={'2022-08-31'}
                   onChange={onChange}
                 />
               </div>

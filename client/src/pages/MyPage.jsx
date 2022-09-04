@@ -79,7 +79,7 @@ const MyPageContainer = styled.div`
     
     .mypage-item {
       position: relative;
-      border-radius: 5px;
+      border-radius: 20px;
       color: #404040;
       padding: 20px;
       margin-bottom: 40px;

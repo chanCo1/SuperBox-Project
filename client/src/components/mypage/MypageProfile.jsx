@@ -2,6 +2,7 @@
 import React, { memo, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import axios from '../../config/axios';
+import Swal from 'sweetalert2';
 
 // 리덕스
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,6 +17,7 @@ import Spinner from '../Spinner';
 // 아이콘 참조
 import { BsMegaphone } from 'react-icons/bs';
 import { FaUserCircle } from 'react-icons/fa';
+import { HiOutlineTrash } from 'react-icons/hi';
 
 const IMG_URL = process.env.REACT_APP_IMG_URL;
 
@@ -94,6 +96,33 @@ const MypageProfile = memo(({ memberData }) => {
     }
   }, [formDataImg, dispatch, memberData]);
 
+  /** 프로필 이미지 삭제 */
+  const onDeleteProfileImg = useCallback(e => {
+    Swal.fire({
+      icon: 'question',
+      iconColor: '#f3b017',
+      text: '프로필 이미지를 삭제할까요?',
+      showCancelButton: true,
+      confirmButtonText: '네!',
+      confirmButtonColor: '#f3b017',
+      cancelButtonText: '아니요',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        (async () => {
+          try {
+            await axios.put('/api/profile/deleteProfileImg', {
+               user_no: memberData.user_no
+            });
+          } catch(err) {
+            console.log(err);
+          }
+        })();
+      };
+
+      dispatch(tokenVerify());
+    })
+  }, [memberData.user_no, dispatch]);
+
   return (
     <>
       <Spinner visible={isLoading} />
@@ -101,7 +130,9 @@ const MypageProfile = memo(({ memberData }) => {
         <div className="profile-img-wrap">
           {imgConfirm ? (
             <>
-              <img src={showImgFile} alt="프로필 이미지" className="profile-img" />
+              <div className='profile-img-box'>
+                <img src={showImgFile} alt="프로필 이미지" className="profile-img" />
+              </div>
               <div className='file-confirm'>
                 <p>이 이미지를 사용할까요?</p>
                 <button className='edit-profile'onClick={uploadFile}>
@@ -115,7 +146,14 @@ const MypageProfile = memo(({ memberData }) => {
           ) : (
             <>
               {memberData?.profile_img ? (
-                <img src={memberData?.profile_img} alt={`${memberData?.user_name} 프로필 이미지`} className='profile-img' />
+                <div className='profile-img-box'>
+                  <img 
+                    src={memberData?.profile_img} 
+                    alt={`${memberData?.user_name} 프로필 이미지`} 
+                    className='profile-img'
+                    onClick={onDeleteProfileImg}
+                  />
+                </div>
               ) : (
                 <FaUserCircle className="profile-img-default" />
               )}
@@ -216,11 +254,32 @@ const MypageProfileContaier = styled.div`
     align-items: center;
     width: 25%;
 
-    .profile-img {
-      width: 200px;
-      height: 200px;
+    .profile-img-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       border-radius: 50%;
-      margin-bottom: 10px;
+
+      .profile-img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+  
+        &:hover {
+          filter: blur(4px);
+          cursor: pointer;
+        }
+      }
+
+      &:hover::before {
+        content: '삭제';
+        position: absolute;
+        z-index: 9;
+        color: #fff;
+        text-shadow: -1px 0px #000, 0px 1px #000, 1px 0px #000, 0px -1px #000;
+        font-size: 18px;
+      }
     }
 
     .profile-img-default {

@@ -20,14 +20,12 @@ import { FaUserCircle } from 'react-icons/fa';
 const IMG_URL = process.env.REACT_APP_IMG_URL;
 
 /**
- * @description 개인정보수정
+ * @description 개인정보 수정
+ * @param memberData 로그인한 사용자 정보 /App.jsx
  */
-const MypageProfile = memo(() => {
+const MypageProfile = memo(({ memberData }) => {
 
   const dispatch = useDispatch();
-  /** Store를 통해 user 상태값 호출 */
-  const { memberData } = useSelector((state) => state.user);
-  console.log(memberData);
 
   // 프로필 수정 상태값
   const [editProfileState, setEditProfileState] = useState(false);
@@ -106,13 +104,21 @@ const MypageProfile = memo(() => {
               <img src={showImgFile} alt="프로필 이미지" className="profile-img" />
               <div className='file-confirm'>
                 <p>이 이미지를 사용할까요?</p>
-                <button className='edit-profile'onClick={uploadFile}>네</button>
-                <button className='edit-profile edit-profile-cancel' onClick={cancelFile}>아니요</button>
+                <button className='edit-profile'onClick={uploadFile}>
+                  네
+                </button>
+                <button className='edit-profile edit-profile-cancel' onClick={cancelFile}>
+                  아니요
+                </button>
               </div>
             </>
           ) : (
             <>
-              <FaUserCircle className="profile-img-default" />
+              {memberData?.profile_img ? (
+                <img src={memberData?.profile_img} alt={`${memberData?.user_name} 프로필 이미지`} className='profile-img' />
+              ) : (
+                <FaUserCircle className="profile-img-default" />
+              )}
               <label
                 htmlFor="imageUpload" 
                 className='edit-profile-btn' 

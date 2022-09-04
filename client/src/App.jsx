@@ -111,7 +111,7 @@ const App = memo(() => {
         <Route
           path="/mypage"
           element={
-            isLogin ? <MyPage /> : <Error404Page error={error} />
+            isLogin ? <MyPage memberData={memberData} /> : <Error404Page error={error} />
           }
         />
         {/* 내접수내역 */}

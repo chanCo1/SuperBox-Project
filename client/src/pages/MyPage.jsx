@@ -8,31 +8,24 @@ import Meta from '../Meta';
 import PageTitle from '../components/PageTitle';
 import MypageProfile from '../components/mypage/MypageProfile';
 
-// 리덕스
-import { useSelector } from 'react-redux';
-
 // 아이콘 참조
 import { TbReportSearch } from 'react-icons/tb';
 import { HiOutlinePencilAlt } from 'react-icons/hi';
 import { RiWechatLine } from 'react-icons/ri';
-// import { FiUserPlus } from 'react-icons/fi';
-// import { AiOutlineStop } from 'react-icons/ai';
-
-// import { BsMegaphone } from 'react-icons/bs';
 
 /**
  * @description 마이페이지
+ * @param memberData 로그인한 사용자 정보 /App.jsx
  */
-const MyPage = memo(() => {
-
-  const { memberData } = useSelector(state => state.user);
+const MyPage = memo(({ memberData }) => {
 
   return (
     <>
       <Meta title={'SuperBox :: 마이페이지'} />
       <PageTitle title={'마이페이지'} subtitle={'고객님의 정보를 한 눈에 확인해보세요.'} />
 
-      <MypageProfile />
+      {/* 프로필 */}
+      <MypageProfile memberData={memberData} />
 
       <MyPageContainer>
         <div className='mypage-wrap'>
@@ -60,6 +53,7 @@ const MyPage = memo(() => {
 
 export default MyPage;
 
+/** 마이페이지 스타일 */
 const MyPageContainer = styled.div`
   position: relative;
   width: 1200px;

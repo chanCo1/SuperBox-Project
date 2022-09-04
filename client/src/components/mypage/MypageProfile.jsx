@@ -86,7 +86,7 @@ const MypageProfile = memo(() => {
         user_no: memberData?.user_no,
       }));
 
-      // dispatch(tokenVerify());
+      dispatch(tokenVerify());
       setImgConfirm(false);
 
     } catch (err) {

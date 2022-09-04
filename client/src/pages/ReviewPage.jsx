@@ -10,18 +10,14 @@ import ReviewList from '../components/review/ReviewList';
 import Search from '../components/Search';
 import { BiPencil } from 'react-icons/bi';
 
-// 리덕스
-import { useDispatch, useSelector } from 'react-redux';
-
 /**
- * 후기 페이지
+ * @description 후기 페이지
+ * @param memberData 로그인한 사용자 정보 /app.jsx
+ * @param isLogin 로그인 상태 /app.jsx
  */
-const ReviewPage = memo(() => {
+const ReviewPage = memo(({ memberData, isLogin }) => {
 
   const navigate = useNavigate();
-
-  /** 리덕스 로그인 상태 */
-  const { isLogin } = useSelector((state) => state.user);
 
   // 정렬 상태값 저장
   const [sort, setSort] = useState('review_no');
@@ -87,7 +83,7 @@ const ReviewPage = memo(() => {
         </div>
       </div>
       
-      <ReviewList listSort={sort} />
+      <ReviewList memberData={memberData} listSort={sort} />
 
     </ReviewPageContainer>
   );

@@ -32,16 +32,17 @@ import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
 /** 
- * 후기 상세보기 
+ * @description 후기 상세보기 
+ * @param memberData 로그인한 사용자 정보 /App.jsx
+ * @param isLogin 로그인 상태 /App.jsx
  */
-const ReviewDetail = memo(() => {
+const ReviewDetail = memo(({ memberData, isLogin }) => {
 
   /** 파라미터 값을 가져오기 위한 params 함수 생성 */
   const params = useParams();
 
   /** 리덕스 값 가져오기 */
   const dispatch = useDispatch();
-  const { memberData, isLogin } = useSelector(state => state.user);
 
   // 백엔드로 부터 받은 데이터 상태값 관리
   const [reviewDetail, setReviewDetail] = useState()
@@ -99,7 +100,11 @@ const ReviewDetail = memo(() => {
             <div className='review-detail-wrap' key={v.review_no}>
               <div className='review-detail-top'>
                 <div className='review-detail-top-wrap'>
-                  <FaUserCircle className='user-icon' />
+                  {v.profile_img ? (
+                    <img src={v.profile_img} alt={`${v.name} 프로필 이미지`} className='profile-img' />
+                  ) : (
+                    <FaUserCircle className='user-icon' />
+                  )}
                   <div className='review-detail-head'>
                     <p>{v.head}</p>
                     <p>{v.name && nameMasking(v.name)}</p>
@@ -137,7 +142,11 @@ const ReviewDetail = memo(() => {
           괜찮은 후기인가요?
         </Like>
 
-        <CommentWrite reviewNo={params.review_no} />
+        <CommentWrite 
+          memberData={memberData}
+          isLogin={isLogin}
+          reviewNo={params.review_no} 
+        />
 
       </ReviewDetailContainer>
     </>
@@ -170,6 +179,13 @@ const ReviewDetailContainer = styled.div`
       .review-detail-top-wrap {
         display: flex;
         align-items: center;
+
+        .profile-img {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          margin-right: 10px;
+        }
 
         .user-icon {
           font-size: 3rem;

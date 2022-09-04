@@ -20,16 +20,16 @@ import RegexHelper from '../../libs/RegexHelper';
 import { postReview } from '../../slices/ReviewSlice';
 
 /**
- * 후기 작성
+ * @description 후기 작성
+ * @param memberData 로그인한 사용자 정보 /App.jsx
+ * @param loading 로딩상태 /App.jsx
+ * @param isLogin 로그인 상태 /App.jsx
  */
-const ReviewWrite = memo(() => {
+const ReviewWrite = memo(({ memberData, loading, isLogin }) => {
   // 리덕스의 디스패치 사용
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-
-  /** Store를 통해 user 상태값 호출 */
-  const { memberData, loading, isLogin } = useSelector((state) => state.user);
 
   // // 백엔드에 보낼 이미지 상태값
   // const [uploadImg, setUploadImg] = useState([]);
@@ -47,6 +47,7 @@ const ReviewWrite = memo(() => {
           content: '',
           img: null,
           name: isLogin ? memberData?.user_name : '',
+          profile_img: isLogin ? memberData?.profile_img : null,
           user_no: isLogin ? memberData?.user_no : '',
         });
       });

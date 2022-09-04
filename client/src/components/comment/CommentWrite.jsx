@@ -19,12 +19,11 @@ import { FaUserCircle } from 'react-icons/fa';
 
 /**
  * @description 댓글 쓰기
+ * @param memberData 로그인한 사용자 정보 / ReviewDetail.jsx
+ * @param isLogin 로그인 상태 / ReviewDetail.jsx
  * @param reviewNo 현재 머물러 있는 후기글 번호 / ReviewDetail.jsx
  */
-const CommentWrite = memo(({ reviewNo }) => {
-
-  // 사용자 정보
-  const { memberData, isLogin } = useSelector(state => state.user);
+const CommentWrite = memo(({ memberData, isLogin, reviewNo }) => {
 
   // 댓글 입력 상태값
   const [comment, setComment] = useState({});
@@ -36,6 +35,7 @@ const CommentWrite = memo(({ reviewNo }) => {
     memberData && setTimeout(() => {
       setComment({
         name: isLogin ? memberData?.user_name : '',
+        profile_img: isLogin ? memberData?.profile_img : null,
         comment: '',
         user_no: isLogin ? memberData?.user_no : null,
         review_no: reviewNo
@@ -95,7 +95,11 @@ const CommentWrite = memo(({ reviewNo }) => {
         {isLogin ? (
           <form className='comment-wrap' onSubmit={onSubmit}>
             <div className='comment-input'>
-              <FaUserCircle className='icon' />
+              {memberData?.profile_img ? (
+                  <img src={memberData?.profile_img} alt={`${memberData?.user_name} 프로필 이미지`} className='profile-img' />
+                ) : (
+                  <FaUserCircle className='icon' />
+                )}
               <textarea 
                 type="text" 
                 name="comment" 
@@ -149,15 +153,20 @@ const CommentWriteContainer = styled.div`
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
+
+      .profile-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
       
       .icon {
-        font-size: 3rem;
+        font-size: 50px;
         color: #bcbcbc;
-        margin-right: 20px;
       }
       
       textarea {
-        width: 100%;
+        width: 92%;
         min-height: 100px;
         border-radius: 10px;
         border: 1px solid #bcbcbc;

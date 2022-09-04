@@ -21,9 +21,10 @@ import { MdOutlineComment } from 'react-icons/md';
 
 /** 
  * @description 고객후기 List
+ * @param memberData 로그인한 사용자 정보 / ReviewPage.jsx
  * @param listSort 정렬을 위한 문자열 ex)review_no / ReviewPage.jsx
  */
-const ReviewList = memo(({ listSort }) => {
+const ReviewList = memo(({ memberData, listSort }) => {
 
   // 리덕스
   const dispatch = useDispatch();
@@ -90,8 +91,12 @@ const ReviewList = memo(({ listSort }) => {
                 </p>
               </div>
               <div className='review-list-tail'>
-                <p><FaUserCircle className='user-icon' />
-                  {/* {v.name && v.name.substr(0,1)}*{v.name && v.name.substring(2,4)} */}
+                <p>
+                  {v.profile_img ? (
+                    <img src={v.profile_img} alt={`${v.name} 프로필 이미지`} className='profile-img' />
+                  ) : (
+                    <FaUserCircle className='user-icon' />
+                  )}
                   {v.name && nameMasking(v.name)}
                 </p>
 
@@ -188,10 +193,16 @@ const ReviewListContainer = styled.div`
       position: relative;
       font-size: 1.1rem;
       margin-bottom: 10px;
+
+      .profile-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
       
       .user-icon {
-        position: relative;
-        font-size: 2rem;
+        font-size: 32px;
         margin-right: 10px;
         color: #bcbcbc;
       }

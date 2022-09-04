@@ -98,10 +98,14 @@ const CommentEdit = memo(({ setEditState, comment, commentNo, setCommentList, re
   return (
     <>
       <Spinner visible={isloading} />
-      <CommentWriteContainer>
+      <CommentEditContainer>
         <form className="comment-wrap" onSubmit={onEditCommentSubmit}>
           <div className="comment-input">
-            <FaUserCircle className="icon" />
+            {memberData.profile_img ? (
+              <img src={memberData.profile_img} alt={`${memberData.user_name} 프로필 이미지`} className='profile-img' />
+            ) : (
+              <FaUserCircle className='icon' />
+            )}
             <textarea
               type="text"
               name="comment"
@@ -119,15 +123,15 @@ const CommentEdit = memo(({ setEditState, comment, commentNo, setCommentList, re
             </button>
           </div>
         </form>
-      </CommentWriteContainer>
+      </CommentEditContainer>
     </>
   );
 });
 
 export default CommentEdit;
 
-
-const CommentWriteContainer = styled.div`
+/** 댓글 수정 컴포넌트 스타일 */
+const CommentEditContainer = styled.div`
   position: relative;
   width: 100%;
   margin: 40px 0;
@@ -143,15 +147,22 @@ const CommentWriteContainer = styled.div`
       display: flex;
       justify-content: space-between;
       margin-bottom: 10px;
+
+      .profile-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 20px;
+      }
       
       .icon {
-        font-size: 3rem;
+        font-size: 50px;
         color: #bcbcbc;
         margin-right: 20px;
       }
       
       textarea {
-        width: 100%;
+        width: 92%;
         min-height: 100px;
         border-radius: 10px;
         border: 1px solid #bcbcbc;

@@ -24,7 +24,7 @@ import { FaUserCircle } from 'react-icons/fa';
 /**
  * @description 댓글 호출
  * @param getComment 댓글 작성하고 받은 댓글 리스트 / commentWrite.jsx
- * @param getComment 현재 머물러 있는 후기글 번호 / commentWrite.jsx
+ * @param reviewNo 현재 머물러 있는 후기글 번호 / commentWrite.jsx
  */
 const CommentList = memo(({ getComment, reviewNo }) => {
   
@@ -65,7 +65,11 @@ const CommentList = memo(({ getComment, reviewNo }) => {
             <div className='comment-wrap'>
               <div className='comment-user-wrap'>
                 <div className='user-info-wrap'>
-                  <FaUserCircle className='user-icon' />
+                  {v.profile_img ? (
+                    <img src={v.profile_img} alt={`${v.name} 프로필 이미지`} className='profile-img' />
+                  ) : (
+                    <FaUserCircle className='user-icon' />
+                  )}
                   <div className='user-info'>
                     <p className='comment-name'>
                       {v.name && nameMasking(v.name)}
@@ -95,6 +99,7 @@ const CommentList = memo(({ getComment, reviewNo }) => {
                   commentNo={v.comment_no}
                   setCommentList={setCommentList}
                   reviewNo={reviewNo}
+                  profileImg={v.profile_img}
                 />
               ) : (
                 // 그렇지 않으면 원래 댓글
@@ -128,8 +133,15 @@ const CommentListContainer = styled.div`
       .user-info-wrap {
         display: flex;
 
+        .profile-img {
+          width: 40px;
+          height: 40px;
+          margin-right: 10px;
+          border-radius: 50%;
+        }
+
         .user-icon {
-          font-size: 2.5rem;
+          font-size: 40px;
           color: #bcbcbc;
           margin-right: 10px;
         }

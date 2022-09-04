@@ -36,7 +36,7 @@ const App = memo(() => {
   const dispatch = useDispatch();
 
   /** Store를 통해 상태값 호출 */
-  const { error, isLogin } = useSelector((state) => state.user);
+  const { memberData, loading, error, isLogin } = useSelector((state) => state.user);
 
   // 로그인 버튼 클릭시 사용할 boolean 값
   const [loginPageState, setLoginPageState] = useState(false);
@@ -56,7 +56,12 @@ const App = memo(() => {
 
   return (
     <>
-      <Header loginPageState={setLoginPageState} />
+      <Header
+        memberData={memberData}
+        isLogin={isLogin}
+        loginPageState={setLoginPageState}
+        loading={loading}
+      />
 
       {loginPageState && <LoginPage loginPageState={setLoginPageState} />}
 
@@ -64,42 +69,79 @@ const App = memo(() => {
         {/* 첫 페이지 */}
         <Route path="/" exact={true} element={<IntroPage />} />
 
-        {/* 메인페이지 */}
-        <Route path="/main" element={<MainPage loginPageState={setLoginPageState} />} />
-
-        {/* 배송접수 */}
+        {/* 메인페이지 페이지 */}
         <Route 
-          path="/reception" 
-          element={isLogin ? <ReceptionPage /> : <Error404Page error={error} />} 
+          path="/main"
+          element={<MainPage loginPageState={setLoginPageState} />}
         />
-        
-        {/* 고객후기 */}
-        <Route path="/review" element={<ReviewPage />} />
-        <Route path="/review/review_write" element={<ReviewWrite />} />
-        <Route path="/review/:review_no" element={<ReviewDetail />} />
+
+        {/* 배송접수 페이지 */}
+        <Route
+          path="/reception"
+          element={
+            isLogin ? <ReceptionPage /> : <Error404Page error={error} />
+          }
+        />
+
+        {/* 고객후기 페이지 */}
+        <Route 
+          path="/review"
+          element={
+            <ReviewPage memberData={memberData} isLogin={isLogin} loading={loading} />
+          }
+        />
+        {/* 후기작성 */}
+        <Route
+          path="/review/review_write"
+          element={
+            <ReviewWrite memberData={memberData} isLogin={isLogin} loading={loading} />
+          }
+        />
+        {/* 후기 상세보기 */}
+        <Route
+          path="/review/:review_no"
+          element={
+            <ReviewDetail memberData={memberData} isLogin={isLogin} />
+          }
+        />
+        {/* 후기수정 */}
         <Route path="/review/edit/:review_no" element={<ReviewEdit />} />
 
         {/* 마이페이지 */}
-        <Route 
-          path="/mypage" 
-          element={isLogin ? <MyPage /> : <Error404Page error={error}/>} 
+        <Route
+          path="/mypage"
+          element={
+            isLogin ? <MyPage /> : <Error404Page error={error} />
+          }
         />
-        <Route 
-          path="/mypage/reception" 
-          element={isLogin ? <MypageReception /> : <Error404Page error={error}/>} 
+        {/* 내접수내역 */}
+        <Route
+          path="/mypage/reception"
+          element={
+            isLogin ? <MypageReception /> : <Error404Page error={error} />
+          }
         />
-        <Route 
-          path="/mypage/review" 
-          element={isLogin ? <MypageReview /> : <Error404Page error={error}/>} 
+        {/* 내가 쓴 후기 */}
+        <Route
+          path="/mypage/review"
+          element={
+            isLogin ? <MypageReview /> : <Error404Page error={error} />
+          }
         />
-        <Route 
-          path="/mypage/inquiry" 
-          element={isLogin ? <MypageInquiry /> : <Error404Page error={error}/>} 
+        {/* 내가 쓴 1:1문의 */}
+        <Route
+          path="/mypage/inquiry"
+          element={
+            isLogin ? <MypageInquiry /> : <Error404Page error={error} />
+          }
         />
-        <Route 
-          path="/mypage/information" 
-          element={isLogin ? <MypageProfile /> : <Error404Page error={error}/>} 
-        />
+
+        {/* <Route
+          path="/mypage/information"
+          element={
+            isLogin ? <MypageProfile /> : <Error404Page error={error} />
+          }
+        /> */}
 
         {/* 회원가입 */}
         <Route
@@ -115,10 +157,6 @@ const App = memo(() => {
 
         {/* 1:1문의 */}
         <Route path="/customer/inquiry" element={<InquiryPage />} />
-        {/* <Route 
-          path="/customer/inquiry" 
-          element={isLogin ? <InquiryPage /> : <ErrorPage error={error} />} 
-        /> */}
 
         {/* 잘못 된 주소로 접속 시 */}
         <Route path="/*" element={<Error404Page />} />

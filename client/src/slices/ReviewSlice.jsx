@@ -14,7 +14,7 @@ const API_URL = 'http://localhost:3001/api/review/';
   console.log(payload);
 
   try {
-    result = await axios.get(`${API_URL}getReview`, {
+    result = await axios.get(`${API_URL}getReviewList`, {
       params: {
         query: payload?.query || '',
         // rows: payload?.rows || 10,

@@ -77,7 +77,7 @@ const ReviewPage = memo(({ memberData, isLogin }) => {
             </Link>
           ) : (
             <button className="write-btn-disabled" disabled>
-              <BiPencil className="icon" />새 글 쓰기
+              <BiPencil className="icon" />
             </button>
           )}
         </div>

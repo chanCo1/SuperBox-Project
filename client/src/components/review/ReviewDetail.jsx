@@ -71,6 +71,7 @@ const ReviewDetail = memo(({ memberData, isLogin }) => {
         const response = await axios.get('/api/review/detail', {
           params: {
             reviewNo: params.review_no,
+            // userNo: memberData?.user_no,
           }
         });
 

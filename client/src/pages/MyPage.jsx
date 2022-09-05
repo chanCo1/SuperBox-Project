@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Meta from '../Meta';
 import PageTitle from '../components/PageTitle';
 import MypageProfile from '../components/mypage/MypageProfile';
+import Withdrawal from '../components/profile/Withdrawal';
 
 // 아이콘 참조
 import { TbReportSearch } from 'react-icons/tb';
@@ -15,17 +16,19 @@ import { RiWechatLine } from 'react-icons/ri';
 
 /**
  * @description 마이페이지
- * @param memberData 로그인한 사용자 정보 /App.jsx
+ * @param memberData 로그인한 사용자 정보 from App.jsx
  */
 const MyPage = memo(({ memberData }) => {
 
   return (
     <>
       <Meta title={'SuperBox :: 마이페이지'} />
-      <PageTitle title={'마이페이지'} subtitle={'고객님의 정보를 한 눈에 확인해보세요.'} />
+      <PageTitle title={'마이페이지'} subtitle={'고객님의 정보를 한 눈에 확인해보세요'} />
 
       {/* 프로필 */}
       <MypageProfile memberData={memberData} />
+
+      <Withdrawal memberData={memberData} />
 
       <MyPageContainer>
         <div className='mypage-wrap'>
@@ -45,7 +48,6 @@ const MyPage = memo(({ memberData }) => {
             <p>내가 남긴 1:1문의를 확인해 보세요</p>
           </Link>
         </div>
-        <button>회원탈퇴</button>
       </MyPageContainer>
     </>
   );

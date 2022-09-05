@@ -77,7 +77,7 @@ const ReviewList = memo(({ memberData, listSort }) => {
       {data?.item && list && list.length > 0 ? (
         currentList.map((v,i) => {
           return (
-            <ReviewListContainer key={v.review_no}>
+            <ReviewListContainer key={`reviewKey${v.review_no}`}>
               <div className='review-list-head'>
                 <div className='review-list-head-top'>
                   <p>#{v.review_no}</p>
@@ -92,12 +92,14 @@ const ReviewList = memo(({ memberData, listSort }) => {
               </div>
               <div className='review-list-tail'>
                 <p>
-                  {v.profile_img ? (
+                  {v.profile_img && v.user_no ? (
                     <img src={v.profile_img} alt={`${v.name} 프로필 이미지`} className='profile-img' />
                   ) : (
                     <FaUserCircle className='user-icon' />
                   )}
-                  {v.name && nameMasking(v.name)}
+                  {v.name && v.user_no ? nameMasking(v.name) : (
+                    <span style={{ color:'#bcbcbc' }}>탈퇴한회원</span>
+                  )}
                 </p>
 
                 <div className='review-list-tail-info'>

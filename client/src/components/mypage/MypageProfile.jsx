@@ -245,7 +245,6 @@ const MypageProfileContaier = styled.div`
   border-radius: 20px;
   border: 1px solid #bcbcbc;
   padding: 50px 0;
-  margin-bottom: 70px;
   color: #404040;
 
   .profile-img-wrap {
@@ -267,7 +266,7 @@ const MypageProfileContaier = styled.div`
         margin-bottom: 10px;
   
         &:hover {
-          filter: blur(4px);
+          filter: blur(3px);
           cursor: pointer;
         }
       }

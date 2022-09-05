@@ -65,14 +65,16 @@ const CommentList = memo(({ getComment, reviewNo }) => {
             <div className='comment-wrap'>
               <div className='comment-user-wrap'>
                 <div className='user-info-wrap'>
-                  {v.profile_img ? (
+                  {v.profile_img && v.user_no ? (
                     <img src={v.profile_img} alt={`${v.name} 프로필 이미지`} className='profile-img' />
                   ) : (
                     <FaUserCircle className='user-icon' />
                   )}
                   <div className='user-info'>
                     <p className='comment-name'>
-                      {v.name && nameMasking(v.name)}
+                      {v.name && v.user_no ? nameMasking(v.name) : (
+                        <span style={{ color:'#bcbcbc' }}>탈퇴한회원</span>
+                      )}
                     </p>
                     <p className='comment-date'>
                       {v.regdate && setTime(v.regdate, v.update_regdate)}

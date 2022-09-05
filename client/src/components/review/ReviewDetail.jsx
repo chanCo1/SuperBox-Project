@@ -101,14 +101,20 @@ const ReviewDetail = memo(({ memberData, isLogin }) => {
             <div className='review-detail-wrap' key={v.review_no}>
               <div className='review-detail-top'>
                 <div className='review-detail-top-wrap'>
-                  {v.profile_img ? (
+                  {v.profile_img && v.user_no ? (
                     <img src={v.profile_img} alt={`${v.name} 프로필 이미지`} className='profile-img' />
                   ) : (
                     <FaUserCircle className='user-icon' />
                   )}
                   <div className='review-detail-head'>
                     <p>{v.head}</p>
-                    <p>{v.name && nameMasking(v.name)}</p>
+                    <p>
+                      {v.name && v.user_no ? 
+                        nameMasking(v.name) : (
+                          <span className='withdrawal'>탈퇴한회원</span>
+                        )
+                      }
+                    </p>
                   </div>
                 </div>
 
@@ -201,10 +207,15 @@ const ReviewDetailContainer = styled.div`
             margin-bottom: 5px;
             border-radius: 20px;
             color: #f3b017;
-            font-size: .8rem;
+            font-size: 14px;
           }
           & > p:nth-child(2) {
             font-size: 1.2rem;
+          }
+
+          .withdrawal {
+            color: #bcbcbc;
+            font-size: 18px;
           }
         }
       }

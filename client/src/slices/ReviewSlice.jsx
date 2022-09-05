@@ -185,7 +185,7 @@ const ReviewSlice = createSlice({
         const data = cloneDeep(state.data);
 
         // 새로 저장된 결과를 기존 상태값 배열의 맵 앞에 추가한다.
-        data.item.unshift(payload.data.item);
+        data.item.unshift(payload?.data?.item);
   
         // 기존의 상태값 배열에서 맨 마지막 항목은 삭제한다.
         // data.item.pop();

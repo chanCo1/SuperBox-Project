@@ -19,7 +19,7 @@ const setTime = (a, b) => {
   if(a !== b) {
     return new Date(b).toLocaleString().substring(0, 12) + 
     (updateHour > 9 ? ` ${updateHour}` : ` 0${updateHour}`) + ':' +
-    (updateMinutes > 9 ? updateMinutes : `0${updateMinutes}`) + ' 수정됨';
+    (updateMinutes > 9 ? updateMinutes : `0${updateMinutes}`) + ' ·수정됨';
 
   } else {
     return new Date(a).toLocaleString().substring(0, 12) + 

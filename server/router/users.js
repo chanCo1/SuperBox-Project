@@ -109,8 +109,8 @@ router.post('/check', async (req, res) => {
     // 중복되는 내용이 없다면 null 반환
     console.log('MEMBER DATA >>> ',memberData);
 
-    if (userId !== (memberData && memberData.user_id)) {
-      if (email !== (memberData && memberData.user_email)) {
+    if (userId !== (memberData?.user_id)) {
+      if (email !== (memberData?.user_email)) {
         res.status(200).json({ success: true, message: '회원가입이 가능합니다.' });
       } else {
         res.status(400).json({ success: false, message: '같은 이메일이 존재합니다.' });
@@ -120,6 +120,24 @@ router.post('/check', async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+  }
+});
+
+
+/**
+ * 회원탈퇴
+ */
+router.delete('/withdrawal', async (req, res) => {
+  console.log('회원탈퇴 >>>', req.query);
+
+  const { user_no } = req.query;
+  const sql = 'DELETE FROM member WHERE user_no = ?';
+
+  try {
+    await mysqlPool(sql, user_no);
+    res.status(200).json({ success: true });
+  } catch(err) {
+    res. status(400).json({ success: false });
   }
 });
 

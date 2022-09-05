@@ -9,7 +9,7 @@ const router = express.Router();
 /**
  * 후기 전체 조회 (get)
  */
-router.get('/getReview', async (req, res) => {
+router.get('/getReviewList', async (req, res) => {
   console.log('후기 조회 들어온값 ... >>', req.query)
 
   const { query, sort } = req.query;
@@ -36,6 +36,7 @@ router.get('/getReview', async (req, res) => {
     });
   };
 });
+
 
 /**
  * 사용자 후기 조회 (get)
@@ -72,9 +73,15 @@ router.get('/getUserReview', async (req, res) => {
 router.get('/detail', async (req, res) => {
   console.log('게시글 번호 >>> ', req.query);
 
-  const { reviewNo } = req.query;
+  const { reviewNo, userNo } = req.query;
 
-  let sql = 'SELECT * FROM review WHERE review_no = ?';
+  let sql = `
+    SELECT *
+    FROM review
+    WHERE review_no=?
+  `;
+
+  // const param = [reviewNo];
 
   let result = null;
 
@@ -114,12 +121,12 @@ router.get('/detail', async (req, res) => {
 router.post('/post', async (req, res) => {
   console.log('후기 들어온 값 >>> ', req.body);
 
-  const { head, title, content, img, name, user_no } = req.body;
+  const { head, title, content, img, name, profile_img, user_no } = req.body;
 
   let sql =
-    'INSERT INTO review (head, title, content, img, name, user_no) VALUES (?, ?, ?, ?, ?, ?)';
+    'INSERT INTO review (head, title, content, img, name, profile_img, user_no) VALUES (?, ?, ?, ?, ?, ?, ?)';
 
-  const param = [head, title, content, img, name, user_no];
+  const param = [head, title, content, img, name, profile_img, user_no];
 
   let result = null;
 

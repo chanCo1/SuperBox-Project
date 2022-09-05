@@ -12,8 +12,6 @@ const router = express.Router();
 router.put('/putProfile', async (req,res) => {
   console.log('프로필 수정 >>>',req.body);
 
-  // FIXME:들어온 값이 기존 암호화된 비번과 같으면 수정하지않고, 다르면 수정하게 해야할듯
-
   const { userName, password, phoneNumber, postcode, addr1, addr2, user_no } = req.body;
 
   const sql = 'SELECT * FROM member WHERE user_no = ?';
@@ -61,20 +59,58 @@ router.put('/putProfile', async (req,res) => {
   }
 });
 
+
 /**
  * 프로필 이미지 수정
  */
-router.put('/putProfileImg', async (req,res) => {
+router.put('/putProfileImg', async (req, res) => {
   console.log('프로필이미지주소 >>> ',req.body);
 
   const { profile_img, user_no } = req.body;
 
-  const sql = 'UPDATE member SET profile_img=? WHERE user_no=?';
-
   const param = [profile_img, user_no];
+  
+  let sql = null;
 
   try {
+    sql = 'UPDATE member SET profile_img=? WHERE user_no=?';
     await mysqlPool(sql, param);
+
+    sql = 'UPDATE review SET profile_img=? WHERE user_no=?';
+    await mysqlPool(sql, param);
+
+    sql = 'UPDATE comment SET profile_img=? WHERE user_no=?';
+    await mysqlPool(sql, param);
+
+    res.status(200).json({ success: true });
+
+  } catch(err) {
+    console.log(err);
+    res.status(400).json({ success: false, message: '프로필 이미지 수정 실패' });
+  }
+});
+
+
+/**
+ * 프로필 이미지 삭제
+ */
+router.put('/deleteProfileImg', async (req, res) => {
+  console.log('프로필이미지주소 >>> ',req.body);
+
+  const { user_no } = req.body;
+  
+  let sql = null;
+
+  try {
+    sql = `UPDATE member SET profile_img=NULL WHERE user_no=?`;
+    await mysqlPool(sql, user_no);
+
+    sql = `UPDATE review SET profile_img=NULL WHERE user_no=?`;
+    await mysqlPool(sql, user_no);
+
+    sql = `UPDATE comment SET profile_img=NULL WHERE user_no=?`;
+    await mysqlPool(sql, user_no);
+
     res.status(200).json({ success: true });
 
   } catch(err) {

@@ -39,11 +39,11 @@ router.get('/getComment', async (req, res) => {
 router.post('/postComment', async (req, res) => {
   console.log('댓글정보 >>> ', req.body);
 
-  const { name, comment, user_no, review_no } = req.body;
+  const { name, profile_img, comment, user_no, review_no } = req.body;
 
-  let sql = 'INSERT INTO comment (name, comment, user_no, review_no) VALUES (?, ?, ?, ?)' ;
+  let sql = 'INSERT INTO comment (name, profile_img, comment, user_no, review_no) VALUES (?, ?, ?, ?, ?)' ;
 
-  const param = [name, comment, user_no, review_no];
+  const param = [name, profile_img, comment, user_no, review_no];
 
   let result = null;
 

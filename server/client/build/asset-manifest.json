@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.bccd4150.css",
+    "main.js": "/static/js/main.46fe4d8d.js",
+    "static/media/reception.png": "/static/media/reception.52d02e1aa269db0b2ebd.png",
+    "static/media/review-icon.png": "/static/media/review-icon.7a5a56b3751b17c6bbdb.png",
+    "static/media/reception-icon2.png": "/static/media/reception-icon2.47193a42e76110a11fe9.png",
+    "static/media/index.cjs": "/static/media/index.b599194a631d76b49328.cjs",
+    "static/media/superbox-logo.png": "/static/media/superbox-logo.c513ad56ce2f78c79464.png",
+    "static/media/review.png": "/static/media/review.f21d2981cb5ea90f5618.png",
+    "static/media/inquiry-icon.png": "/static/media/inquiry-icon.98f48f41a03614565eff.png",
+    "static/media/customer2.png": "/static/media/customer2.c97dfe04b00716566dd2.png",
+    "static/media/inquiry-character.png": "/static/media/inquiry-character.5a27b4386f22e894c5fd.png",
+    "static/media/arrow_down.png": "/static/media/arrow_down.4c98765459122789effc.png",
+    "index.html": "/index.html",
+    "main.bccd4150.css.map": "/static/css/main.bccd4150.css.map",
+    "main.46fe4d8d.js.map": "/static/js/main.46fe4d8d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bccd4150.css",
+    "static/js/main.46fe4d8d.js"
+  ]
+}

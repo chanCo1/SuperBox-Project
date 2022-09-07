@@ -192,7 +192,9 @@ const RegisterPage = memo(({ loginPageState }) => {
     // 아이디, 이메일, 전화번호 값 존재 여부 확인
     try {
       setIsLoading(true);
-      await axios.post('http://localhost:3001/api/users/check', register);
+      // await axios.post('http://localhost:3001/api/users/check', register);
+      // baseurl test
+      await axios.post('https://superbox-project.herokuapp.com/api/users/check', register);
 
       Swal.fire({
         icon: 'success',

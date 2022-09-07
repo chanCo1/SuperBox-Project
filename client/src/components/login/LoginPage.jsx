@@ -89,7 +89,7 @@ const LoginPage = memo(({ loginPageState }) => {
       }
 
       try {
-        const response = await axios.post('http://localhost:3001/api/users/login', login);
+        const response = await axios.post('api/users/login', login);
 
         const accessToken = response.data.accessToken;
         const refreshToken = response.data.refreshToken;

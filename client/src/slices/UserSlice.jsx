@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../config/axios';
 import { pending, fulfilled, rejected } from '../utils/ExtraReducers';
 
-const API_URL = 'http://localhost:3001/api/users/';
+const API_URL = '/api/users/';
 
 /** 
  * 토큰에 대한 유효성 확인 백엔드 통신 -> 유효하면 멤버데이터를 반환받는다.

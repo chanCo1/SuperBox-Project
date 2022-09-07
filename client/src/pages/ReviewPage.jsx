@@ -31,7 +31,7 @@ const ReviewPage = memo(({ memberData, isLogin }) => {
 
     setSort(e.target.dataset.sort);
 
-    navigate(`/review?query=${keyword}&rows=10&page=1&sort=${e.target.dataset.sort}`);
+    navigate(`/review?query=${keyword}&sort=${e.target.dataset.sort}`);
   }, [keyword, navigate]);
 
   return (

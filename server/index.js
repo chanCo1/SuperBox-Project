@@ -26,6 +26,7 @@ import review from './router/review.js';
 import like from './router/like.js';
 import comment from './router/comment.js';
 import fileUpload from './router/fileUpload.js';
+import profile from './router/profile.js';
 
 
 /** Express 객체 생성 */
@@ -33,6 +34,7 @@ const app = express();
 
 // 프로젝트 폴더 위치
 const __dirname = path.resolve();
+console.log(__dirname);
 
 // 보안성을 높이기 위한 config.env 파일 참조
 dotenv.config({ path: path.join(__dirname, '../env/config.env') });
@@ -92,8 +94,24 @@ app.use('/api/inquiry', inquiry);
 app.use('/api/review', review);
 app.use('/api/like', like);
 app.use('/api/comment', comment);
+app.use('/api/profile', profile);
 
 app.use('/api/image', fileUpload);
+
+
+/** build */
+/**
+ * FIXME: 데이터가 안불러와지는 현상 해결!
+ * 어떻게? app.get에 '*' 넣으면 index.html을 반환한다.
+ * 그렇기 때문에 데이터 호출보다 뒤에 지정해야한다.
+ */
+app.use('/', serveStatic('./client/build'));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build/index.html'));
+});
 
 
 /** 서버 구동 */

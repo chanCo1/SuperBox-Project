@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../config/axios';
 import { pending, fulfilled, rejected } from '../utils/ExtraReducers';
 
-const API_URL = 'http://localhost:3001/api/reception/';
+const API_URL = '/api/reception/';
 
 /** 
  * @description 배송 접수 조회

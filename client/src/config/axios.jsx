@@ -3,7 +3,9 @@
  */
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3001';
+// axios.defaults.baseURL = 'http://localhost:3001';
+// baseurl test
+axios.defaults.baseURL = 'https://superbox-project.herokuapp.com/';
 
 axios.interceptors.request.use(
   (request) => {
@@ -25,7 +27,7 @@ axios.interceptors.response.use(
 
     if (response.status === 401) {
       const { data } = await axios.get('api/users/refresh', {
-        baseURL: 'http://localhost:3001',
+        baseURL: 'https://superbox-project.herokuapp.com/',
         params: {
           token: window.localStorage.getItem('refreshToken'),
         },

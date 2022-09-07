@@ -37,6 +37,7 @@ const App = memo(() => {
 
   /** Store를 통해 상태값 호출 */
   const { memberData, loading, error, isLogin } = useSelector((state) => state.user);
+  console.log('현재로그인한유저정보 >>>', memberData);
 
   // 로그인 버튼 클릭시 사용할 boolean 값
   const [loginPageState, setLoginPageState] = useState(false);

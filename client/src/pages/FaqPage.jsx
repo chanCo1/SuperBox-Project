@@ -33,7 +33,7 @@ const FaqPage = memo(() => {
 
       <FaqPageContainer>
         <div className='faq-wrap'>
-          <div className='faq-question' onClick={(e) => ReverseSlideUpDown(testRef, testArrow, setTestArrow, arrowIconRef)}>
+          <div className='faq-question'>
             <TbZoomQuestion className='question-icon' />
             <p>자주찾는질문자주찾는질문자주찾는질문</p>
             <img src={arrow_down} alt="arrow_button" ref={arrowIconRef}/>

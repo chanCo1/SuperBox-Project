@@ -75,11 +75,13 @@ const MypageProfile = memo(({ memberData }) => {
     e.preventDefault();
 
     formData.append('imgFile', formDataImg);
+    console.log('업로드파일 .. >>', formData);
 
     try {
       setIsLoading(true)
 
-      const response = await axios.post('api/image/upload/single', formData);
+      const response = await axios.post('/api/image/upload/single', formData);
+      console.log('이미지요청 >>', response);
 
       dispatch(putProfileImg({
         profile_img: `${IMG_URL}${response.data.filePath.filename}`,
@@ -121,7 +123,7 @@ const MypageProfile = memo(({ memberData }) => {
 
       dispatch(tokenVerify());
     })
-  }, [memberData.user_no, dispatch]);
+  }, [memberData?.user_no, dispatch]);
 
   return (
     <>

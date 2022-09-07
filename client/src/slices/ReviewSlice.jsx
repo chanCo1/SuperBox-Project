@@ -4,7 +4,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { pending, fulfilled, rejected } from '../utils/ExtraReducers';
 import { cloneDeep } from 'lodash';
 
-const API_URL = 'http://localhost:3001/api/review/';
+const API_URL = '/api/review/';
 
 /**
  * 후기 조회

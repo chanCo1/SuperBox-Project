@@ -24,6 +24,7 @@ router.post('/login', async (req, res) => {
   try {
     // SQL문 실행 후 값을 가져온다.
     const result = await mysqlPool(sql, userId);
+    console.log('사용자조회 >>>', result);
 
     let memberData = null;
     for (const data of result) {

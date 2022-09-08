@@ -13,7 +13,7 @@ import Spinner from '../Spinner';
 import { MdOutlineDriveFolderUpload } from 'react-icons/md';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 
-const IMG_URL = process.env.REACT_APP_IMG_URL;
+// const IMG_URL = process.env.REACT_APP_IMG_URL;
 
 /**
  * @description 이미지 업로드 컴포넌트
@@ -75,7 +75,7 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
 
         const response = await axios.post('api/image/upload/single', formData);
 
-        setUploadImg(`${IMG_URL}${response.data.filePath.filename}`);
+        setUploadImg(`${response.data.filePath}`);
         setImgConfirm(false);
       } catch (err) {
         console.error(err);

@@ -27,7 +27,7 @@ import 'tui-editor-plugin-font-size/dist/tui-editor-plugin-font-size.css';
 
 // import uml from '@toast-ui/editor-plugin-uml';
 
-const IMG_URL = process.env.REACT_APP_IMG_URL;
+// const IMG_URL = process.env.REACT_APP_IMG_URL;
 
 /** 후기 작성을 위한 ToastUi Editor */
 const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
@@ -62,33 +62,30 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
 
     // 이미지 객체 추가
     formData.append('imgFile', blob);
-    // for(const i of formData) console.log(i);
+    for(const i of formData) console.log(i);
 
     try {
       // 비동기 처리
       const response = await axios.post('api/image/upload/multiple', formData);
+      console.log(response.data)
 
       // 백엔드에서 전달 받은 파일정보 사용
-      const filePath = response.data.filePath;
+      const filePath = response.data;
       
       // 여러 이미지를 사용하려다 보니 이전 이미지까지 같이 불러와진다.
       // -> i 값을 filePath의 길이 -1 값으로 줘서 이전 이미지는 불러오지 않게 처리
       // -> 하지만 이전 이미지의 filename을 읽을 수 없다는 에러가 뜬다 .. 겉으로 보기엔 정상 작동..
-      for(let i = filePath.length - 1; i <= filePath.length; i++) { 
-        /** 원본 */
-        // callback(`https://localhost:3001/image/${filePath[i].filename}`, `review-image${i}`);
-        callback(`${IMG_URL}${filePath[i].filename}`, `review-image${i}`);
-        
-        // // 부모컴포넌트로 보낼 상태값에 배열로 저장
-        // setImg(img => [...img, `http://localhost:3001/image/${filePath[i].filename}`]);
-
-      };
+      // for(let i = filePath.length - 1; i <= filePath.length; i++) { 
+      //   /** 원본 */
+      //   // callback(`https://localhost:3001/image/${filePath[i].filename}`, `review-image${i}`);
+      // };
+      callback(filePath.filePath);
     } catch(err) {
 
       Swal.fire({
         icon: 'error',
         iconColor: '#f3b017',
-        text: err.response.data.result,
+        text: err,
         confirmButtonColor: '#f3b017',
         confirmButtonText: '확인',
       });

@@ -1,5 +1,5 @@
 /** 패키지 참조 */
-import React, { memo, useState, useCallback } from 'react';
+import React, { memo, useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 
@@ -110,7 +110,7 @@ const EditProfile = memo(({ setEditProfileState }) => {
       if (current.addr2.value.length >= 1) {
         RegexHelper.inputCheck(current.addr2, '상세주소는 2~20자 내로 입력해주세요.');
       }
-      
+
       Swal.fire({
         icon: 'success',
         iconColor: '#f3b017',
@@ -119,9 +119,10 @@ const EditProfile = memo(({ setEditProfileState }) => {
         confirmButtonColor: '#f3b017',
       }).then(() => {
         dispatch(putProfile(editInfo));
-        dispatch(tokenVerify());
         setEditProfileState(false);
       });
+      
+      dispatch(tokenVerify());
 
     } catch(err) {
       Swal.fire({

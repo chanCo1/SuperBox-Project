@@ -108,9 +108,7 @@ const SlideUpDown = (e, ref, arrow, setArrow) => {
  * 숨어있는거 보이기 (with arrow icon)
  */
 const ReverseSlideUpDown = (ref, arrow, setArrow, icon) => {
-  console.log(icon)
   const refStyle = ref.current.style;
-  console.log(refStyle);
   const refArea = ref.current
   const iconStyle = icon.current.style;
 

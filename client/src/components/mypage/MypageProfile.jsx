@@ -1,5 +1,5 @@
 /** 패키지 참조 */
-import React, { memo, useState, useCallback } from 'react';
+import React, { memo, useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from '../../config/axios';
 import Swal from 'sweetalert2';
@@ -40,9 +40,6 @@ const MypageProfile = memo(({ memberData }) => {
   // 백엔드 통신 로딩 상태
   const [isLoading, setIsLoading] = useState(false);
 
-  // formData 사용
-  const formData = new FormData();
-
   /** 개인정보수정 toggle */
   const onEditProfile = useCallback((e) => {
     e.preventDefault();
@@ -74,8 +71,11 @@ const MypageProfile = memo(({ memberData }) => {
   const uploadFile = useCallback( async e => {
     e.preventDefault();
 
+    // formData 사용
+    const formData = new FormData();
+
     formData.append('imgFile', formDataImg);
-    console.log('업로드파일 .. >>', formData);
+    for (const i of formData) console.log('!!!formData >>> ', i);
 
     try {
       setIsLoading(true)
@@ -84,18 +84,19 @@ const MypageProfile = memo(({ memberData }) => {
       console.log('이미지요청 >>', response);
 
       dispatch(putProfileImg({
-        profile_img: `${IMG_URL}${response.data.filePath.filename}`,
+        profile_img: `${response.data.filePath}`,
         user_no: memberData?.user_no,
       }));
 
-      dispatch(tokenVerify());
       setImgConfirm(false);
-
+      
     } catch (err) {
       console.error(err);
     } finally {
       setIsLoading(false);
     }
+
+    dispatch(tokenVerify());
   }, [formDataImg, dispatch, memberData]);
 
   /** 프로필 이미지 삭제 */
@@ -120,9 +121,9 @@ const MypageProfile = memo(({ memberData }) => {
           }
         })();
       };
-
-      dispatch(tokenVerify());
     })
+
+    dispatch(tokenVerify());
   }, [memberData?.user_no, dispatch]);
 
   return (

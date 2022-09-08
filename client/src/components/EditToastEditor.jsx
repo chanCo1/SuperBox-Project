@@ -19,7 +19,7 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import fontSize from 'tui-editor-plugin-font-size';
 import 'tui-editor-plugin-font-size/dist/tui-editor-plugin-font-size.css';
 
-const IMG_URL = process.env.REACT_APP_IMG_URL;
+// const IMG_URL = process.env.REACT_APP_IMG_URL;
 
 /** 후기 내용 수정을 위한 ToastUi Editor */
 const ToastEditor2 = memo(({ reviewContent, reviewOrigin, setReviewOrigin }) => {
@@ -63,7 +63,7 @@ const ToastEditor2 = memo(({ reviewContent, reviewOrigin, setReviewOrigin }) => 
       for(let i = filePath.length - 1; i <= filePath.length; i++) { 
         /** 원본 */
         // callback(`http://localhost:3001/image/${filePath[i].filename}`, `review-image${i}`);
-        callback(`${IMG_URL}${filePath[i].filename}`, `review-image${i}`);
+        callback(`${filePath[i]}`, `review-image${i}`);
       };
     } catch(err) {
 

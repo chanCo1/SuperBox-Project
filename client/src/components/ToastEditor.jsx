@@ -19,17 +19,11 @@ import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-sy
 import fontSize from 'tui-editor-plugin-font-size';
 import 'tui-editor-plugin-font-size/dist/tui-editor-plugin-font-size.css';
 
-// import chart from '@toast-ui/editor-plugin-chart';
-// import '@toast-ui/chart/dist/toastui-chart.css';
-
-// import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
-// import '@toast-ui/editor-plugin-table-merged-cell/dist/toastui-editor-plugin-table-merged-cell.css';
-
-// import uml from '@toast-ui/editor-plugin-uml';
-
-// const IMG_URL = process.env.REACT_APP_IMG_URL;
-
-/** 후기 작성을 위한 ToastUi Editor */
+/** 
+ * @description 후기 작성을 위한 ToastUi Editor
+ * @param review 부모 컴포넌트의 후기작성 상태값 from ReviewWrite.jsx
+ * @param setReview 부모 컴포넌트로 보낼 후기작성 상태값 from ReviewWrite.jsx
+ */
 const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
 // export default function ToastEditor() {
 
@@ -70,16 +64,16 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
       console.log(response.data)
 
       // 백엔드에서 전달 받은 파일정보 사용
-      const filePath = response.data;
+      const filePath = response.data.filePath;
       
       // 여러 이미지를 사용하려다 보니 이전 이미지까지 같이 불러와진다.
       // -> i 값을 filePath의 길이 -1 값으로 줘서 이전 이미지는 불러오지 않게 처리
       // -> 하지만 이전 이미지의 filename을 읽을 수 없다는 에러가 뜬다 .. 겉으로 보기엔 정상 작동..
-      // for(let i = filePath.length - 1; i <= filePath.length; i++) { 
-      //   /** 원본 */
-      //   // callback(`https://localhost:3001/image/${filePath[i].filename}`, `review-image${i}`);
-      // };
-      callback(filePath.filePath);
+      for(let i = filePath.length - 1; i < filePath.length; i++) { 
+        /** 원본 */
+        // callback(`https://localhost:3001/image/${filePath[i].filename}`, `review-image${i}`);
+        callback(`${filePath[i].location}`, `${filePath[i].key}`);
+      };
     } catch(err) {
 
       Swal.fire({

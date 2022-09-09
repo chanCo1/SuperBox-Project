@@ -153,6 +153,7 @@ const ReviewListContainer = styled.div`
         top: 1px;
       }
       &>p:nth-child(2) {
+        display: inline-block;
         border: 1px solid #f3b017;
         padding: 1px 10px;
         border-radius: 20px;

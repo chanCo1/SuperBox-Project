@@ -120,9 +120,12 @@ const EditProfile = memo(({ setEditProfileState }) => {
       }).then(() => {
         dispatch(putProfile(editInfo));
         setEditProfileState(false);
+        
+        setTimeout(() => {
+          dispatch(tokenVerify());
+        }, 500);
       });
-      
-      dispatch(tokenVerify());
+
 
     } catch(err) {
       Swal.fire({

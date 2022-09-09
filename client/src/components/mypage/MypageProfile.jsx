@@ -89,6 +89,10 @@ const MypageProfile = memo(({ memberData }) => {
       }));
 
       setImgConfirm(false);
+
+      setTimeout(() => {
+        dispatch(tokenVerify());
+      }, 500);
       
     } catch (err) {
       console.error(err);
@@ -96,7 +100,6 @@ const MypageProfile = memo(({ memberData }) => {
       setIsLoading(false);
     }
 
-    dispatch(tokenVerify());
   }, [formDataImg, dispatch, memberData]);
 
   /** 프로필 이미지 삭제 */
@@ -121,9 +124,11 @@ const MypageProfile = memo(({ memberData }) => {
           }
         })();
       };
-    })
 
-    dispatch(tokenVerify());
+      setTimeout(() => {
+        dispatch(tokenVerify());
+      }, 500);
+    });
   }, [memberData?.user_no, dispatch]);
 
   return (

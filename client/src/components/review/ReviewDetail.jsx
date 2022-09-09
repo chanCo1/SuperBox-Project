@@ -202,6 +202,7 @@ const ReviewDetailContainer = styled.div`
 
         .review-detail-head {
           & > p:nth-child(1) {
+            display: inline-block;
             border: 1px solid #f3b017;
             padding: 1px 10px;
             margin-bottom: 5px;
@@ -215,7 +216,7 @@ const ReviewDetailContainer = styled.div`
 
           .withdrawal {
             color: #bcbcbc;
-            font-size: 18px;
+            font-size: 20px;
           }
         }
       }

@@ -1,5 +1,11 @@
 # SuperBox 프로젝트
 
+### 택배접수 / 게시판 / 1:1문의 / 마이페이지 / 로그인&아웃
+
+[https://superbox-project.herokuapp.com](https://superbox-project.herokuapp.com)
+
+_작업기간_: 22/07/28 ~ 22/09/07
+
 7/28(목)
 * 프로젝트 생성
 * 프로젝트 진행을 위한 기본값 설정(GlobalStyles, Meta 등)
@@ -172,3 +178,6 @@
 
 9/6
 * HEROKU 배포 테스트
+
+9/7
+* 배포완료

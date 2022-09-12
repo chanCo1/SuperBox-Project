@@ -1,6 +1,6 @@
 # SuperBox 프로젝트
 
-### 택배접수 / 게시판 / 1:1문의 / 마이페이지 / 로그인&아웃
+### 택배접수 / 게시판 / 1:1문의 / 마이페이지 / 회원가입 / 로그인 & 로그아웃
 
 [https://superbox-project.herokuapp.com](https://superbox-project.herokuapp.com)
 
@@ -181,3 +181,4 @@ _작업기간_: 22/07/28 ~ 22/09/07
 
 9/7
 * 배포완료
+* 프로젝트 종료

@@ -33,7 +33,7 @@ const Like = memo(({ userNo, reviewNo, children }) => {
   }, [userNo, reviewNo]);
 
   // 후기 상세보기 페이지 마운트 시 좋아요 확인
-  // -> 좋아요를 누른 상태라면 표시
+  // -> 좋아요/싫어요를 누른 상태라면 표시
   useEffect(() => {
     (async () => {
       try {

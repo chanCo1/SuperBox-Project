@@ -6,10 +6,10 @@ const { kakao } = window;
 
 /**
  * @description 카카오맵
- * @parma sendAddress 보내는 분 주소 /ReceptionPage.jsx
- * @parma sendAddress2 보내는 분 상세 주소 /ReceptionPage.jsx
- * @parma arriveAddress 받는 분 주소 /ReceptionPage.jsx
- * @parma arriveAddress2 받는 분 상세주소 /ReceptionPage.jsx
+ * @param sendAddress 보내는 분 주소 /ReceptionPage.jsx
+ * @param sendAddress2 보내는 분 상세 주소 /ReceptionPage.jsx
+ * @param arriveAddress 받는 분 주소 /ReceptionPage.jsx
+ * @param arriveAddress2 받는 분 상세주소 /ReceptionPage.jsx
  */
 const KakaoMap = memo(({ sendAddress, sendAddress2, arriveAddress, arriveAddress2 }) => {
   const mapRef = useRef();

@@ -66,12 +66,7 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
       // 백엔드에서 전달 받은 파일정보 사용
       const filePath = response.data.filePath;
       
-      // 여러 이미지를 사용하려다 보니 이전 이미지까지 같이 불러와진다.
-      // -> i 값을 filePath의 길이 -1 값으로 줘서 이전 이미지는 불러오지 않게 처리
-      // -> 하지만 이전 이미지의 filename을 읽을 수 없다는 에러가 뜬다 .. 겉으로 보기엔 정상 작동..
       for(let i = filePath.length - 1; i < filePath.length; i++) { 
-        /** 원본 */
-        // callback(`https://localhost:3001/image/${filePath[i].filename}`, `review-image${i}`);
         callback(`${filePath[i].location}`, `${filePath[i].key}`);
       };
     } catch(err) {
@@ -95,7 +90,7 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
         height="600px" // 에디터 창 높이
         initialEditType="wysiwyg" // 초기 입력모드 설정(디폴트 markdown)
         initialValue=" " // 초기 값
-        plugins={[colorSyntax, fontSize]} // 플러그인 사용 -> color빼고 쓸모 없는듯 ..
+        plugins={[colorSyntax, fontSize]} // 플러그인 사용
         useCommandShortcut={true} // 단축키 설정
         language="ko-KR" // 언어 설정 -> 초기 값은 영어
         toolbarItems={[

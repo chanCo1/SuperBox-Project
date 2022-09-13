@@ -4,10 +4,10 @@ import styled from 'styled-components';
 
 /**
  * @description pagination 컴포넌트
- * @param rows 한 페이지에 보여질 리스트 수
- * @param totalList 배열의 전체 길이
- * @param currentPage 현재 페이지 번호
- * @param setCurrentPage 현재 페이지 번호 설정
+ * @param rows 한 페이지에 보여질 리스트 수 /ReviewList.jsx
+ * @param totalList 배열의 전체 길이 /ReviewList.jsx
+ * @param currentPage 현재 페이지 번호 /ReviewList.jsx
+ * @param setCurrentPage 현재 페이지 번호 설정 /ReviewList.jsx
  */
 const Pagination = memo(({ rows, totalList, currentPage, setCurrentPage }) => {
 

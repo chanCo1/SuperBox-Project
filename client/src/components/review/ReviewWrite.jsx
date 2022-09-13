@@ -29,6 +29,9 @@ const ReviewWrite = memo(({ memberData, loading, isLogin }) => {
   // 리덕스의 디스패치 사용
   const dispatch = useDispatch();
 
+  const { data, error } = useSelector(state => state.review);
+  console.log('글쓰고 데이터?', data);
+
   const navigate = useNavigate();
 
   // // 백엔드에 보낼 이미지 상태값
@@ -113,6 +116,9 @@ const ReviewWrite = memo(({ memberData, loading, isLogin }) => {
           confirmButtonColor: '#f3b017',
         });
       } else {
+
+        dispatch(postReview(review));
+
         Swal.fire({
           icon: 'success',
           iconColor: '#f3b017',
@@ -121,7 +127,6 @@ const ReviewWrite = memo(({ memberData, loading, isLogin }) => {
           timer: 1500,
           footer: '소중한 후기 고마워요! 👍',
         }).then(() => {
-          dispatch(postReview(review));
           navigate('/review');
         });
       };

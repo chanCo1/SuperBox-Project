@@ -52,7 +52,7 @@ const ReviewList = memo(({ memberData, listSort }) => {
     setList(data && data.item);
   }, [data]);
 
-   /** QueryString 문자열 얻기 */
+  /** QueryString 문자열 얻기 */
   const { sort, query } = useQueryString({
     sort: listSort,
     query: '',

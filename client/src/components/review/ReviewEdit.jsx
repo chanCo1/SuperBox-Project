@@ -43,7 +43,7 @@ const ReviewEdit = memo(() => {
   // // 백엔드에 보낼 이미지 상태값
   // const [uploadImg, setUploadImg] = useState([]);
 
-  /** 페이지가 열림과 동시에 id값에 대한 데이터를 조회하여 상태값에 반영한다. */
+  /** 페이지가 열림과 동시에 URL 파라미터 값에 대한 데이터를 조회하여 상태값에 반영한다. */
   useEffect(() => {
     if(data) {
       const index = data.item.findIndex((e) => e.review_no === parseInt(param.review_no));
@@ -98,6 +98,9 @@ const ReviewEdit = memo(() => {
             confirmButtonColor: '#f3b017',
           });
         } else {
+
+          dispatch(putReview(reviewOrigin));
+
           Swal.fire({
             icon: 'success',
             iconColor: '#f3b017',
@@ -105,11 +108,9 @@ const ReviewEdit = memo(() => {
             confirmButtonText: '확인',
             confirmButtonColor: '#f3b017',
           }).then(() => {
-            if(reviewOrigin) {
-              dispatch(putReview(reviewOrigin));
-              // navigate(`/review/${reviewOrigin.review_no}`);
-              navigate(-1);
-            }
+            setTimeout(() => {
+              if(reviewOrigin) navigate(-1);
+            })
           });
         }
       } catch (err) {

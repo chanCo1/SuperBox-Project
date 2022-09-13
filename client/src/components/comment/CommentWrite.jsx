@@ -64,7 +64,9 @@ const CommentWrite = memo(({ memberData, isLogin, reviewNo }) => {
       (async () => {
         try {
           const response = await axios.post('api/comment/postComment', comment);
+          // 댓글 입력 창 초기화
           setComment({ ...comment, comment: '' });
+          // 댓글 리스트
           setGetComment([ ...response.data.item]);
         } catch(err) {
           console.log(err);

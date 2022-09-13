@@ -38,7 +38,7 @@ export const getReception = createAsyncThunk('ReceptionSlice/getReception', asyn
 
 /** 
  * @discription 배송 접수
- * @param payload
+ * @param payload 배송 접수 내용 from ReceptionPage.jsx
  */
 export const postReception = createAsyncThunk('ReceptionSlice/postReception', async (payload, { rejectWithValue }) => {
   let result = null;

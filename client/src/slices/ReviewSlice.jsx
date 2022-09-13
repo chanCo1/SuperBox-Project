@@ -3,6 +3,7 @@ import axios from '../config/axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { pending, fulfilled, rejected } from '../utils/ExtraReducers';
 import { cloneDeep } from 'lodash';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = '/api/review/';
 
@@ -193,7 +194,7 @@ const ReviewSlice = createSlice({
         return {
           ...state,
           data: data,
-          loadin: false,
+          loading: false,
           error: null,
         };
 

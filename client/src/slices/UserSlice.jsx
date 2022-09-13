@@ -6,7 +6,8 @@ import { pending, fulfilled, rejected } from '../utils/ExtraReducers';
 const API_URL = '/api/users/';
 
 /** 
- * 토큰에 대한 유효성 확인 백엔드 통신 -> 유효하면 멤버데이터를 반환받는다.
+ * @description 토큰에 대한 유효성 확인 백엔드 통신 -> 유효하면 멤버데이터를 반환받는다.
+ * @param payload 백엔드로부터 받은 access 토큰 정보 from LoginPage.jsx
  */
 export const tokenVerify = createAsyncThunk('UserSlice/tokenVerify', async (payload, { rejectWithValue }) => {
   let result = null;
@@ -33,7 +34,8 @@ export const tokenVerify = createAsyncThunk('UserSlice/tokenVerify', async (payl
 });
 
 /** 
- * 회원가입에 대한 백엔드 통신
+ * @description 회원가입에 대한 백엔드 통신
+ * @param payload 회원가입을 위한 사용자 정보 from RegisterPage.jsx
  */
 export const postRegister = createAsyncThunk('userSlice/register', async (payload, {rejectWithValue }) => {
   let result = null;
@@ -75,12 +77,7 @@ const UserSlice = createSlice({
       if(!payload) {
         return { ...state, isLogin: payload };
       }
-    },
-
-    // setProfileImg: (state, { payload }) => {
-    //   console.log(payload)
-    //   return { ...state, memberData: { ...state.memberData, profile_img: payload } }
-    // }
+    }
   },
 
   extraReducers: {

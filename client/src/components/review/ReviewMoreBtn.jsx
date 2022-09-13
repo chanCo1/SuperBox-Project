@@ -65,7 +65,8 @@ const ReviewMoreBtn = memo(({ reviewNo, commentCount }) => {
       }).then((result) => {
         if (result.isConfirmed) {
           dispatch(deleteReview(reviewNo));
-          navigate('/review');
+
+          setTimeout(() => navigate('/review'), 500);
         }
       })
     );

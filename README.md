@@ -2,7 +2,7 @@
 
 ### 택배접수 / 게시판 / 1:1문의 / 마이페이지 / 회원가입 / 로그인 & 로그아웃
 
-[https://superbox-project.herokuapp.com](https://superbox-project.herokuapp.com){:target="_blank"}
+<a href="https://superbox-project.herokuapp.com" target="_blank">https://superbox-project.herokuapp.com</a>
 
 _작업기간_: 22/07/28 ~ 22/09/07
 

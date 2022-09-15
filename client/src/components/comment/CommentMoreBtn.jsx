@@ -34,13 +34,17 @@ const CommentMoreBtn = memo(({ setEditState, setEditCommentNo, commentNo, review
 
   /** 더보기 버튼 on */
   const onBtnClick = useCallback((e) => {
+    // 더보기 버튼 상태값 변경
     setButton(true);
   }, []);
 
   /** 댓글 수정 클릭 */
   const onEditClick = useCallback((e) => {
+    // 댓글 수정 입력 창
     setEditState(true);
+    // 더보기 버튼 
     setButton(false);
+    // 수정할 댓글 번호
     setEditCommentNo(parseInt(e.target.dataset.no))
   }, [setEditState, setEditCommentNo]);
 

@@ -59,10 +59,12 @@ const MypageReception = memo(() => {
 
   // 페이지 들어가면 리스트 호출
   useEffect(() => {
-    dispatch(getReception({
-      user_no: memberData?.user_no,
-    }));
-  }, [dispatch, memberData]);
+    setTimeout(() => {
+      dispatch(getReception({
+        user_no: memberData?.user_no,
+      }));
+    }, 800);
+  }, [dispatch, memberData,]);
 
   /** 접수 취소 버튼 */
   const onCancelClick = useCallback(e => {
@@ -83,7 +85,11 @@ const MypageReception = memo(() => {
           reception_no: parseInt(e.target.dataset.no)
         }));
         // 리스트 새로 호출
-        dispatch(getReception({user_no: memberData?.user_no,}))
+        setTimeout(() => {
+          dispatch(getReception({
+            user_no: memberData?.user_no,
+          }));
+        }, 500);
       }
     });
   }, [dispatch, memberData]);
@@ -93,7 +99,7 @@ const MypageReception = memo(() => {
       <Spinner visible={loading} />
       <Meta title={'SuperBox :: 마이페이지'} />
       <PageTitle
-        title={'마이페이지'}
+        title={'접수현황'}
         subtitle={'진행중인 접수현황과 배송내역을 확인해보세요'}
       />
 

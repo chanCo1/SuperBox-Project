@@ -81,8 +81,15 @@ const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
           </Link>
 
           <ul className="nav-wrap">
-            <NavLink className="NavLink nav" to={'/reception'} onClick={connectReceptionPage}><li>배송접수</li></NavLink>
-            <NavLink className="NavLink nav" to={'/review'}><li>고객후기</li></NavLink>
+            <NavLink className="NavLink nav" to={'/reception'} onClick={connectReceptionPage}>
+              <li>배송접수</li>
+            </NavLink>
+            <NavLink className="NavLink nav" to={'/mypage/reception'} onClick={connectReceptionPage}>
+              <li>접수현황</li>
+            </NavLink>
+            <NavLink className="NavLink nav" to={'/review'}>
+              <li>고객후기</li>
+            </NavLink>
             <li 
               className="NavLink nav" 
               onMouseOver={() => ShowSlideItem(subMenuRef)}

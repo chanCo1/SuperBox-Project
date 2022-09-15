@@ -59,7 +59,7 @@ const MypageReview = memo(() => {
     <>
       <Spinner visible={loading} />
       <Meta title={'SuperBox :: 마이페이지'} />
-      <PageTitle title={'마이페이지'} subtitle={'내가 쓴 사용 후기를 확인해보세요'} />
+      <PageTitle title={'내 후기'} subtitle={'내가 쓴 사용 후기를 확인해보세요'} />
       
       <MypageReviewContainer>
         <div className="title-wrap">

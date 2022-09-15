@@ -39,9 +39,7 @@ const InquiryPage = memo(() => {
   // 이미지 첨부 확인 여부
   const [confirm, setConfirm] = useState(false);
 
-  /**
-   * 1:1문의 입력 상태값 관리
-   */
+  // 1:1문의 입력 상태값 관리
   const [inquiry, setInquiry] = useState({});
   // console.log(inquiry);
 

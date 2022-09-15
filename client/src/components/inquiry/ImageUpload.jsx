@@ -17,13 +17,11 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 /**
  * @description 이미지 업로드 컴포넌트
- * @parma setUploadImg 백엔드에 보낼 이미지 상태값을 부모컴포넌트에 보낸다 /InquiryPage.jsx
- * @parma setConfirm 이미지 첨부 확인 여부 상태값을 부모컴포넌트에 보낸다 /InquiryPage.jsx
+ * @param setUploadImg 백엔드에 보낼 이미지 상태값을 부모컴포넌트에 보낸다 /InquiryPage.jsx
+ * @param setConfirm 이미지 첨부 확인 여부 상태값을 부모컴포넌트에 보낸다 /InquiryPage.jsx
  */
 const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
-  // formData 사용
-  const formData = new FormData();
-
+  
   // 보여줄 이미지 상태값 관리
   const [showImgFiles, setShowImgFiles] = useState('');
   // 백엔드에 보낼 이미지 상태값
@@ -66,6 +64,9 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
   const uploadFile = useCallback(
     async (e) => {
       e.preventDefault();
+
+      // formData 사용
+      const formData = new FormData();
 
       formData.append('imgFile', formDataImg);
       for (const i of formData) console.log('!!!formData >>> ', i);

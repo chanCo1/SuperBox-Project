@@ -36,6 +36,8 @@ const nameMasking = (name) => {
   if(name.length < 3) return name.replace(/(?<=.{1})./gi, "*");
   else if(name.length < 4) return name.replace(/(?<=.{2})./gi, "*");
   else if(name.length < 5) return name.replace(/(?<=.{3})./gi, "*");
+  else if(name.length < 6) return name.replace(/(?<=.{4})./gi, "*");
+  else if(name.length < 7) return name.replace(/(?<=.{5})./gi, "*");
 };
 
 
@@ -56,7 +58,7 @@ const tomorrow = () => {
     tomorrow = date.getDate(0) - (date.getDate() -1);
   }
 
-  return `${year}-` + (month > 9 ? month : `0${month}`) + (tomorrow > 9 ? tomorrow : `-0${tomorrow}`);
+  return `${year}-` + (month > 9 ? `${month}-` : `0${month}-`) + (tomorrow > 9 ? tomorrow : `-0${tomorrow}`);
 };
 
 export { setTime, nameMasking, tomorrow };

@@ -7,7 +7,7 @@ const API_URL = '/api/profile/';
 
 /** 
  * @description 개인정보수정
- * @param payload
+ * @param payload 수정할 개인정보 값 from EditProfile.jsx
  */
 export const putProfile = createAsyncThunk('ProfileSlice/putProfile', async (payload, { rejectWithValue }) => {
   let result = null;
@@ -33,7 +33,7 @@ export const putProfile = createAsyncThunk('ProfileSlice/putProfile', async (pay
 
 /** 
  * @description 프로필 이미지 수정
- * @param payload
+ * @param payload 반환받은 URL 주소 from MypageProfile.jsx
  */
 export const putProfileImg = createAsyncThunk('ProfileSlice/putProfileImg', async (payload, { rejectWithValue }) => {
   let result = null;

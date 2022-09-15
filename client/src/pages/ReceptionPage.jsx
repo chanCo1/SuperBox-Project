@@ -218,7 +218,7 @@ const ReceptionPage = memo(() => {
           confirmButtonColor: '#f3b017',
         }).then(() => {
           dispatch(postReception(reception));
-          navigate('/mypage');
+          navigate('/mypage/reception');
         });
 
       } catch (err) {

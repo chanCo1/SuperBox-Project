@@ -88,7 +88,6 @@ const EditProfile = memo(({ setEditProfileState }) => {
     const current = e.target;
 
     try {
-
       // 이름 유효성 검사
       RegexHelper.value(current.userName, '이름을 입력해주세요.');
       RegexHelper.nameCheck(current.userName, '2~10자리의 영문(소문자), 한글만 가능합니다.');
@@ -125,7 +124,6 @@ const EditProfile = memo(({ setEditProfileState }) => {
           dispatch(tokenVerify());
         }, 500);
       });
-
 
     } catch(err) {
       Swal.fire({

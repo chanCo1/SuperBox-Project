@@ -155,7 +155,7 @@ const RegisterPage = memo(({ loginPageState }) => {
 
         // 전화번호 유효성 검사
         RegexHelper.value(current.phoneNumber, '전화번호를 입력해주세요.');
-        RegexHelper.cellphone(
+        RegexHelper.phone(
           current.phoneNumber,
           '전화번호 형식에 맞지 않습니다. "-"이 있다면 빼고 입력해주세요.'
         );

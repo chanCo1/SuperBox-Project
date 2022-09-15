@@ -123,11 +123,11 @@ const MypageProfile = memo(({ memberData }) => {
             console.log(err);
           }
         })();
-      };
 
-      setTimeout(() => {
-        dispatch(tokenVerify());
-      }, 500);
+        setTimeout(() => {
+          dispatch(tokenVerify());
+        }, 500);
+      };
     });
   }, [memberData?.user_no, dispatch]);
 

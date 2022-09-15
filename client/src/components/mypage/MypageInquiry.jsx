@@ -46,8 +46,8 @@ const MypageInquiry = memo(() => {
   }, [data]);
 
   // 페이지 들어가면 리스트 호출
-  useEffect(() => {dispatch(
-    getUserInquiry({
+  useEffect(() => {
+    dispatch(getUserInquiry({
       user_no: memberData?.user_no,
     }));
   }, [dispatch, memberData]);
@@ -82,7 +82,9 @@ const MypageInquiry = memo(() => {
           inquiry_no: parseInt(e.target.dataset.no)
         }));
         // 리스트 새로 호출
-        dispatch(getUserInquiry({user_no: memberData?.user_no,}))
+        setTimeout(() => {
+          dispatch(getUserInquiry({user_no: memberData?.user_no,}))
+        }, 500);
       }
     });
   }, [dispatch, memberData]);
@@ -92,7 +94,7 @@ const MypageInquiry = memo(() => {
       <Spinner visible={loading} />
       <Meta title={'SuperBox :: 마이페이지'} />
       <PageTitle
-        title={'마이페이지'}
+        title={'내가 남긴 1:1 문의'}
         subtitle={'내가 남긴 1:1문의 내용을 확인해보세요'}
       />
 

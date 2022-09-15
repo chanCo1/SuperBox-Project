@@ -28,7 +28,6 @@ const Withdrawal = memo(({ memberData }) => {
       confirmButtonText: '네',
       confirmButtonColor: '#f3b017',
       cancelButtonText: '아니요',
-      // footer: '탈퇴시 모든 데이터는 복구할 수 없습니다.'
     }).then((result) => {
       if(result.isConfirmed) {
         (async () => {
@@ -37,8 +36,10 @@ const Withdrawal = memo(({ memberData }) => {
               params: { user_no: memberData?.user_no }
             });
 
+            // 로컬스토리지 삭제
             window.localStorage.removeItem("accessToken");
             window.localStorage.removeItem("refreshToken");
+            // 로그인상태 false로 변경
             dispatch(setIsLogin(false));
 
             Swal.fire({

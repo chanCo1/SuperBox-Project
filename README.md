@@ -1,8 +1,6 @@
 # SuperBox
 
-<img src="https://user-images.githubusercontent.com/94843131/190389462-fd69c295-0a9c-44a0-835f-3b90ac01e532.gif" width="300" height="250">
-
-<br/>
+<img src="https://user-images.githubusercontent.com/94843131/190389462-fd69c295-0a9c-44a0-835f-3b90ac01e532.gif" width="400" height="350">
 
 `SuperBox`는 택배 접수 대행 서비스 입니다. 
 
@@ -10,16 +8,12 @@
 
 [https://superbox-project.herokuapp.com](https://superbox-project.herokuapp.com)
 
-## 개발기간
-22/07/28 ~ 22/09/07 (약 5주)
-
-<br />
-
-# 프로젝트 소개
-
 ## 기획의도
 
 기획 부터 배포까지 스스로 직접 해봄으로서 하나의 웹 페이지가 탄생하기 까지 전체적인 흐름을 파악하고, 클라이언트로 부터 입력받은 데이터를 서버를 통해 데이터베이스에 저장 및 호출 하기까지 즉, REST API에 대해 깊게 공부하기 위해 개인 프로젝트를 기획하였습니다.
+
+## 개발기간
+22/07/28 ~ 22/09/07 (약 5주)
 
 ## 주요기능
 
@@ -27,7 +21,7 @@
 
 <br />
 
-# 개발환경
+## 개발환경
 
 ### Front-end
 

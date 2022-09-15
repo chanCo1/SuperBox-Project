@@ -59,9 +59,11 @@
 
 ### 회원가입
 
-![Sep-15-2022 21-31-28](https://user-images.githubusercontent.com/94843131/190404366-0bf70050-091d-4505-8d7d-b9940029be73.gif)
+![Sep-15-2022 21-40-08](https://user-images.githubusercontent.com/94843131/190406112-0c628fd0-ad0c-4fae-9e86-30f234e13d5c.gif)
 
+### 로그인
 
+![Sep-15-2022 21-44-27](https://user-images.githubusercontent.com/94843131/190406939-ec974de9-e39c-43f3-bbb1-ff8cb0b05a99.gif)
 
 
 

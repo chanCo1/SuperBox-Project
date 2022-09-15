@@ -1,10 +1,76 @@
-# SuperBox 프로젝트
+# SuperBox
 
-### 택배접수 / 게시판 / 1:1문의 / 마이페이지 / 회원가입 / 로그인 & 로그아웃
+<img src="https://user-images.githubusercontent.com/94843131/190389462-fd69c295-0a9c-44a0-835f-3b90ac01e532.gif" width="300" height="250">
 
-<a href="https://superbox-project.herokuapp.com" target="_blank">https://superbox-project.herokuapp.com</a>
+<br/>
 
-_작업기간_: 22/07/28 ~ 22/09/07
+`SuperBox`는 택배 접수 대행 서비스 입니다. 
+
+시용후기를 남기고, 사용자들과 소통할 수 있습니다.
+
+[https://superbox-project.herokuapp.com](https://superbox-project.herokuapp.com)
+
+## 개발기간
+22/07/28 ~ 22/09/07 (약 5주)
+
+<br />
+
+# 프로젝트 소개
+
+## 기획의도
+
+기획 부터 배포까지 스스로 직접 해봄으로서 하나의 웹 페이지가 탄생하기 까지 전체적인 흐름을 파악하고, 클라이언트로 부터 입력받은 데이터를 서버를 통해 데이터베이스에 저장 및 호출 하기까지 즉, REST API에 대해 깊게 공부하기 위해 개인 프로젝트를 기획하였습니다.
+
+## 주요기능
+
+택배 접수 / 후기 게시판 / 1:1문의 / 마이페이지 / 개인정보관리 / 회원가입 / 로그인 & 로그아웃
+
+<br />
+
+# 개발환경
+
+### Front-end
+
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![React Router](https://img.shields.io/badge/React--Router-CA4245?style=for-the-badge&logo=React-Router&logoColor=white)
+![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=Axios&logoColor=white)
+
+### Back-end
+
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+
+### Deploy
+
+![Heroku](https://img.shields.io/badge/heroku-430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
+
+### Others
+
+![Amazon S3](https://img.shields.io/badge/Amazon--S3-569A31.svg?style=for-the-badge&logo=Amazon-S3&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 일자 별 구현 내용
 
 7/28(목)
 * 프로젝트 생성

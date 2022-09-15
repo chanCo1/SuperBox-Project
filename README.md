@@ -8,6 +8,8 @@
 
 [https://superbox-project.herokuapp.com](https://superbox-project.herokuapp.com)
 
+<br />
+
 ## 기획의도
 
 기획 부터 배포까지 스스로 직접 해봄으로서 하나의 웹 페이지가 탄생하기 까지 전체적인 흐름을 파악하고, 클라이언트로 부터 입력받은 데이터를 서버를 통해 데이터베이스에 저장 및 호출 하기까지 즉, REST API에 대해 깊게 공부하기 위해 개인 프로젝트를 기획하였습니다.
@@ -47,8 +49,13 @@
 ![Amazon S3](https://img.shields.io/badge/Amazon--S3-569A31.svg?style=for-the-badge&logo=Amazon-S3&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)
 
+<br />
 
+## 기능소개
 
+### 메인페이지
+
+![SuperBox/main](https://user-images.githubusercontent.com/94843131/190402533-0775d508-db32-41c9-b3c4-1baeeb56b4e6.gif)
 
 
 

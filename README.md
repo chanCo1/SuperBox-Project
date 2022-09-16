@@ -53,6 +53,10 @@
 
 ## 기능소개
 
+### 전체페이지
+
+![Sep-16-2022 18-01-56](https://user-images.githubusercontent.com/94843131/190600257-c7460b7d-700f-43cc-96d2-25d0c3aca278.gif)
+
 ### 메인페이지
 
 ![SuperBox/main](https://user-images.githubusercontent.com/94843131/190402533-0775d508-db32-41c9-b3c4-1baeeb56b4e6.gif)

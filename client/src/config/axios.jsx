@@ -9,7 +9,7 @@ axios.defaults.baseURL = 'https://superbox-project.herokuapp.com/';
 
 axios.interceptors.request.use(
   (request) => {
-    request.headers['access-token'] = window.localStorage.getItem('accessToken');
+    request.headers['access-token'] = window.sessionStorage.getItem('accessToken');
     // request.headers['refresh-token'] = window.localStorage.getItem('refreshToken');
     return request;
   },
@@ -29,13 +29,13 @@ axios.interceptors.response.use(
       const { data } = await axios.get('api/users/refresh', {
         baseURL: 'https://superbox-project.herokuapp.com/',
         params: {
-          token: window.localStorage.getItem('refreshToken'),
+          token: window.sessionStorage.getItem('refreshToken'),
         },
       });
 
       const { accessToken } = data;
       //새 액세스 토큰을 로컬스토리지에 저장
-      window.localStorage.setItem('accessToken', accessToken);
+      window.sessionStorage.setItem('accessToken', accessToken);
       //새 액세스 토큰을 헤더에 설정
       config.headers['access-token'] = accessToken;
       //재요청

@@ -34,7 +34,7 @@ const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
 
   // 로그아웃 버튼
   const logoutBtnClick = useCallback((e) => {
-    window.localStorage.clear();
+    window.sessionStorage.clear();
     dispatch(setIsLogin(false));
 
     Swal.fire({

@@ -36,9 +36,13 @@ const Withdrawal = memo(({ memberData }) => {
               params: { user_no: memberData?.user_no }
             });
 
-            // 로컬스토리지 삭제
-            window.localStorage.removeItem("accessToken");
-            window.localStorage.removeItem("refreshToken");
+            // // 로컬스토리지 삭제
+            // window.localStorage.removeItem("accessToken");
+            // window.localStorage.removeItem("refreshToken");
+            
+            // 세션스토리지 삭제
+            window.sessionStorage.removeItem("accessToken");
+            window.sessionStorage.removeItem("refreshToken");
             // 로그인상태 false로 변경
             dispatch(setIsLogin(false));
 

@@ -44,7 +44,7 @@ const App = memo(() => {
 
   // 앱이 실행될 때 마다 토큰 유효성 검사 실행
   useEffect(() => {
-    if (window.localStorage.getItem('accessToken')) {
+    if (window.sessionStorage.getItem('accessToken')) {
       try {
         dispatch(tokenVerify());
       } catch (err) {

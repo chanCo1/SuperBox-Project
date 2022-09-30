@@ -43,6 +43,7 @@ const MypageReception = memo(() => {
 
   /** 토글에 사용할 리스트 상태값 */
   const [showItem, setShowItem] = useState({});
+  console.log(showItem);
 
   /** map을 활용한 리스트에서 토글기능 구현 */
   const toggleItem = id => {

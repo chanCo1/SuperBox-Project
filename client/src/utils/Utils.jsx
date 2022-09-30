@@ -42,20 +42,28 @@ const nameMasking = (name) => {
 
 
 /** 
- * @discription 내일 날짜 구하는 함수 -> yyyy-mm-dd 
+ * @discription 내일 날짜 구하는 함수
+ * @return yyyy-mm-dd 
  */
 const tomorrow = () => {
+  // data 객체 생성
   const date = new Date();
+  // date 객체에서 현재 년도를 구한다
   const year = date.getFullYear();
+  // date 객체에서 현재 월을 구한다 (getMonth는 0부터 시작하기 때문에 +1을 해준다)
   let month = date.getMonth() + 1;
+  // date 객체에서 오늘 날짜를 구한다
   const today = date.getDate();
-  let tomorrow = date.getDate() + 1;
+  // 오늘 날짜에 +1을 하여 내일 날짜를 구한다
+  let tomorrow = today + 1;
   
   // 해당 월의 마지막 날이면?
   // -> month를 다음달로 변경, tomorrow는 다음달 1일로 변경
   if(new Date(year, month, 0).getDate() === today) {
-    month = + date.getMonth() + 2;
-    tomorrow = date.getDate(0) - (date.getDate() -1);
+    // 다음달로 넘기기 위해 +2를 한다 (month는 0부터 시작하기 때문에 이번달을 구할 땐 +1, 다음달은 +2)
+    month = date.getMonth() + 2;
+    // 오늘날짜 - (오늘날짜 -1)을 한 날짜로 변경 (31일 이면 30을 빼 1이 남도록 한다, 월의 1일)
+    tomorrow = date.getDate() - (date.getDate() - 1);
   }
 
   return `${year}-` + (month > 9 ? `${month}-` : `0${month}-`) + (tomorrow > 9 ? tomorrow : `-0${tomorrow}`);

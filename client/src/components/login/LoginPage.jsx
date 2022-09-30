@@ -94,9 +94,13 @@ const LoginPage = memo(({ loginPageState }) => {
         const accessToken = response.data.accessToken;
         const refreshToken = response.data.refreshToken;
 
-        // 로컬스토리지에 토큰 저장
-        window.localStorage.setItem('accessToken', accessToken);
-        window.localStorage.setItem('refreshToken', refreshToken);
+        // // 로컬스토리지에 토큰 저장
+        // window.localStorage.setItem('accessToken', accessToken);
+        // window.localStorage.setItem('refreshToken', refreshToken);
+
+        // 세션스토리지에 토근 저장
+        window.sessionStorage.setItem('accessToken', accessToken);
+        window.sessionStorage.setItem('refreshToken', refreshToken);
 
         // Redux 값 갱신 요청
         dispatch(tokenVerify(accessToken));

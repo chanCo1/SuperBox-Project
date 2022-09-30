@@ -2,9 +2,9 @@
 
 <img src="https://user-images.githubusercontent.com/94843131/190389462-fd69c295-0a9c-44a0-835f-3b90ac01e532.gif" width="400" height="350">
 
-`SuperBox`는 택배 접수 대행 서비스 입니다. 
+`SuperBox`는 포트폴리오를 위한 개인프로젝트입니다.
 
-시용후기를 남기고, 사용자들과 소통할 수 있습니다.
+택배 접수 및 시용후기를 남길 수 있으며, 사용자들과 소통할 수 있습니다.
 
 [https://superbox-project.herokuapp.com](https://superbox-project.herokuapp.com)
 
@@ -25,6 +25,9 @@
 
 ## 개발기간
 22/07/28 ~ 22/09/07 (약 5주)
+
+### 개발인원
+1명 (개인)
 
 ## 주요기능
 

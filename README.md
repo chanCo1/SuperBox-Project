@@ -8,6 +8,8 @@
 
 [https://superbox-project.herokuapp.com](https://superbox-project.herokuapp.com)
 
+(PC, chrome에 최적화 되어있습니다)
+
 <br />
 
 ### 테스트를 위한 공유 아이디

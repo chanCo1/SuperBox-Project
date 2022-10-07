@@ -30,7 +30,6 @@ const ReviewWrite = memo(({ memberData, loading, isLogin }) => {
   const dispatch = useDispatch();
 
   const { data, error } = useSelector(state => state.review);
-  console.log('글쓰고 데이터?', data);
 
   const navigate = useNavigate();
 

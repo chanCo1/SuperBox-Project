@@ -229,7 +229,6 @@ const RegisterPage = memo(({ loginPageState }) => {
         });
       } catch (e) {
         const errMsg = e.response.data.message;
-        console.log(e);
 
         if (errMsg === '같은 아이디가 존재합니다.') {
           setIdErrorMsg(errMsg);

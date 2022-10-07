@@ -12,6 +12,7 @@ import Meta from '../../Meta';
 import PageTitle from '../PageTitle';
 import Spinner from '../Spinner';
 import Pagination from '../Pagination';
+import { setTime } from '../../utils/Utils';
 
 import arrow_down from '../../assets/image/arrow_down.png';
 
@@ -43,7 +44,6 @@ const MypageReception = memo(() => {
 
   /** 토글에 사용할 리스트 상태값 */
   const [showItem, setShowItem] = useState({});
-  console.log(showItem);
 
   /** map을 활용한 리스트에서 토글기능 구현 */
   const toggleItem = id => {
@@ -125,7 +125,8 @@ const MypageReception = memo(() => {
                   # 1{v.reception_date.substring(0, 10).replaceAll('-', '')}-
                   {v.reception_no > 9 ? v.reception_no : `0${v.reception_no}`}
                 </p>
-                <p>{new Date(v.reception_date).toLocaleString()}</p>
+                {/* <p>{new Date(v.reception_date).toLocaleString()}</p> */}
+                <p>{setTime(v.reception_date, v.reception_date)}</p>
                 <p>-</p>
                 <p>{v.progress}</p>
                 <img 

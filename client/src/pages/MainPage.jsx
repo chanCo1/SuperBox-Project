@@ -52,24 +52,24 @@ const MainPage = memo(({ loginPageState }) => {
     ScrollEvent(logoRef, receptionTextRef, receptionImgRef, reviewImgRef, reviewTextRef, customerTextRef, customerImgRef, useStartTextRef, useStartBtnRef);
   }, []);
 
-  // 로그인 상태가 false면 배송접수 버튼 차단
-  const connectReceptionPage = useCallback(e => {
-    e.preventDefault();
+  // // 로그인 상태가 false면 배송접수 버튼 차단
+  // const connectReceptionPage = useCallback(e => {
+  //   e.preventDefault();
     
-    if(!isLogin) {
-      Swal.fire({
-        icon: 'warning',
-        iconColor: '#f3b017',
-        text:'로그인 후 이용해주세요.',
-        confirmButtonText: '확인',
-        confirmButtonColor: '#f3b017',
-      }).then(() => {
-        loginPageState(true);
-      });
-    } else {
-      navigate('/reception');
-    }
-  }, [isLogin, loginPageState, navigate])
+  //   if(!isLogin) {
+  //     Swal.fire({
+  //       icon: 'warning',
+  //       iconColor: '#f3b017',
+  //       text:'로그인 후 이용해주세요.',
+  //       confirmButtonText: '확인',
+  //       confirmButtonColor: '#f3b017',
+  //     }).then(() => {
+  //       loginPageState(true);
+  //     });
+  //   } else {
+  //     navigate('/reception');
+  //   }
+  // }, [isLogin, loginPageState, navigate])
 
   return (
     <div>
@@ -130,7 +130,7 @@ const MainPage = memo(({ loginPageState }) => {
         <div className='main-useStart-wrap'>
           <p ref={useStartTextRef}>그럼 <span>Superbox</span> 한 번 사용해 볼까요?</p>
           <div className='useStart-btn-wrap' ref={useStartBtnRef}>
-            <Link to={'/reception'} className='useStart-btn' onClick={connectReceptionPage}>
+            <Link to={'/reception'} className='useStart-btn'>
               <button className='start-btn'>
                 {/* <RiUserReceivedFill className='btn-icon' /> */}
                 <img className='btn-icon' src={receptionIcon} alt="" />

@@ -156,7 +156,6 @@ const KakaoMap = memo(({ sendAddress, sendAddress2, arriveAddress, arriveAddress
       let bounds = new kakao.maps.LatLngBounds();
       for(let i = 0; i < polyline.length; i++) {
         // LatLngBounds 객체에 좌표 추가
-        // console.log(polyline[i]);
         bounds.extend(polyline[i]);
       }
   
@@ -198,7 +197,6 @@ const KakaoMap = memo(({ address }) => {
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState('');
   const [search, setSearch] = useState('경기 용인시 수지구 포은대로 435');
-  console.log('search >>>', search);
 
   const { kakao } = window;
 

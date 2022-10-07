@@ -51,7 +51,6 @@ const ToastEditor2 = memo(({ reviewContent, reviewOrigin, setReviewOrigin }) => 
 
     // 이미지 객체 추가
     formData.append('imgFile', blob);
-    // for(const i of formData) console.log(i);
 
     try {
       // 비동기 처리
@@ -77,7 +76,6 @@ const ToastEditor2 = memo(({ reviewContent, reviewOrigin, setReviewOrigin }) => 
         confirmButtonColor: '#f3b017',
         confirmButtonText: '확인',
       });
-      // console.log(err.response.data.result);
     }
   };
 

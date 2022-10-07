@@ -16,7 +16,6 @@ const Search = memo(({ listSort, setKeyword }) => {
 
   // 검색어 상태값 저장
   const [search, setSearch] = useState('');
-  console.log(search);
 
   // 부모컴포넌트에 검색값을 보낸다.
   useEffect(() => {

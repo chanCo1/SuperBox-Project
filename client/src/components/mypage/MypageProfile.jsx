@@ -75,13 +75,11 @@ const MypageProfile = memo(({ memberData }) => {
     const formData = new FormData();
 
     formData.append('imgFile', formDataImg);
-    for (const i of formData) console.log('!!!formData >>> ', i);
 
     try {
       setIsLoading(true)
 
       const response = await axios.post('/api/image/upload/single', formData);
-      console.log('이미지요청 >>', response);
 
       dispatch(putProfileImg({
         profile_img: `${response.data.filePath}`,

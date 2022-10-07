@@ -18,7 +18,6 @@ const Store = configureStore({
   },
 
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({serializableCheck: false}),
-  devTools: true,
 });
 
 export default Store;

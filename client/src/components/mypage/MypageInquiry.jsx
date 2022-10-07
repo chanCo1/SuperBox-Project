@@ -7,10 +7,12 @@ import Swal from 'sweetalert2';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserInquiry, putCancelInquiry } from '../../slices/InquirySlice';
 
+// 컴포넌트 참조
 import Meta from '../../Meta';
 import PageTitle from '../PageTitle';
 import Spinner from '../Spinner';
 import Pagination from '../Pagination';
+import { setTime } from '../../utils/Utils';
 
 import arrow_down from '../../assets/image/arrow_down.png';
 
@@ -116,7 +118,8 @@ const MypageInquiry = memo(() => {
                 className={showItem[v.inquiry_no] ? 'cotent-list cotent-list-background' : 'cotent-list'}>
                 <p>{v.type}</p>
                 <p>{v.title}</p>
-                <p>{new Date(v.regdate).toLocaleString()}</p>
+                {/* <p>{new Date(v.regdate).toLocaleString()}</p> */}
+                <p>{setTime(v.regdate, v.regdate)}</p>
                 <p>{v.progress}</p>
                 <img
                   src={arrow_down}

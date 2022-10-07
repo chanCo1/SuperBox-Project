@@ -69,7 +69,6 @@ const ImageUpload = memo(({ setUploadImg, setConfirm }) => {
       const formData = new FormData();
 
       formData.append('imgFile', formDataImg);
-      for (const i of formData) console.log('!!!formData >>> ', i);
 
       try {
         setIsLoading(true)

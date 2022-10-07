@@ -56,12 +56,10 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
 
     // 이미지 객체 추가
     formData.append('imgFile', blob);
-    for(const i of formData) console.log(i);
 
     try {
       // 비동기 처리
       const response = await axios.post('api/image/upload/multiple', formData);
-      console.log(response.data)
 
       // 백엔드에서 전달 받은 파일정보 사용
       const filePath = response.data.filePath;
@@ -78,7 +76,6 @@ const ToastEditor = memo(({ review, setReview, setUploadImg }) => {
         confirmButtonColor: '#f3b017',
         confirmButtonText: '확인',
       });
-      // console.log(err.response.data.result);
     }
   };
 

@@ -36,7 +36,6 @@ const CommentEdit = memo(({ setEditState, comment, commentNo, setCommentList, re
     comment: comment,
     review_no: reviewNo,
   });
-  console.log('수정댓글 >>>', editComment);
 
   // 로딩 상태
   const [isloading, setIsloading] = useState(false);

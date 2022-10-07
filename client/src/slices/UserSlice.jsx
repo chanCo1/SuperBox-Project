@@ -42,7 +42,6 @@ export const postRegister = createAsyncThunk('userSlice/register', async (payloa
 
   try {
     result = await axios.post(`${API_URL}register`, payload);
-    console.log(result);
 
     if(result.data.faultInfo !== undefined) {
       const err = new Error();

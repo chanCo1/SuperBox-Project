@@ -29,7 +29,6 @@ const ReviewEdit = memo(() => {
   // 리덕스
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.review);
-  console.log('edit에서 data 호출 >>> ',data);
 
   const navigate = useNavigate();
 
@@ -38,7 +37,6 @@ const ReviewEdit = memo(() => {
 
   /** 기존 후기 상태값 관리 */
   const [reviewOrigin, setReviewOrigin] = useState({});
-  console.log(reviewOrigin);
 
   // // 백엔드에 보낼 이미지 상태값
   // const [uploadImg, setUploadImg] = useState([]);

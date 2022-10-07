@@ -33,7 +33,7 @@ import { BsQuestionCircle } from 'react-icons/bs';
 /**
  * @description 배송접수 페이지
  */
-const ReceptionPage = memo(() => {
+const ReceptionPage = memo(({ isLogin }) => {
   /** 주소 검색 라이브러리 사용 */
   const postcode = useDaumPostcodePopup();
 
@@ -539,7 +539,11 @@ const ReceptionPage = memo(() => {
             )}
             {reception.payment && <span># {reception.payment}로 할께요! </span>}
           </div>
-          <button type="submit">접수하기</button>
+          {isLogin ? 
+            <button type="submit" className='btn-active'>접수하기</button> :
+            <button type="button" className='btn-disabled' disabled>배송접수는 로그인 후 가능합니다!</button>
+          }
+          
         </div>
       </ReceptionPageContainer>
     </div>
@@ -699,7 +703,7 @@ const ReceptionPageContainer = styled.form`
       }
     }
 
-    button {
+    .btn-active {
       width: 100%;
       background-color: #f3b017;
       color: #fff;
@@ -713,6 +717,16 @@ const ReceptionPageContainer = styled.form`
       &:active {
         transform: scale(0.9, 0.9);
       }
+    }
+
+    .btn-disabled {
+      width: 100%;
+      background-color: #bcbcbc51;
+      border: none;
+      padding: 10px;
+      font-size: 1.5em;
+      cursor: not-allowed;
+      border-radius: 0 0 10px 10px;
     }
   }
 `;

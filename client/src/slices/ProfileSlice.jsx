@@ -11,11 +11,9 @@ const API_URL = '/api/profile/';
  */
 export const putProfile = createAsyncThunk('ProfileSlice/putProfile', async (payload, { rejectWithValue }) => {
   let result = null;
-  console.log(payload)
 
   try {
     result = await axios.put(`${API_URL}putProfile`, payload);
-    console.log(result)
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {
@@ -37,11 +35,9 @@ export const putProfile = createAsyncThunk('ProfileSlice/putProfile', async (pay
  */
 export const putProfileImg = createAsyncThunk('ProfileSlice/putProfileImg', async (payload, { rejectWithValue }) => {
   let result = null;
-  console.log(payload)
 
   try {
     result = await axios.put(`${API_URL}putProfileImg`, payload);
-    console.log(result)
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {

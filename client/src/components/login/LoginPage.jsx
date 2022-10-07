@@ -118,7 +118,6 @@ const LoginPage = memo(({ loginPageState }) => {
 
       } catch (e) {
         const errMsg = e.response.data.message;
-        console.log(e);
 
         if (errMsg === '아이디가 존재하지 않습니다.') {
           setIdErrorMsg(errMsg);

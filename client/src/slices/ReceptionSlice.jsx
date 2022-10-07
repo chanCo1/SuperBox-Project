@@ -11,7 +11,6 @@ const API_URL = '/api/reception/';
  */
 export const getReception = createAsyncThunk('ReceptionSlice/getReception', async (payload, { rejectWithValue }) => {
   let result = null;
-  console.log(payload);
 
   try {
     result = await axios.get(`${API_URL}getReception`, {
@@ -19,7 +18,6 @@ export const getReception = createAsyncThunk('ReceptionSlice/getReception', asyn
         user_no: payload?.user_no,
       }
     });
-    console.log(result)
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {
@@ -45,7 +43,6 @@ export const postReception = createAsyncThunk('ReceptionSlice/postReception', as
 
   try {
     result = await axios.post(`${API_URL}`, payload);
-    console.log(result)
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {
@@ -67,11 +64,9 @@ export const postReception = createAsyncThunk('ReceptionSlice/postReception', as
  */
 export const putReception = createAsyncThunk('ReceptionSlice/putReception', async (payload, { rejectWithValue }) => {
   let result = null;
-  console.log(payload)
 
   try {
     result = await axios.put(`${API_URL}putReception`, payload);
-    console.log(result)
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {

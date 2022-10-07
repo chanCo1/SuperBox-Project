@@ -40,7 +40,6 @@ const EditProfile = memo(({ setEditProfileState }) => {
     addr2: memberData?.addr2 || '',
     user_no: memberData?.user_no,
   });
-  console.log(editInfo);
 
   /** input 입력값을 state에 저장 */
   const onChange = useCallback((e) => {

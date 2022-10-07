@@ -5,14 +5,18 @@
  * @param b 바뀐시간
  */
 const setTime = (a, b) => {
-
   const originTime = new Date(a);
   const updateTime = new Date(b);
 
-  const originHour = originTime.getHours();
+  // heroku의 cleardb는 미국 시간을 기준으로 timezone이 형성 되는데
+  // root 계정을 제공하지 않아 timezone을 수정할 수 없어서 프론트단에서 +9를 해서 현재 시간에 맞춤..
+  // too many connections 에러가 너무 자주 발생해서 max connection 이랑 wait_timeout을
+  // 수정하고 싶은데 root계정에 접근할 수 없으니 이건 뭐..
+  // 담에는 cleardb 안쓸래..
+  const originHour = originTime.getHours() + 9;
   const originMinutes = originTime.getMinutes();
 
-  const updateHour = updateTime.getHours();
+  const updateHour = updateTime.getHours() + 9;
   const updateMinutes = updateTime.getMinutes();
 
 
@@ -66,7 +70,7 @@ const tomorrow = () => {
     tomorrow = date.getDate() - (date.getDate() - 1);
   }
 
-  return `${year}-` + (month > 9 ? `${month}-` : `0${month}-`) + (tomorrow > 9 ? tomorrow : `-0${tomorrow}`);
+  return `${year}-` + (month > 9 ? `${month}-` : `0${month}-`) + (tomorrow > 9 ? tomorrow : `0${tomorrow}`);
 };
 
 export { setTime, nameMasking, tomorrow };

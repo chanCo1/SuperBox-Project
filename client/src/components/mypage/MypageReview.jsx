@@ -24,7 +24,6 @@ const MypageReview = memo(() => {
   const dispatch = useDispatch();
   const { memberData, isLogin } = useSelector((state) => state.user);
   const { data, loading, error } = useSelector((state) => state.review);
-  console.log(data);
 
   /**
    * pagination

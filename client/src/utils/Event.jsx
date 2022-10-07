@@ -22,7 +22,6 @@ const ScrollEvent = (
   const useStartBtn = useStartBtnRef.current.style;
 
   const scrollEvent = window.addEventListener('scroll', (e) => {
-    // console.log(window.scrollY);
     if (window.scrollY < 100) {
       receptionText.display = 'none';
       receptionImg.display = 'none';

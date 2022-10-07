@@ -12,7 +12,6 @@ const API_URL = '/api/review/';
  */
  export const getReviewList = createAsyncThunk('ReviewSlice/getReviewList', async (payload, { rejectWithValue }) => {
   let result = null;
-  console.log(payload);
 
   try {
     result = await axios.get(`${API_URL}getReviewList`, {
@@ -23,7 +22,6 @@ const API_URL = '/api/review/';
         sort: payload?.sort || 'review_no',
       }
     });
-    console.log(result);
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {
@@ -45,7 +43,6 @@ const API_URL = '/api/review/';
  */
  export const getUserReview = createAsyncThunk('ReviewSlice/getUserReview', async (payload, { rejectWithValue }) => {
   let result = null;
-  console.log(payload);
 
   try {
     result = await axios.get(`${API_URL}getUserReview`, {
@@ -53,7 +50,6 @@ const API_URL = '/api/review/';
         user_no: payload?.user_no || '', 
       }
     });
-    console.log(result);
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {
@@ -79,7 +75,6 @@ export const postReview = createAsyncThunk('ReviewSlice/postReview', async (payl
 
   try {
     result = await axios.post(`${API_URL}post`, payload);
-    console.log(result);
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {
@@ -102,11 +97,9 @@ export const postReview = createAsyncThunk('ReviewSlice/postReview', async (payl
  */
  export const putReview = createAsyncThunk('ReviewSlice/putReview', async (payload, { rejectWithValue }) => {
   let result = null;
-  console.log(payload)
 
   try {
     result = await axios.put(`${API_URL}put`, payload);
-    console.log(result);
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {
@@ -136,7 +129,6 @@ export const deleteReview = createAsyncThunk('ReviewSlice/deleteReview', async (
         review_no: payload,
       }
     });
-    console.log(result);
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {
@@ -212,7 +204,6 @@ const ReviewSlice = createSlice({
     [putReview.fulfilled]: (state, { meta, payload }) => {
       // 기존의 상태값을 복사한다. (원본이 JSON이므로 깊은 복사를 수행해야 한다.)
       const data = cloneDeep(state.data);
-      console.log(data);
 
       // 기존의 데이터에서 수정이 요청된 항목의 위치를 검색한다.
       const index = data.item.findIndex(v => v.review_no === parseInt(meta.arg.review_no));
@@ -231,7 +222,6 @@ const ReviewSlice = createSlice({
     /** 데이터 삭제를 위한 액션 함수 */
     [deleteReview.pending]: pending,
     [deleteReview.fulfilled]: (state, { meta, payload }) => {
-      console.log('meta >>>', meta);
 
       // 기존의 상태값을 복사한다. (원본이 JSON이므로 깊은 복사를 수행해야 한다.)
       const data = cloneDeep(state.data);

@@ -9,7 +9,6 @@ const API_URL = '/api/inquiry/';
  */
  export const getUserInquiry = createAsyncThunk('inquirySlice/getUserInquiry', async (payload, { rejectWithValue }) => {
   let result = null;
-  console.log(payload);
 
   try {
     result = await axios.get(`${API_URL}getUserInquiry`, {
@@ -17,7 +16,6 @@ const API_URL = '/api/inquiry/';
         user_no: payload?.user_no,
       }
     });
-    console.log(result)
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {
@@ -38,11 +36,9 @@ const API_URL = '/api/inquiry/';
  */
 export const postInquiry = createAsyncThunk('inquirySlice/postInquiry', async (payload, { rejectWithValue }) => {
   let result = null;
-  console.log(payload);
 
   try {
     result = await axios.post(`${API_URL}`, payload);
-    console.log(result)
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {
@@ -65,11 +61,9 @@ export const postInquiry = createAsyncThunk('inquirySlice/postInquiry', async (p
  */
  export const putCancelInquiry = createAsyncThunk('ReceptionSlice/putCancelInquiry', async (payload, { rejectWithValue }) => {
   let result = null;
-  console.log(payload)
 
   try {
     result = await axios.put(`${API_URL}putCancelInquiry`, payload);
-    console.log(result)
 
     // 에러가 발생하더라도 HTTP 상태코드는 200으로 응답이 오기 때문에 catch문이 동작하지 않는다
     if(result.data.faultInfo !== undefined) {

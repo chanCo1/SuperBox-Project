@@ -49,22 +49,22 @@ const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
     navigate('/main');
   }, [dispatch, navigate]);
 
-  // 로그인 상태가 false면 배송접수 버튼 차단
-  const connectReceptionPage = useCallback(e => {
-    if(!isLogin) {
-      Swal.fire({
-        icon: 'warning',
-        iconColor: '#f3b017',
-        text:'로그인 후 이용해주세요.',
-        confirmButtonText: '확인',
-        confirmButtonColor: '#f3b017',
-      }).then(() => {
-        loginPageState(true);
-      });
+  // // 로그인 상태가 false면 배송접수 버튼 차단
+  // const connectReceptionPage = useCallback(e => {
+  //   if(!isLogin) {
+  //     Swal.fire({
+  //       icon: 'warning',
+  //       iconColor: '#f3b017',
+  //       text:'로그인 후 이용해주세요.',
+  //       confirmButtonText: '확인',
+  //       confirmButtonColor: '#f3b017',
+  //     }).then(() => {
+  //       loginPageState(true);
+  //     });
 
-      e.preventDefault();
-    }
-  }, [isLogin, loginPageState])
+  //     e.preventDefault();
+  //   }
+  // }, [isLogin, loginPageState])
 
   return (
     <>
@@ -81,12 +81,12 @@ const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
           </Link>
 
           <ul className="nav-wrap">
-            <NavLink className="NavLink nav" to={'/reception'} onClick={connectReceptionPage}>
+            <NavLink className="NavLink nav" to={'/reception'}>
               <li>배송접수</li>
             </NavLink>
-            <NavLink className="NavLink nav" to={'/mypage/reception'} onClick={connectReceptionPage}>
+            {/* <NavLink className="NavLink nav" to={'/mypage/reception'} onClick={connectReceptionPage}>
               <li>접수현황</li>
-            </NavLink>
+            </NavLink> */}
             <NavLink className="NavLink nav" to={'/review'}>
               <li>고객후기</li>
             </NavLink>
@@ -107,9 +107,15 @@ const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
           <MyPage state={isLogin}>
             <Link to={'/mypage'}>
               {memberData?.profile_img ? (
-                <img src={memberData?.profile_img} alt={`${memberData?.user_name} 프로필 이미지`} className='profile-img' />
+                <>
+                  <img src={memberData?.profile_img} alt={`${memberData?.user_name} 프로필 이미지`} className='profile-img' />
+                  <span>마이페이지</span>
+                </>
               ) : (
-                <FaUserCircle className='profile-img-default'/>
+                <>
+                  <FaUserCircle className='profile-img-default'/>
+                  <span>마이페이지</span>
+                </>
               )}
             </Link>
           </MyPage>
@@ -244,36 +250,47 @@ export default Header;
 
 // 로그인 상태값에 따른 css 처리
 const MyPage = styled.div`
- display: flex;
- font-size: 2.5rem;
- cursor: pointer;
- overflow: hidden;
- max-height: 0;
- /* border: 1px solid #bcbcbc; */
- border-radius: 50%;
- transition: ease .3s;
+  display: flex;
+  font-size: 2.5rem;
+  overflow: hidden;
+  /* max-height: 0; */
+  /* border: 1px solid #bcbcbc; */
+  border-radius: 50%;
+  transition: ease .3s;
+  cursor: pointer;
+  visibility: hidden;
 
- &:hover { transform: scale(1.2, 1.2); }
- 
- a {
-   display: flex;
-   justify-content: end;
+  /* &:hover { transform: scale(1.1, 1.1); } */
+  
+  a {
+    display: flex;
+    justify-content: end;
 
-   .profile-img {
-    width: 40px;
-    height: 40px;
-   }
-   
-   .profile-img-default {
-     color: #bcbcbc;
-     transition: ease .3s;
-     
-     &:active {
-       transform: scale(0.8, 0.8);
-     }
-   }
- }
+    .profile-img {
+      width: 40px;
+      height: 40px;
+      transition: .3s ease;
+    }
+    
+    .profile-img-default {
+      color: #bcbcbc;
+      transition: ease .3s;
+      
+      &:active {
+        transform: scale(0.8, 0.8);
+      }
+    }
+  }
+
+  span {
+    position: absolute;
+    font-size: 11px;
+    top: 70%;
+    right: 11.3%;
+    color: #999;
+  }
 
  // props로 css 상태값 변경
- ${(props) => props.state && css` max-height: 100vh; `}
+ /* ${(props) => props.state && css` max-height: 100vh; `} */
+ ${(props) => props.state && css` visibility: visible; `}
 `;

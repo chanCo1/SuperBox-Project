@@ -41,7 +41,6 @@ const InquiryPage = memo(() => {
 
   // 1:1문의 입력 상태값 관리
   const [inquiry, setInquiry] = useState({});
-  // console.log(inquiry);
 
   // 새로고침 했을 때 값이 안들어가는 현상 해결
   useEffect(() => {

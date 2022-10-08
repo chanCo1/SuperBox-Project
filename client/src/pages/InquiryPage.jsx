@@ -252,7 +252,7 @@ export default InquiryPage;
 
 /** 스타일 */
 const InquiryContainer = styled.div`
-  width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
   /* border: 1px solid #999; */
   border-radius: 11px;

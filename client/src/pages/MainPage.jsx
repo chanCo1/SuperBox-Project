@@ -168,7 +168,7 @@ const MainLogoContainer = styled.div`
   text-align: center;
   
   .main-logo-wrap {
-    width: 1200px;
+    max-width: 1200px;
     height: 100vh;
     margin: auto;
     padding: 225px 0 120px; 
@@ -231,7 +231,7 @@ const MainReceptionContainer = styled.div`
   .main-reception-wrap {
     position: relative;
     display: flex;
-    width: 1200px;
+    max-width: 1200px;
     margin: auto;
     justify-content: space-between;
 
@@ -277,7 +277,7 @@ const MainReviewContainer = styled.div`
   .main-review-wrap {
     position: relative;
     display: flex;
-    width: 1200px;
+    max-width: 1200px;
     margin: auto;
 
     .review-icon-wrap {

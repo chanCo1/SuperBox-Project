@@ -29,6 +29,7 @@ import { tomorrow } from '../utils/Utils';
 
 import arrow_btn from '../assets/image/arrow_up.png';
 import { BsQuestionCircle } from 'react-icons/bs';
+import { GrCircleAlert } from 'react-icons/gr';
 
 /**
  * @description 배송접수 페이지
@@ -543,7 +544,9 @@ const ReceptionPage = memo(({ isLogin }) => {
             <button type="submit" className='btn-active'>접수하기</button> :
             <button type="button" className='btn-disabled' disabled>배송접수는 로그인 후 가능합니다!</button>
           }
-          
+          <div className="reception-notice">
+            <p><GrCircleAlert style={{ margin: "2px 5px 0 0" }} /> 접수현황은 마이페이지에서 확인할 수 있습니다.</p>
+          </div>
         </div>
       </ReceptionPageContainer>
     </div>
@@ -727,6 +730,17 @@ const ReceptionPageContainer = styled.form`
       font-size: 1.5em;
       cursor: not-allowed;
       border-radius: 0 0 10px 10px;
+    }
+
+    .reception-notice {
+      padding-top: 10px;
+      color: #404040;
+
+      p {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+      }
     }
   }
 `;

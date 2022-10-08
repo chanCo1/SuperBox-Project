@@ -13,7 +13,7 @@ import { ShowSlideItem, HideSlideItem } from '../utils/Event';
 // 이미지 참조
 import logo from '../assets/image/superbox-logo.png';
 
-// 마이페이지 1회용 아이콘 -> 나중에 수정
+// 아이콘
 import { FaUserCircle } from 'react-icons/fa';
 
 /** 
@@ -269,16 +269,17 @@ const MyPage = styled.div`
     .profile-img {
       width: 40px;
       height: 40px;
+      border-radius: 50%;
       transition: .3s ease;
+
+      &:active { transform: scale(0.8, 0.8); }
     }
     
     .profile-img-default {
       color: #bcbcbc;
-      transition: ease .3s;
+      transition: .3s ease;
       
-      &:active {
-        transform: scale(0.8, 0.8);
-      }
+      &:active { transform: scale(0.8, 0.8); }
     }
   }
 

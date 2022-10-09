@@ -15,39 +15,57 @@ import logo from '../assets/image/superbox-logo.png';
 
 // 아이콘
 import { FaUserCircle } from 'react-icons/fa';
+import { VscThreeBars } from 'react-icons/vsc';
 
-/** 
+/**
  * @description 헤더 영역 정의
  * @param loginPageState 현재 로그인 상태값 / app.jsx
  */
 const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const subMenuRef = useRef();
+  const navItem = useRef();
 
-  // 로그인 버튼 클릭시 app.jsx에서 받은 상태값을 true 바꾼다.
+  /**
+   * 로그인 버튼 클릭시
+   * app.jsx에서 받은 상태값을 true 바꾼다.
+   */
   const loginBtnClick = useCallback(() => {
     loginPageState(true);
   }, [loginPageState]);
 
-  // 로그아웃 버튼
-  const logoutBtnClick = useCallback((e) => {
-    window.sessionStorage.clear();
-    dispatch(setIsLogin(false));
+  /** 
+   * 로그아웃 버튼 클릭시
+   * 세션스토리지의 토큰 삭제
+   */
+  const logoutBtnClick = useCallback(
+    (e) => {
+      window.sessionStorage.clear();
+      dispatch(setIsLogin(false));
 
-    Swal.fire({
-      icon: 'info',
-      iconColor: '#f3b017',
-      text:'로그아웃 되었습니다.',
-      showConfirmButton: false,
-      timer: 1500,
-      footer: '다음에 또 만나요! 👋'
-    });
+      Swal.fire({
+        icon: 'info',
+        iconColor: '#f3b017',
+        text: '로그아웃 되었습니다.',
+        showConfirmButton: false,
+        timer: 1500,
+        footer: '다음에 또 만나요! 👋',
+      });
 
-    navigate('/main');
-  }, [dispatch, navigate]);
+      navigate('/main');
+    },
+    [dispatch, navigate]
+  );
+
+  /** 
+   * 반응형에 따른 more버튼
+   * @description 클릭시 open 클래스 toggle
+   */
+  const showBars = useCallback((e) => {
+    navItem.current.classList.toggle("open");
+  }, []);
 
   // // 로그인 상태가 false면 배송접수 버튼 차단
   // const connectReceptionPage = useCallback(e => {
@@ -72,7 +90,6 @@ const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
 
       <HeaderContainer>
         <div className="header-wrap">
-
           <Link to={'/main'}>
             <div className="logo">
               <img src={logo} alt="superbox-logo" />
@@ -80,7 +97,7 @@ const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
             </div>
           </Link>
 
-          <ul className="nav-wrap">
+          <ul className="nav-wrap" ref={navItem}>
             <NavLink className="NavLink nav" to={'/reception'}>
               <li>배송접수</li>
             </NavLink>
@@ -90,16 +107,20 @@ const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
             <NavLink className="NavLink nav" to={'/review'}>
               <li>고객후기</li>
             </NavLink>
-            <li 
-              className="NavLink nav" 
+            <li
+              className="NavLink nav"
               onMouseOver={() => ShowSlideItem(subMenuRef)}
               onMouseOut={() => HideSlideItem(subMenuRef)}
             >
               고객센터
-              <ul className='customer-Subnav' ref={subMenuRef}>
+              <ul className="customer-Subnav" ref={subMenuRef}>
                 {/* <Link to={'/customer/notice'}><li>공지사항</li></Link> */}
-                <Link to={'/customer/faq'}><li>자주 찾는 질문</li></Link>
-                <Link to={'/customer/inquiry'}><li>1:1 문의</li></Link>
+                <Link to={'/customer/faq'}>
+                  <li>자주 찾는 질문</li>
+                </Link>
+                <Link to={'/customer/inquiry'}>
+                  <li>1:1 문의</li>
+                </Link>
               </ul>
             </li>
           </ul>
@@ -108,12 +129,16 @@ const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
             <Link to={'/mypage'}>
               {memberData?.profile_img ? (
                 <>
-                  <img src={memberData?.profile_img} alt={`${memberData?.user_name} 프로필 이미지`} className='profile-img' />
+                  <img
+                    src={memberData?.profile_img}
+                    alt={`${memberData?.user_name} 프로필 이미지`}
+                    className="profile-img"
+                  />
                   <span>마이페이지</span>
                 </>
               ) : (
                 <>
-                  <FaUserCircle className='profile-img-default'/>
+                  <FaUserCircle className="profile-img-default" />
                   <span>마이페이지</span>
                 </>
               )}
@@ -121,10 +146,18 @@ const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
           </MyPage>
 
           {isLogin ? (
-            <button className='login-button' onClick={logoutBtnClick}>로그아웃</button>
+            <button className="login-button" onClick={logoutBtnClick}>
+              로그아웃
+            </button>
           ) : (
-            <button className='login-button' onClick={loginBtnClick}>로그인</button>
+            <button className="login-button" onClick={loginBtnClick}>
+              로그인
+            </button>
           )}
+
+          <div className="bars" onClick={showBars}>
+            <VscThreeBars />
+          </div>
         </div>
       </HeaderContainer>
     </>
@@ -133,119 +166,142 @@ const Header = memo(({ memberData, loading, isLogin, loginPageState }) => {
 
 export default Header;
 
-/** 
+/**
  * Header 스타일
  */
- const HeaderContainer = styled.div`
- position: fixed;
- width: 100%;
- /* border-bottom: 2px solid #f3b017; */
- background-color: #fff;
- /* opacity: .9; */
- z-index: 99;
- 
- .header-wrap {
-   position: relative;
-   width: 1200px;
-   margin: auto;
-   padding: 20px 0;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
+const HeaderContainer = styled.div`
+  position: fixed;
+  width: 100%;
+  /* border-bottom: 2px solid #f3b017; */
+  background-color: #fff;
+  /* opacity: .9; */
+  z-index: 99;
 
-   @media (max-width: 1200px) {
-     width: 90%;
-     /* margin: 0 auto; */
-   }
-   
-   .logo {
-     display: flex;
-     align-items: center;
+  .header-wrap {
+    position: relative;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-     img {
-       width: 85px;
-       height: 50px;
-     }
+    .logo {
+      display: flex;
+      align-items: center;
 
-     h1 {
-       margin: 0 10px;
-       color: #f3b017;
-       font-size: 26px;
-       font-weight: 500;
-     }
-   }
+      img {
+        width: 85px;
+        height: 50px;
+      }
 
-   .nav-wrap {
-     display: flex;
-     width: 60%;
-     padding: 0;
+      h1 {
+        margin: 0 10px;
+        color: #f3b017;
+        font-size: 26px;
+        font-weight: 500;
+      }
+    }
 
-     .NavLink {
-       &:hover {
-         text-decoration: underline #f3b017;
-         text-underline-position: under;
-         text-decoration-thickness: 5px;
-       }
-     }
+    .nav-wrap {
+      display: flex;
+      width: 60%;
+      padding: 0;
 
-     .nav {
-       color: #404040;
-       font-size: 20px;
-       margin-right: 30px;
-       cursor: pointer;
-     }
+      .NavLink {
+        &:hover {
+          text-decoration: underline #f3b017;
+          text-underline-position: under;
+          text-decoration-thickness: 5px;
+        }
+      }
 
-     .active {
-       text-decoration: underline #f3b017;
-       text-underline-position: under;
-       text-decoration-thickness: 5px;
-     }
+      .nav {
+        color: #404040;
+        font-size: 20px;
+        margin-right: 30px;
+        cursor: pointer;
+      }
 
-     .customer-Subnav {
-       position: absolute;
-       background-color: #fff;
-       padding: 10px 20px;
-       margin-top: 10px;
-       border: 1px solid #f3b017;
-       border-radius: 15px;
-       overflow: hidden;
-       transition: .4s ease;
-       opacity: 0;
-       max-height: 0;
-       
-       li {
-         margin: 0;
-         padding: 10px 0;
-         font-size: 17px;
-         color: #404040;
+      .active {
+        text-decoration: underline #f3b017;
+        text-underline-position: under;
+        text-decoration-thickness: 5px;
+      }
 
-         &:hover {
-           text-decoration: underline #f3b017;
-           text-underline-position: under;
-           text-decoration-thickness: 3px;
-         }
-       }
-     }
-   }
+      .customer-Subnav {
+        position: absolute;
+        background-color: #fff;
+        padding: 10px 20px;
+        margin-top: 10px;
+        border: 1px solid #f3b017;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: 0.4s ease;
+        opacity: 0;
+        max-height: 0;
 
-   .login-button {
-     background-color: #fff;
-     width: 101px;
-     border: 1px solid #f3b017;
-     color: #f3b017;
-     padding: 5px 20px;
-     cursor: pointer;
-     transition: ease .3s;
-     border-radius: 5px;
-     font-size: 16px;
+        li {
+          margin: 0;
+          padding: 10px 0;
+          font-size: 17px;
+          color: #404040;
 
-     &:hover {
-       background-color: #f3b017;
-       color: #fff;
-     }
-     &:active { transform: scale(0.9, 0.9); }
-   }
- }
+          &:hover {
+            text-decoration: underline #f3b017;
+            text-underline-position: under;
+            text-decoration-thickness: 3px;
+          }
+        }
+      }
+    }
+
+    .login-button {
+      background-color: #fff;
+      width: 101px;
+      border: 1px solid #f3b017;
+      color: #f3b017;
+      padding: 5px 20px;
+      cursor: pointer;
+      transition: ease 0.3s;
+      border-radius: 5px;
+      font-size: 16px;
+
+      &:hover {
+        background-color: #f3b017;
+        color: #fff;
+      }
+      &:active {
+        transform: scale(0.9, 0.9);
+      }
+    }
+
+    .bars { display: none; }
+  }
+
+  @media (max-width: 767px) {
+    .header-wrap {
+      max-width: 90%;
+
+      .logo {
+        img {
+          width: 12vw;
+          height: 8vw;
+        }
+
+        h1 { font-size: 7vw; }
+      }
+
+      .nav-wrap { display: none; }
+      .login-button { display: none; }
+
+      .bars { 
+        display: flex;
+        font-size: 8vw;
+        color: #404040;
+      }
+    }
+  }
 `;
 
 // 로그인 상태값에 따른 css 처리
@@ -256,12 +312,12 @@ const MyPage = styled.div`
   /* max-height: 0; */
   /* border: 1px solid #bcbcbc; */
   border-radius: 50%;
-  transition: ease .3s;
+  transition: ease 0.3s;
   cursor: pointer;
   visibility: hidden;
 
   /* &:hover { transform: scale(1.1, 1.1); } */
-  
+
   a {
     display: flex;
     justify-content: end;
@@ -270,16 +326,20 @@ const MyPage = styled.div`
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      transition: .3s ease;
+      transition: 0.3s ease;
 
-      &:active { transform: scale(0.8, 0.8); }
+      &:active {
+        transform: scale(0.8, 0.8);
+      }
     }
-    
+
     .profile-img-default {
       color: #bcbcbc;
-      transition: .3s ease;
-      
-      &:active { transform: scale(0.8, 0.8); }
+      transition: 0.3s ease;
+
+      &:active {
+        transform: scale(0.8, 0.8);
+      }
     }
   }
 
@@ -291,7 +351,12 @@ const MyPage = styled.div`
     color: #999;
   }
 
- // props로 css 상태값 변경
- /* ${(props) => props.state && css` max-height: 100vh; `} */
- ${(props) => props.state && css` visibility: visible; `}
+  // props로 css 상태값 변경
+  /* ${(props) => props.state && css` max-height: 100vh; `} */
+  ${(props) => props.state && css` visibility: visible; `}
+
+  /* responsive */
+  @media (max-width: 767px) {
+    a { display: none; }
+  }
 `;

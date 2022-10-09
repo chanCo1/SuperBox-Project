@@ -21,6 +21,8 @@ const GlobalStyles = createGlobalStyle`
     color: #404040;
   }
 
+  /* html, body { overflow-x: hidden; } */
+
   input, select, textarea { outline: none; }
 
   textarea { resize: none; }

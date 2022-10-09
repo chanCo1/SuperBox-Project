@@ -42,6 +42,7 @@ const IntroPageContainer = styled.div`
   width: 100%;
   height: 100vh;
   background-color: #fff;
+  overflow-x: hidden;
   z-index: 99;
 
   .logo-wrap {
@@ -57,7 +58,7 @@ const IntroPageContainer = styled.div`
     img {
       display: flex;
       justify-content: center;
-      width: 40%;
+      width: 30vw;
       animation: up-down 1.5s ease-in-out infinite alternate;
 
       @keyframes up-down {
@@ -68,14 +69,14 @@ const IntroPageContainer = styled.div`
 
     .title {
       color: #f3b017;
-      font-size: 5vw;
-      margin: 10px 0;
+      font-size: 4.5vw;
+      margin: .8vw 0;
     }
 
     p {
-      margin: 0 0 20px 0;
+      margin: 0 0 1vw 0;
       color: #5e5e5e;
-      font-size: 1.1vw;
+      font-size: 1.5vw;
       font-weight: 500;
     }
 
@@ -85,8 +86,8 @@ const IntroPageContainer = styled.div`
         border: 1px solid #f3b017;
         border-radius: 20px;
         color: #f3b017;
-        padding: .3vw 2vw;
-        font-size: 1.3vw;
+        padding: .2vw 1.8vw;
+        font-size: 1.5vw;
         cursor: pointer;
         transition: 0.3s ease-in;
 
@@ -95,6 +96,27 @@ const IntroPageContainer = styled.div`
           color: #fff;
         }
         &:active { transform: scale(0.9, 0.9); }
+      }
+    }
+  }
+ 
+  /** responsive */
+  @media (max-width: 767px) {
+    .logo-wrap {
+      img { width: 70%; }
+
+      .title { font-size: 15vw; }
+      
+      p { 
+        font-size: 4vw;
+        margin-bottom: 6vw;
+      }
+      
+      .button {
+        button { 
+          font-size: 5vw;
+          padding: 1vw 4vw;
+        }
       }
     }
   }

@@ -81,9 +81,6 @@ const MainPage = memo(({ loginPageState }) => {
           <h2>SuperBox</h2>
           <p>누구나 한번 쯤은 택배 상자를 받고 설레는 기분을 느꼈을거예요.</p>
           <p>그 기분, <span>SuperBox</span>를 통해 더 오래, 더 많이 느껴보세요.</p>
-          {/* <div className='delivery-character'>
-            <img src={delivery} alt="delivery 이미지" />
-          </div> */}
         </div>
       </MainLogoContainer>
 
@@ -170,14 +167,14 @@ const MainLogoContainer = styled.div`
   .main-logo-wrap {
     max-width: 1200px;
     height: 100vh;
-    margin: auto;
-    padding: 225px 0 120px; 
+    margin: 0 auto;
+    padding: 220px 0 15vw;
     /* font-weight: 500; */
     transition: 1s ease-in-out;
     
     .logo {
       position: relative;
-      width: 30rem;
+      width: 30vw;
       animation: fly-logo 13s ease infinite;
 
       @keyframes fly-logo {
@@ -198,26 +195,39 @@ const MainLogoContainer = styled.div`
   
     h2 {
       color: #f3b017;
-      font-size: 4rem;
-      margin: 10px 0 40px;
+      font-size: 4vw;
+      margin: 1.5vw 0 1vw;
     }
   
     p {
-      font-size: 1.5rem;
-      margin: 10px 0;
+      font-size: 1.5vw;
+      margin: 1vw 0;
       color: #404040;
   
       span {
         color: #f3b017;
       }
     }
+  }
 
-    .delivery-character {
-      position: relative;
-      top: -15rem;
-      right: -30rem;
+  /** responsive */
+  @media (max-width: 767px) {
+    .main-logo-wrap{
+      padding: 25vh 0 20vh;
 
-      img { width: 13%; }
+      .logo {
+        width: 60vw;
+      }
+
+      h2 {
+        font-size: 9vw;
+      }
+
+      p {
+        width: 80%;
+        font-size: 5vw;
+        margin: 0 auto;
+      }
     }
   }
 `;

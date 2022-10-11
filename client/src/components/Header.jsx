@@ -279,9 +279,10 @@ const HeaderContainer = styled.div`
     .bars { display: none; }
   }
 
+  /** responsive */
   @media (max-width: 767px) {
     .header-wrap {
-      max-width: 90%;
+      padding: 3vw;
 
       .logo {
         img {
@@ -289,10 +290,47 @@ const HeaderContainer = styled.div`
           height: 8vw;
         }
 
-        h1 { font-size: 7vw; }
+        h1 { font-size: 6vw; }
       }
 
-      .nav-wrap { display: none; }
+      .nav-wrap { 
+        position: absolute;
+        padding: 5vw 5vw;
+        width: 100%;
+        right: -100%;
+        min-height: 0;
+        top: 15vw;
+        border-top: 1px solid #404040;
+        transition: 1s ease;
+
+        .NavLink {
+          visibility: hidden;
+        }
+
+        &.open {
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          top: 15vw;
+          right: 0;
+          max-height: 100vh;
+          background-color : #fff;
+
+          .NavLink { 
+            visibility: visible;
+            font-size: 5vw;
+            line-height: 12vw;
+
+            .customer-Subnav {
+              li {
+                font-size: 4vw;
+                line-height: 5vw;
+              }
+            }
+          }
+        }
+      }
+
       .login-button { display: none; }
 
       .bars { 
@@ -357,6 +395,6 @@ const MyPage = styled.div`
 
   /* responsive */
   @media (max-width: 767px) {
-    a { display: none; }
+    /* a { display: none; } */
   }
 `;
